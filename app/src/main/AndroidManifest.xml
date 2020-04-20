@@ -9,24 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.example.serveIt.owner_activities.menu"></activity>
+        <activity android:name="com.example.serveIt.owner_activities.stats" />
+        <activity android:name="com.example.serveIt.owner_activities.manage_staff" />
+        <activity android:name="com.example.serveIt.owner_activities.build_layout" />
         <activity android:name="com.example.serveIt.login_activities.home_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".store_layout"
-            android:label="Layout"/>
+            android:label="Layout" />
         <activity
             android:name=".new_order"
-            android:label="New Order"/>
+            android:label="New Order" />
         <activity
             android:name=".active_order"
-            android:label="Active Orders"/>
+            android:label="Active Orders" />
         <activity
             android:name=".settings"
-            android:label="Settings"/>
+            android:label="Settings" />
     </application>
 
 </manifest>

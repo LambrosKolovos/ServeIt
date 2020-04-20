@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/layout"
+        android:icon="@drawable/ic_layout_black_24dp"
+        android:title="Layout" />
+    <item
+        android:id="@+id/menu"
+        android:icon="@drawable/ic_restaurant_menu_black_24dp"
+        android:title="Menu" />
+    <item
+        android:id="@+id/staff"
+        android:icon="@drawable/ic_people_black_24dp"
+        android:title="Staff" />
+    <item
+        android:id="@+id/stats"
+        android:icon="@drawable/ic_show_chart_black_24dp"
+        android:title="Stats" />
+</menu>

@@ -8,18 +8,26 @@
 
     <Button
         android:id="@+id/login_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Login"
         android:layout_centerInParent="true"
         android:layout_marginBottom="10dp"
-       />
+        android:text="Login Employee" />
+
+    <Button
+        android:id="@+id/owner_btn"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Login Owner"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/login_btn"/>
 
     <Button
         android:id="@+id/register_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="Register"
-        android:layout_below="@+id/login_btn"
+        android:layout_below="@+id/owner_btn"
         android:layout_centerInParent="true"/>
 </RelativeLayout>

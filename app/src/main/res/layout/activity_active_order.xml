@@ -226,6 +226,6 @@
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
-        app:menu="@menu/menu_nav" />
+        app:menu="@menu/employee_nav" />
 
 </RelativeLayout>
