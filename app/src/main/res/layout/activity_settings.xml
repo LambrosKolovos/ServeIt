@@ -7,11 +7,10 @@
     tools:context="com.example.serveIt.employee_activities.settings">
 
     <TextView
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:text="SETTINGS DESIGN GOES HERE"
-        android:textSize="50sp"
-        android:gravity="center"/>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="50sp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
@@ -22,6 +21,167 @@
         app:itemIconTint="@drawable/selector"
         app:menu="@menu/employee_nav"
         android:layout_alignParentBottom="true" />
+
+    <Button
+        android:id="@+id/leave"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginLeft="131dp"
+        android:layout_marginRight="131dp"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="474dp"
+        android:text="Leave" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="299dp"
+        android:layout_height="385dp"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginRight="56dp"
+        android:layout_marginStart="56dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="340dp"
+        android:layout_marginEnd="99dp"
+        android:layout_marginLeft="99dp"
+        android:layout_marginRight="99dp"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="158dp"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="265dp"
+        android:layout_marginEnd="99dp"
+        android:layout_marginLeft="99dp"
+        android:layout_marginRight="99dp"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="233dp"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="180dp"
+        android:layout_marginEnd="99dp"
+        android:layout_marginLeft="99dp"
+        android:layout_marginRight="99dp"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="310dp"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="466dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginLeft="299dp"
+        android:layout_marginRight="56dp"
+        android:layout_marginStart="299dp"
+        android:layout_marginTop="27dp"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="104dp"
+        android:layout_height="22dp"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="480dp"
+        android:layout_marginEnd="154dp"
+        android:layout_marginLeft="154dp"
+        android:layout_marginRight="154dp"
+        android:layout_marginStart="154dp"
+        android:layout_marginTop="44dp"
+        android:gravity="center"
+        android:text="Name" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="55dp"
+        android:layout_height="52dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="300dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginRight="300dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="27dp"
+        app:srcCompat="@drawable/ic_people_black_24dp" />
+
+    <Button
+        android:id="@+id/privacy"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_above="@+id/bottom_nav"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="408dp"
+        android:layout_marginEnd="121dp"
+        android:layout_marginLeft="122dp"
+        android:layout_marginRight="121dp"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="93dp"
+        android:text="Privacy" />
 
 
 </RelativeLayout>
