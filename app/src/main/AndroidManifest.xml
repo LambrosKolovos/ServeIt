@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.serveIt.employee_activities">
+    package="com.example.serveIt">
 
     <application
         android:allowBackup="true"
@@ -9,11 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.serveIt.owner_activities.menu"></activity>
-        <activity android:name="com.example.serveIt.owner_activities.stats" />
-        <activity android:name="com.example.serveIt.owner_activities.manage_staff" />
-        <activity android:name="com.example.serveIt.owner_activities.build_layout" />
-        <activity android:name="com.example.serveIt.login_activities.home_screen">
+        <activity android:name=".employee_activities.item_notes"></activity>
+        <activity android:name=".owner_activities.menu" />
+        <activity android:name=".owner_activities.stats" />
+        <activity android:name=".owner_activities.manage_staff" />
+        <activity android:name=".owner_activities.build_layout" />
+        <activity android:name=".login_activities.home_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,16 +22,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".store_layout"
+            android:name=".employee_activities.store_layout"
             android:label="Layout" />
         <activity
-            android:name=".new_order"
+            android:name=".employee_activities.new_order"
             android:label="New Order" />
         <activity
-            android:name=".active_order"
+            android:name=".employee_activities.active_order"
             android:label="Active Orders" />
         <activity
-            android:name=".settings"
+            android:name=".employee_activities.settings"
             android:label="Settings" />
     </application>
 

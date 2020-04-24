@@ -1,17 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".new_order">
+    android:orientation="vertical"
+    tools:context="com.example.serveIt.employee_activities.new_order">
 
-    <TextView
-        android:layout_height="match_parent"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:text="NEW ORDER DESIGN GOES HERE"
-        android:textSize="50sp"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/orderlayout"
+        android:layout_weight="4"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <SearchView
+            android:queryBackground="@null"
+            android:theme="@style/SearchTheme"
+            android:id="@+id/searchMenu"
+            android:background="@drawable/search_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:queryHint="Add items"
+            android:textColorHint="@color/colorPrimaryDark">
+
+        </SearchView>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="25dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:textSize="16sp"
+                    android:text="Item" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textSize="16sp"
+                    android:text="Quantity" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:textSize="16sp"
+                    android:text="Price"
+                    android:gravity="center_horizontal" />
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:onClick="loadItemNotes">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:text="Burger"
+                    android:textColor="@color/colorPrimary"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorPrimary"
+                    android:text="1"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:textColor="@color/colorPrimary"
+                    android:text="6.50"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal" />
+
+
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:onClick="loadItemNotes">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:text="Burger"
+                    android:textColor="@color/colorPrimary"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorPrimary"
+                    android:text="1"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:textColor="@color/colorPrimary"
+                    android:text="6.50"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal" />
+
+
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:onClick="loadItemNotes">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:text="Burger"
+                    android:textColor="@color/colorPrimary"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorPrimary"
+                    android:text="1"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:textColor="@color/colorPrimary"
+                    android:text="6.50"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal" />
+
+
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:onClick="loadItemNotes">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:text="Burger"
+                    android:textColor="@color/colorPrimary"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorPrimary"
+                    android:text="1"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:textColor="@color/colorPrimary"
+                    android:text="6.50"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal" />
+
+
+            </TableRow>
+
+        </TableLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/totalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="Total: 19.50$"
+            android:textSize="20sp"
+            android:layout_marginRight="15dp" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="121dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
+        android:text="SEND" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
@@ -23,4 +242,4 @@
         app:menu="@menu/employee_nav"
         android:layout_alignParentBottom="true" />
 
-</RelativeLayout>
+</LinearLayout>

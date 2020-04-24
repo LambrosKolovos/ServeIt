@@ -9,4 +9,9 @@
 
     </style>
 
+    <style name="SearchTheme">
+        <item name="android:textColorHint">@color/colorPrimary</item>
+    </style>
+
+
 </resources>

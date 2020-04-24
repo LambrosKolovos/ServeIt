@@ -6,21 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.serveIt.employee_activities.settings">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="50sp" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bottom_nav"
-        app:itemBackground="@color/colorPrimary"
-        app:itemTextColor="@drawable/selector"
-        app:itemIconTint="@drawable/selector"
-        app:menu="@menu/employee_nav"
-        android:layout_alignParentBottom="true" />
 
     <Button
         android:id="@+id/leave"
@@ -162,8 +147,7 @@
         android:layout_marginLeft="56dp"
         android:layout_marginRight="300dp"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="27dp"
-        app:srcCompat="@drawable/ic_people_black_24dp" />
+        android:layout_marginTop="27dp" />
 
     <Button
         android:id="@+id/privacy"
@@ -182,6 +166,16 @@
         android:layout_marginStart="122dp"
         android:layout_marginTop="93dp"
         android:text="Privacy" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_nav"
+        app:itemBackground="@color/colorPrimary"
+        app:itemTextColor="@drawable/selector"
+        app:itemIconTint="@drawable/selector"
+        app:menu="@menu/employee_nav"
+        android:layout_alignParentBottom="true" />
 
 
 </RelativeLayout>
