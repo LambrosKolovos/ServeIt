@@ -6,166 +6,132 @@
     android:layout_height="match_parent"
     tools:context="com.example.serveIt.employee_activities.settings">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="40dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/username"
+        android:layout_marginBottom="40dp">
+
+        <TextView
+            android:paddingTop="15dp"
+            android:textSize="20sp"
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/backgroundColor"
+            android:text="👤"
+            android:textAlignment="center"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:background="@color/backgroundColor"
+            android:paddingTop="15dp"
+            android:textAlignment="center"
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:textColor="@color/colorPrimary"
+            android:text="John Doe"
+            android:textSize="20sp"
+            android:gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#f2f2f2"
+            android:text="Edit"
+            android:textColor="@color/colorPrimaryDark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#e6faf6">
+
+        <TextView
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/privacy_btn"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@color/colorPrimary"
+            android:text="Privacy"
+            android:background="@color/backgroundColor"
+            android:gravity="center_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/backgroundColor"
+        android:id="@+id/privacy_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp">
+
+        <EditText
+            android:id="@+id/current_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/input_style"
+            android:ems="10"
+            android:hint="Current Password"
+            android:inputType="textPassword"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/new_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/input_style"
+            android:ems="10"
+            android:hint="New Password"
+            android:inputType="textPassword"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/conf_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/input_style"
+            android:ems="10"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:padding="10dp" />
+    </LinearLayout>
 
     <Button
-        android:id="@+id/leave"
-        android:layout_width="wrap_content"
-        android:layout_height="44dp"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="28dp"
-        android:layout_marginEnd="131dp"
-        android:layout_marginLeft="131dp"
-        android:layout_marginRight="131dp"
-        android:layout_marginStart="131dp"
-        android:layout_marginTop="474dp"
-        android:text="Leave" />
+        android:id="@+id/addBtn"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
+        android:text="LEAVE" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="299dp"
-        android:layout_height="385dp"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="80dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginRight="56dp"
-        android:layout_marginStart="56dp" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="340dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginRight="99dp"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="158dp"
-        android:ems="10"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="265dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginRight="99dp"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="233dp"
-        android:ems="10"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="180dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginRight="99dp"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="310dp"
-        android:ems="10"
-        android:inputType="textPassword" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="466dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginLeft="299dp"
-        android:layout_marginRight="56dp"
-        android:layout_marginStart="299dp"
-        android:layout_marginTop="27dp"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="104dp"
-        android:layout_height="22dp"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="480dp"
-        android:layout_marginEnd="154dp"
-        android:layout_marginLeft="154dp"
-        android:layout_marginRight="154dp"
-        android:layout_marginStart="154dp"
-        android:layout_marginTop="44dp"
-        android:gravity="center"
-        android:text="Name" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="55dp"
-        android:layout_height="52dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="300dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginRight="300dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="27dp" />
-
-    <Button
-        android:id="@+id/privacy"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="408dp"
-        android:layout_marginEnd="121dp"
-        android:layout_marginLeft="122dp"
-        android:layout_marginRight="121dp"
-        android:layout_marginStart="122dp"
-        android:layout_marginTop="93dp"
-        android:text="Privacy" />
+</LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"

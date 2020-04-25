@@ -63,7 +63,7 @@
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:ems="10"
-            android:background="@drawable/notes_style"
+            android:background="@drawable/input_style"
             android:gravity="start|top"
             android:hint="Add comments..."
 
