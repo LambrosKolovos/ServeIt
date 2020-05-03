@@ -9,9 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".employee_activities.item_notes"></activity>
-        <activity android:name=".owner_activities.menu" />
-        <activity android:name=".owner_activities.stats" />
+        <activity
+            android:name=".owner_activities.stats_page"
+            android:label="@string/title_activity_stats_page"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".owner_activities.menu_page"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".employee_activities.item_notes" />
         <activity android:name=".owner_activities.manage_staff" />
         <activity android:name=".owner_activities.build_layout" />
         <activity android:name=".login_activities.home_screen">

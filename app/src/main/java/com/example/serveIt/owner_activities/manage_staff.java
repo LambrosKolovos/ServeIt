@@ -28,13 +28,13 @@ public class manage_staff extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), build_layout.class));
                         overridePendingTransition(0, 0);
                     case R.id.menu:
-                        startActivity(new Intent(getApplicationContext(), menu.class));
+                        startActivity(new Intent(getApplicationContext(), menu_page.class));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.staff:
                         return true;
                     case R.id.stats:
-                        startActivity(new Intent(getApplicationContext(), stats.class));
+                        startActivity(new Intent(getApplicationContext(), stats_page.class));
                         overridePendingTransition(0, 0);
                         return true;
                 }

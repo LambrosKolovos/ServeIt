@@ -44,10 +44,11 @@
                 android:text="1"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:onClick="increase"/>
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/incBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

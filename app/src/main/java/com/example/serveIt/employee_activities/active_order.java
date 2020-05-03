@@ -45,5 +45,4 @@ public class active_order extends AppCompatActivity {
         });
     }
 
-
 }

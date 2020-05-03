@@ -27,7 +27,7 @@ public class build_layout extends AppCompatActivity {
                     case R.id.layout:
                         return true;
                     case R.id.menu:
-                        startActivity(new Intent(getApplicationContext(), menu.class));
+                        startActivity(new Intent(getApplicationContext(), menu_page.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.staff:
@@ -35,7 +35,7 @@ public class build_layout extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.stats:
-                        startActivity(new Intent(getApplicationContext(), stats.class));
+                        startActivity(new Intent(getApplicationContext(), stats_page.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
