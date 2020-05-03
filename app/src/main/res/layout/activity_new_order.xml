@@ -14,8 +14,10 @@
         android:orientation="vertical"
         android:id="@+id/orderlayout"
         android:layout_weight="4"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="30dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
 
         <SearchView
             android:queryBackground="@null"
@@ -25,232 +27,69 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             android:queryHint="Add items"
             android:textColorHint="@color/colorPrimaryDark">
 
         </SearchView>
 
-        <TableLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="25dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6"
-                    android:textSize="16sp"
-                    android:text="Item" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:textSize="14sp"
-                    android:text="Quantity" />
-
-                <TextView
-                    android:textAlignment="center"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:textSize="16sp"
-                    android:text="Price"
-                    android:gravity="center_horizontal" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:textSize="16sp" />
-
-
-            </TableRow>
-
-            <TableRow
+            <TableLayout
+                android:id="@+id/order_display"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:onClick="loadItemNotes">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6"
-                    android:text="Burger"
-                    android:textColor="@color/colorPrimary"/>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="25dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/colorPrimary"
-                    android:text="1"
-                    android:textAlignment="center" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:text="Item"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:gravity="center_horizontal"
-                    android:text="6.50"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center_horizontal"
+                        android:text="Quantity"
+                        android:textAlignment="center"
+                        android:textSize="14sp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:gravity="center_horizontal"
-                    android:text="x"
-                    android:clickable="true"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center_horizontal"
+                        android:text="Price"
+                        android:textAlignment="center"
+                        android:textSize="16sp" />
 
-
-            </TableRow>
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:onClick="loadItemNotes">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6"
-                    android:text="Burger"
-                    android:textColor="@color/colorPrimary"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/colorPrimary"
-                    android:text="1"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:gravity="center_horizontal"
-                    android:text="6.50"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:gravity="center_horizontal"
-                    android:text="x"
-                    android:clickable="true"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="16sp" />
 
 
-            </TableRow>
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:onClick="loadItemNotes">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6"
-                    android:text="Burger"
-                    android:textColor="@color/colorPrimary"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/colorPrimary"
-                    android:text="1"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:gravity="center_horizontal"
-                    android:text="6.50"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:gravity="center_horizontal"
-                    android:text="x"
-                    android:clickable="true"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary" />
+                </TableRow>
 
 
-            </TableRow>
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:onClick="loadItemNotes">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6"
-                    android:text="Burger"
-                    android:textColor="@color/colorPrimary"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/colorPrimary"
-                    android:text="1"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:gravity="center_horizontal"
-                    android:text="6.50"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:gravity="center_horizontal"
-                    android:text="x"
-                    android:clickable="true"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary" />
-
-
-            </TableRow>
-
-
-        </TableLayout>
+            </TableLayout>
+        </ScrollView>
 
         <View
             android:id="@+id/divider"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorPrimary" />
@@ -262,22 +101,10 @@
             android:layout_gravity="end"
             android:text="Total: 19.50$"
             android:textSize="20sp"
-            android:layout_marginRight="85dp" />
+            android:layout_marginRight="40dp" />
 
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="121dp"
-        android:layout_height="20dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
-        android:layout_weight="1"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffffff"
-        android:text="SEND" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
