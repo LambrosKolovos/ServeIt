@@ -69,7 +69,7 @@ public class new_order extends Fragment {
     public void makerOrder() {
         int price = 0;
         double foodcost = 6.00;
-        for(int i=1; i<5; i++){
+        for(int i=1; i<150; i++){
             price += i * foodcost;
             TableRow item_row = build_row("Burger", Integer.toString(i), Double.toString(foodcost*i) + "$");
             orderLayout.addView(item_row);

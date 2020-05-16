@@ -7,36 +7,35 @@
     android:orientation="vertical"
     tools:context="com.example.serveIt.employee_activities.new_order">
 
-
-    <LinearLayout
-        android:id="@+id/orderlayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="4"
-        android:orientation="vertical"
-        android:paddingLeft="25dp"
-        android:paddingTop="10dp"
-        android:paddingRight="25dp"
-        android:paddingBottom="30dp">
+        android:layout_height="match_parent"
+        android:layout_weight="4">
 
-        <SearchView
-            android:id="@+id/searchMenu"
+        <LinearLayout
+            android:id="@+id/orderlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/search_style"
-            android:queryBackground="@null"
-            android:queryHint="Add items"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:theme="@style/SearchTheme">
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:paddingLeft="25dp"
+            android:paddingTop="10dp"
+            android:paddingRight="25dp"
+            android:paddingBottom="30dp">
 
-        </SearchView>
+            <SearchView
+                android:id="@+id/searchMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/search_style"
+                android:queryBackground="@null"
+                android:queryHint="Add items"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:theme="@style/SearchTheme">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            </SearchView>
 
             <TableLayout
                 android:id="@+id/order_display"
@@ -86,25 +85,36 @@
 
 
             </TableLayout>
-        </ScrollView>
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimary" />
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
 
-        <TextView
-            android:id="@+id/totalPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginRight="40dp"
-            android:text="Total: 19.50$"
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/totalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="40dp"
+                android:text="Total: 19.50$"
+                android:textSize="20sp" />
 
 
-    </LinearLayout>
+            <Button
+                android:layout_marginTop="40dp"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#ffffff"
+                android:text="Send Order" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>
