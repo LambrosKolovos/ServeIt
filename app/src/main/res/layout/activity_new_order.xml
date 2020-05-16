@@ -9,27 +9,27 @@
 
 
     <LinearLayout
+        android:id="@+id/orderlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/orderlayout"
         android:layout_weight="4"
-        android:paddingTop="10dp"
-        android:paddingBottom="30dp"
+        android:orientation="vertical"
         android:paddingLeft="25dp"
-        android:paddingRight="25dp">
+        android:paddingTop="10dp"
+        android:paddingRight="25dp"
+        android:paddingBottom="30dp">
 
         <SearchView
-            android:queryBackground="@null"
-            android:theme="@style/SearchTheme"
             android:id="@+id/searchMenu"
-            android:background="@drawable/search_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/search_style"
+            android:queryBackground="@null"
             android:queryHint="Add items"
-            android:textColorHint="@color/colorPrimaryDark">
+            android:textColorHint="@color/colorPrimaryDark"
+            android:theme="@style/SearchTheme">
 
         </SearchView>
 
@@ -99,21 +99,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginRight="40dp"
             android:text="Total: 19.50$"
-            android:textSize="20sp"
-            android:layout_marginRight="40dp" />
+            android:textSize="20sp" />
 
 
     </LinearLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bottom_nav"
-        app:itemBackground="@color/colorPrimary"
-        app:itemTextColor="@drawable/selector"
-        app:itemIconTint="@drawable/selector"
-        app:menu="@menu/employee_nav"
-        android:layout_alignParentBottom="true" />
 
 </LinearLayout>

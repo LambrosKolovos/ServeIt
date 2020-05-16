@@ -1,7 +1,9 @@
 package com.example.serveIt.employee_activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,9 +11,11 @@ import android.graphics.Color;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -24,20 +28,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.w3c.dom.Text;
 
 
-public class new_order extends AppCompatActivity {
+public class new_order extends Fragment {
 
-    TableLayout orderLayout;
-    TextView priceView;
+    private TableLayout orderLayout;
+    private TextView priceView;
+    private SearchView searchMenu;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_order);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
-        final SearchView searchMenu = findViewById(R.id.searchMenu);
-        orderLayout = findViewById(R.id.order_display);
-        priceView = findViewById(R.id.totalPrice);
+        View root = inflater.inflate(R.layout.activity_new_order, container, false);
+        searchMenu = root.findViewById(R.id.searchMenu);
+        orderLayout = root.findViewById(R.id.order_display);
+        priceView = root.findViewById(R.id.totalPrice);
 
         searchMenu.onActionViewExpanded();
 
@@ -53,43 +57,13 @@ public class new_order extends AppCompatActivity {
             }
         });
 
-
-
-        bottomNav.setSelectedItemId(R.id.new_order);
-
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.store:
-                        startActivity(new Intent(getApplicationContext(), store_layout.class));
-                        overridePendingTransition(0,0);
-                    case R.id.new_order:
-                        return true;
-                    case R.id.active_orders:
-                        startActivity(new Intent(getApplicationContext(), active_order.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.settings:
-                        startActivity(new Intent(getApplicationContext(), settings.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-                return false;
-            }
-        });
-
         makerOrder();
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), home_screen.class));
+        return root;
     }
 
     public void loadItemNotes(View view) {
-        startActivity(new Intent(getApplicationContext(), item_notes.class));
+        startActivity(new Intent(getActivity(), item_notes.class));
     }
 
     public void makerOrder() {
@@ -113,7 +87,7 @@ public class new_order extends AppCompatActivity {
         final float scale = getResources().getDisplayMetrics().density;
         int padd_bottom = (int) (padding_in_dp * scale + 0.5f);
 
-        TableRow row = new TableRow(this);
+        TableRow row = new TableRow(getContext());
 
         TextView item_view = build_view(item_name, 6, false, true, row);
         TextView quantity_view = build_view(quantity, 3,true, false, row);
@@ -131,7 +105,7 @@ public class new_order extends AppCompatActivity {
     }
 
     public TextView build_view(String name, int weight, boolean center, boolean clickable, final TableRow row){
-        TextView view = new TextView(this);
+        TextView view = new TextView(getContext());
         view.setText(name);
 
         if(clickable){

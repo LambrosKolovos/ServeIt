@@ -31,6 +31,7 @@
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
-        app:menu="@menu/owner_nav" />
+        app:menu="@menu/owner_nav"
+        android:background="@color/colorPrimary"/>
 
 </RelativeLayout>

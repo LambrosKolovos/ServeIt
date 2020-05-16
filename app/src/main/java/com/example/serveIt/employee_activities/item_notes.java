@@ -2,6 +2,7 @@ package com.example.serveIt.employee_activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.content.Intent;
@@ -75,13 +76,10 @@ public class item_notes extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), new_order.class));
+                finish(); //to be changed (hardcoded)
             }
         });
     }
 
-    public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), new_order.class));
-    }
 }
 

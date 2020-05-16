@@ -9,10 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".employee_activities.employee_activity"></activity>
+        <activity
+            android:name=".login_activities.login"
+            android:label="Login" />
+        <activity
+            android:name=".login_activities.sign_up"
+            android:label="Sign Up" />
         <activity
             android:name=".owner_activities.stats_page"
             android:label="@string/title_activity_stats_page"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".owner_activities.menu_page"
             android:theme="@style/AppTheme.NoActionBar" />
