@@ -1,28 +1,35 @@
 package com.example.serveIt.owner_activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.serveIt.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class menu_page extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_menu, container, false);
+        View root = inflater.inflate(R.layout.activity_menu, container, false);
+
+        ExpandableListView menu = root.findViewById(R.id.expandableListView);
+        HashMap<String, List<String>> content = MenuListData.getData();
+        List<String> menuTitle = new ArrayList<String>(content.keySet());
+        ExpandableListAdapter adapter = new ListAdapter(getContext(), menuTitle, content);
+
+        menu.setAdapter(adapter);
+
+        return root;
     }
 }

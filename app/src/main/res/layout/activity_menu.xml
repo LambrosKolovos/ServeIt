@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.serveIt.owner_activities.menu_page">
 
-    <TextView
+    <ExpandableListView
+        android:id="@+id/expandableListView"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:text="//TODO MENU"
-        android:textSize="50sp"
-        android:gravity="center"/>
+        android:indicatorRight="?android:attr/expandableListPreferredItemIndicatorLeft"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.5dp" />
 
 </RelativeLayout>
