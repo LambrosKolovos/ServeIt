@@ -11,6 +11,7 @@ import com.example.serveIt.R;
 import com.example.serveIt.employee_activities.employee_activity;
 import com.example.serveIt.employee_activities.store_layout;
 import com.example.serveIt.owner_activities.build_layout;
+import com.example.serveIt.owner_activities.owner_activity;
 
 public class home_screen extends AppCompatActivity {
 
@@ -36,7 +37,7 @@ public class home_screen extends AppCompatActivity {
         login_ownerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), build_layout.class));
+                startActivity(new Intent(getApplicationContext(), owner_activity.class));
             }
         });
 

@@ -1,45 +1,24 @@
 package com.example.serveIt.owner_activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.serveIt.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class manage_staff extends AppCompatActivity {
-
+public class manage_staff extends Fragment {
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_staff);
-
-        BottomNavigationView bottomNav = findViewById(R.id.owner_nav);
-        bottomNav.setSelectedItemId(R.id.staff);
-
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.layout:
-                        startActivity(new Intent(getApplicationContext(), build_layout.class));
-                        overridePendingTransition(0, 0);
-                    case R.id.menu:
-                        startActivity(new Intent(getApplicationContext(), menu_page.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.staff:
-                        return true;
-                    case R.id.stats:
-                        startActivity(new Intent(getApplicationContext(), stats_page.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                }
-                return false;
-            }
-        });
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_manage_staff, container, false);
     }
 }
