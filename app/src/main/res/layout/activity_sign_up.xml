@@ -52,12 +52,22 @@
                 android:layout_marginBottom="10dp"
                 android:inputType="textPassword" />
 
-            <Spinner
-                android:id="@+id/menu"
+            <Switch
+                android:id="@+id/owner_switch"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="4dp"
+                android:layout_height="wrap_content"
+                android:text="Owner" />
+
+            <EditText
+                android:id="@+id/store_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:entries="@array/User_choice" />
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Store name"
+                android:visibility="gone"
+                android:text="" />
 
             <Button
                 android:id="@+id/sign_up"
@@ -79,6 +89,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
 
-/>
+        />
 
 </RelativeLayout>
