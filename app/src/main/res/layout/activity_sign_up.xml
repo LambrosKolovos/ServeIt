@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
+            android:animateLayoutChanges="true"
             >
 
             <EditText
@@ -65,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:hint="Store name"
+
                 android:visibility="gone"
                 android:text="" />
 

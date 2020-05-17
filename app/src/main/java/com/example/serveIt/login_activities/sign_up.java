@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -66,10 +68,46 @@ public class sign_up extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     store_name.setVisibility(View.VISIBLE);
+                    Animation slide = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_open);
+                    slide.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            store_name.setHint("Store name");
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    store_name.startAnimation(slide);
                     isOwner = true;
                 }
                 else{
-                    store_name.setVisibility(View.GONE);
+                    Animation slide = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_close);
+                    slide.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            store_name.setHint("");
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            store_name.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    store_name.startAnimation(slide);
                     isOwner = false;
                 }
             }
@@ -82,6 +120,7 @@ public class sign_up extends AppCompatActivity {
                 final String name_text = name.getText().toString();
                 final String email_text = email.getText().toString();
                 final String pass_text = password.getText().toString();
+                final String store_text = store_name.getText().toString();
 
                 if(name_text.isEmpty()){
                     name.setError("Please enter full name");
@@ -94,6 +133,10 @@ public class sign_up extends AppCompatActivity {
                 else if (pass_text.isEmpty()){
                     password.setError("Please enter password");
                     password.requestFocus();
+                }
+                else if( isOwner && store_text.isEmpty()){
+                    store_name.setError("Please enter store name");
+                    store_name.requestFocus();
                 }
                 else{
                     pb.setVisibility(View.VISIBLE);
