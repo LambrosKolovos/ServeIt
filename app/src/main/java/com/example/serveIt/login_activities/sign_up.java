@@ -25,6 +25,7 @@ import com.example.serveIt.*;
 import com.example.serveIt.employee_activities.employee_activity;
 import com.example.serveIt.employee_activities.settings;
 import com.example.serveIt.owner_activities.build_layout;
+import com.example.serveIt.owner_activities.owner_activity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -162,7 +163,7 @@ public class sign_up extends AppCompatActivity {
                                                         .push()
                                                         .setValue(store);
                                                 finish();
-                                                startActivity(new Intent(getApplicationContext(), build_layout.class));
+                                                startActivity(new Intent(getApplicationContext(), owner_activity.class));
                                             }
                                             else{
                                                 finish();

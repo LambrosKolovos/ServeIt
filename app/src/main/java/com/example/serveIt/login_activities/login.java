@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.serveIt.R;
 import com.example.serveIt.employee_activities.employee_activity;
 import com.example.serveIt.owner_activities.build_layout;
+import com.example.serveIt.owner_activities.owner_activity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -66,7 +67,7 @@ public class login extends AppCompatActivity {
                         if(isOwner){
                             progressBar.setVisibility(View.GONE);
                             finish();
-                            startActivity(new Intent(getApplicationContext(), build_layout.class));
+                            startActivity(new Intent(getApplicationContext(), owner_activity.class));
                         }
                         else{
                             progressBar.setVisibility(View.GONE);
@@ -130,7 +131,7 @@ public class login extends AppCompatActivity {
                                     if(isOwner){
                                         progressBar.setVisibility(View.GONE);
                                         finish();
-                                        startActivity(new Intent(getApplicationContext(), build_layout.class));
+                                        startActivity(new Intent(getApplicationContext(), owner_activity.class));
                                     }
                                     else{
                                         progressBar.setVisibility(View.GONE);
