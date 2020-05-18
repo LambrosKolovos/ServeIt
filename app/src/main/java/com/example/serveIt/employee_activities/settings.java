@@ -36,8 +36,8 @@ public class settings extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthState;
     private FirebaseDatabase database;
     private DatabaseReference ref;
-    Button signOut;
     TextView name;
+    TextView logout;
     String userID;
 
     @Nullable
@@ -48,11 +48,10 @@ public class settings extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
+        logout = root.findViewById(R.id.logoutView);
         name = root.findViewById(R.id.name);
-        signOut = root.findViewById(R.id.sign_out);
 
-
-        signOut.setOnClickListener(new View.OnClickListener() {
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
@@ -61,7 +60,6 @@ public class settings extends Fragment {
                     activity.finish();
                     startActivity(new Intent(getActivity(),login.class));
                 }
-
             }
         });
 
@@ -80,4 +78,5 @@ public class settings extends Fragment {
         }
 
     }
+
 }
