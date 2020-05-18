@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -68,7 +69,8 @@ public class sign_up extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     store_name.setVisibility(View.VISIBLE);
-                    Animation slide = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_open);
+                    Animation slide = new ScaleAnimation(1.0f,1.0f,0.0f,1.0f);
+                    slide.setDuration(300);
                     slide.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
@@ -77,7 +79,7 @@ public class sign_up extends AppCompatActivity {
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            store_name.setHint("Store name");
+                            store_name.setHint("Business Name");
                         }
 
                         @Override
@@ -86,28 +88,15 @@ public class sign_up extends AppCompatActivity {
                         }
                     });
                     store_name.startAnimation(slide);
+
                     isOwner = true;
                 }
                 else{
-                    Animation slide = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_close);
-                    slide.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                            store_name.setHint("");
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            store_name.setVisibility(View.GONE);
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
+                    store_name.setHint("");
+                    Animation slide = new ScaleAnimation(1.0f,1.0f,1.0f,0.0f);
+                    slide.setDuration(300);
                     store_name.startAnimation(slide);
+                    store_name.setVisibility(View.GONE);
                     isOwner = false;
                 }
             }
