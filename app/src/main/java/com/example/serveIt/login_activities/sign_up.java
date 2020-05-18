@@ -8,17 +8,23 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
 import com.example.serveIt.*;
 import com.example.serveIt.employee_activities.employee_activity;
 import com.example.serveIt.employee_activities.settings;
+import com.example.serveIt.owner_activities.build_layout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,9 +38,10 @@ public class sign_up extends AppCompatActivity {
     Button signUp_btn;
     EditText name, email, password;
     ProgressBar pb;
-    Spinner user_menu;
     private FirebaseAuth mAuth;
     FirebaseDatabase database;
+    Switch owner_switch;
+    EditText store_name;
 
     private boolean isOwner;
 
@@ -51,10 +58,50 @@ public class sign_up extends AppCompatActivity {
         email = findViewById(R.id.email);
         name = findViewById(R.id.name);
         password = findViewById(R.id.password);
-        user_menu = findViewById(R.id.menu);
+        owner_switch = findViewById(R.id.owner_switch);
+        store_name = findViewById(R.id.store_name);
 
         pb = findViewById(R.id.progressbar);
         pb.setVisibility(View.GONE);
+
+        owner_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    store_name.setVisibility(View.VISIBLE);
+                    Animation slide = new ScaleAnimation(1.0f,1.0f,0.0f,1.0f);
+                    slide.setDuration(300);
+                    slide.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            store_name.setHint("Business Name");
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    store_name.startAnimation(slide);
+
+                    isOwner = true;
+                }
+                else{
+                    store_name.setHint("");
+                    Animation slide = new ScaleAnimation(1.0f,1.0f,1.0f,0.0f);
+                    slide.setDuration(300);
+                    store_name.startAnimation(slide);
+                    store_name.setVisibility(View.GONE);
+                    isOwner = false;
+                }
+            }
+        });
+
 
         signUp_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,12 +109,7 @@ public class sign_up extends AppCompatActivity {
                 final String name_text = name.getText().toString();
                 final String email_text = email.getText().toString();
                 final String pass_text = password.getText().toString();
-                final String isOwner_text = user_menu.getSelectedItem().toString();
-
-                if(isOwner_text.equals("Owner"))
-                    isOwner = true;
-                else
-                    isOwner = false;
+                final String store_text = store_name.getText().toString();
 
                 if(name_text.isEmpty()){
                     name.setError("Please enter full name");
@@ -81,6 +123,10 @@ public class sign_up extends AppCompatActivity {
                     password.setError("Please enter password");
                     password.requestFocus();
                 }
+                else if( isOwner && store_text.isEmpty()){
+                    store_name.setError("Please enter store name");
+                    store_name.requestFocus();
+                }
                 else{
                     pb.setVisibility(View.VISIBLE);
                     login_container.setBackgroundColor(Color.parseColor("#dddddd"));
@@ -91,7 +137,7 @@ public class sign_up extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                User user = new User(
+                                final User user = new User(
                                         email_text,
                                         name_text,
                                         isOwner
@@ -102,12 +148,27 @@ public class sign_up extends AppCompatActivity {
                                         .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+
                                         if(task.isSuccessful()){
                                             pb.setVisibility(View.GONE);
                                             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                             login_container.setBackgroundColor(Color.WHITE);
                                             Toast.makeText(sign_up.this, "Sign up successful", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(getApplicationContext(), employee_activity.class));
+
+                                            if(user.getIsOwner()){
+                                                Store store = new Store(store_name.getText().toString());
+                                                database.getReference("Store")
+                                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                        .push()
+                                                        .setValue(store);
+                                                finish();
+                                                startActivity(new Intent(getApplicationContext(), build_layout.class));
+                                            }
+                                            else{
+                                                finish();
+                                                startActivity(new Intent(getApplicationContext(), employee_activity.class));
+                                            }
+
                                         }
                                         else{
                                             Toast.makeText(sign_up.this, "Sign up unsuccessful", Toast.LENGTH_SHORT).show();
