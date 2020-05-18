@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.serveIt.R;
+import com.example.serveIt.owner_activities.stats_page;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -18,9 +19,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.stats_1, R.string.stats_2, R.string.stats_3};
-    private final Context mContext;
+    private final stats_page mContext;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public SectionsPagerAdapter(stats_page context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }

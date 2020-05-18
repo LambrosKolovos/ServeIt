@@ -6,142 +6,167 @@
     android:layout_height="match_parent"
     tools:context="com.example.serveIt.employee_activities.settings">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="40dp">
-
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/username"
-        android:layout_marginBottom="40dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:paddingTop="15dp"
-            android:textSize="20sp"
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:background="@color/backgroundColor"
-            android:text="👤"
-            android:textAlignment="center"
-            android:gravity="center_horizontal" />
-
-        <TextView
-            android:background="@color/backgroundColor"
-            android:paddingTop="15dp"
-            android:textAlignment="center"
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:textColor="@color/colorPrimary"
-            android:text="John Doe"
-            android:textSize="20sp"
-            android:gravity="center_horizontal" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#f2f2f2"
-            android:text="Edit"
-            android:textColor="@color/colorPrimaryDark" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#e6faf6">
-
-        <TextView
-            android:paddingTop="10dp"
-            android:paddingBottom="5dp"
-            android:id="@+id/privacy_btn"
-            android:textAlignment="center"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="@color/colorPrimary"
-            android:text="Privacy"
-            android:background="@color/backgroundColor"
-            android:gravity="center_horizontal" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="40dp">
 
-    <LinearLayout
-        android:background="@color/backgroundColor"
-        android:id="@+id/privacy_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="30dp"
-        android:paddingBottom="30dp">
+            <LinearLayout
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/current_pass"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/input_style"
-            android:ems="10"
-            android:hint="Current Password"
-            android:inputType="textPassword"
-            android:padding="10dp" />
+                <TextView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@color/backgroundColor"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="👤"
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/new_pass"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/input_style"
-            android:ems="10"
-            android:hint="New Password"
-            android:inputType="textPassword"
-            android:padding="10dp" />
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@color/backgroundColor"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="15dp"
+                    android:text="John Doe"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/conf_pass"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:background="@drawable/input_style"
-            android:ems="10"
-            android:hint="Confirm Password"
-            android:inputType="textPassword"
-            android:padding="10dp" />
-    </LinearLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#f2f2f2"
+                    android:text="Edit"
+                    android:textColor="@color/colorPrimaryDark" />
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/addBtn"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="15dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffffff"
-        android:text="LEAVE" />
+            <Button
+                android:id="@+id/sign_out"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="55dp"
+                android:background="#269ffb"
+                android:text="Leave Workspace"
+                android:textColor="#ffffff" />
 
-    <Button
-        android:id="@+id/sign_out"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="50dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffffff"
-        android:text="Sign out" />
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#f0fffd"
+                android:padding="15dp">
 
-</LinearLayout>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:paddingTop="20dp">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/dark_mode_icon" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="5dp"
+                        android:text="Night mode"
+                        android:textColor="@color/colorPrimaryDark" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/privacy_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="5dp"
+                        android:text="Privacy"
+                        android:textColor="@color/colorPrimaryDark" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/help_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="5dp"
+                        android:text="Help"
+                        android:textColor="@color/colorPrimaryDark" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/logout_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:clickable="true"
+                        android:id="@+id/logoutView"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="5dp"
+                        android:text="Logout"
+                        android:textColor="@color/colorPrimaryDark" />
+                </TableRow>
+            </TableLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </RelativeLayout>

@@ -23,15 +23,5 @@
         android:textSize="20sp"
         android:textColor="@color/colorPrimary"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/owner_nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@drawable/selector"
-        app:itemTextColor="@drawable/selector"
-        app:menu="@menu/owner_nav"
-        android:background="@color/colorPrimary"/>
 
 </RelativeLayout>

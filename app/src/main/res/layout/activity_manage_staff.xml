@@ -125,7 +125,6 @@
                 android:layout_marginBottom="15dp">
 
                 <CheckBox
-                    android:id="@+id/checkBox3"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
@@ -180,7 +179,6 @@
                 android:layout_marginBottom="15dp">
 
                 <CheckBox
-                    android:id="@+id/checkBox3"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
@@ -235,7 +233,6 @@
                 android:layout_marginBottom="15dp">
 
                 <CheckBox
-                    android:id="@+id/checkBox3"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
@@ -287,16 +284,5 @@
 
         </TableLayout>
     </LinearLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/owner_nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@drawable/selector"
-        app:itemTextColor="@drawable/selector"
-        app:menu="@menu/owner_nav"
-        android:background="@color/colorPrimary"/>
 
 </RelativeLayout>
