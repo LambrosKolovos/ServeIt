@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="150dp"
+    android:background="#ffffff"
+    android:padding="5dp"
+    android:layout_gravity="center">
+
+
+    <EditText
+        android:paddingLeft="15dp"
+        android:layout_margin="20dp"
+        android:id="@+id/categoryField"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Category name"
+        android:background="@drawable/input_style"/>
+
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/categoryField"
+        android:id="@+id/button_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:background="@drawable/input_style"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Cancel"/>
+
+        <Button
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginLeft="27dp"
+            android:layout_gravity="right"
+            android:id="@+id/add_category"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Add" />
+    </LinearLayout>
+
+</RelativeLayout>

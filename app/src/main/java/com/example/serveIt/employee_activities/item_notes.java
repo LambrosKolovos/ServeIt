@@ -80,6 +80,5 @@ public class item_notes extends AppCompatActivity {
             }
         });
     }
-
 }
 

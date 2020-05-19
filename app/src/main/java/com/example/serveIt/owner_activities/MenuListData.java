@@ -1,35 +1,48 @@
 package com.example.serveIt.owner_activities;
 
+import com.example.serveIt.Food_Item;
+
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class MenuListData {
-    public static HashMap<String, List<String>> getData() {
-        HashMap<String, List<String>> categories = new HashMap<String, List<String>>();
 
-        List<String> drinks = new ArrayList<String>();
-        drinks.add("WINE");
-        drinks.add("BEER");
-        drinks.add("WATER 1,5L");
-        drinks.add("ADD NEW");
+    private static LinkedHashMap<String, List<Food_Item>> categories = new LinkedHashMap<>();
 
-        List<String> burgers = new ArrayList<String>();
-        burgers.add("BURGER 1");
-        burgers.add("BURGER 2");
-        burgers.add("BURGER 3");
-        burgers.add("BURGER 5");
-        burgers.add("ADD NEW");
+    public static LinkedHashMap<String, List<Food_Item>> getData() {
 
-        List<String> salads = new ArrayList<String>();
-        salads.add("SALAD 1");
-        salads.add("SALAD 2");
-        salads.add("SALAD 3");
-        salads.add("ADD NEW");
-
-        categories.put("CATEGORY 1", drinks);
-        categories.put("CATEGORY 2", burgers);
-        categories.put("CATEGORY 3", salads);
         return categories;
     }
+
+    public static void addCategory(String name){
+        List<Food_Item> newCategory = new ArrayList<>();
+        Food_Item addNew = new Food_Item("Add new");
+        newCategory.add(addNew);
+        categories.put(name, newCategory);
+    }
+
+    public static void addItem(Food_Item item, String category){
+        for (LinkedHashMap.Entry<String, List<Food_Item>> entry : categories.entrySet()) {
+            String categoryName = entry.getKey();
+            List<Food_Item> categoryList = entry.getValue();
+
+            if(categoryName.equals(category))
+                categoryList.add(0, item);
+        }
+    }
+
+    public static void removeItem(Food_Item item, String category){
+        for (LinkedHashMap.Entry<String, List<Food_Item>> entry : categories.entrySet()) {
+            String categoryName = entry.getKey();
+            List<Food_Item> categoryList = entry.getValue();
+
+            if(categoryName.equals(category))
+                categoryList.remove(item);
+        }
+    }
+
+
 }
