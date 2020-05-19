@@ -2,31 +2,37 @@ package com.example.serveIt.owner_activities;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Callable;
+
 import android.content.Context;
 import android.graphics.Typeface;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.example.serveIt.Food_Item;
 import com.example.serveIt.R;
+
+import org.w3c.dom.Text;
 
 public class ListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> expandableListTitle;
-    private HashMap<String, List<String>> expandableListDetail;
+    private HashMap<String, List<Food_Item>> expandableListDetail;
 
     public ListAdapter(Context context, List<String> expandableListTitle,
-                                       HashMap<String, List<String>> expandableListDetail) {
+                                       HashMap<String, List<Food_Item>> expandableListDetail) {
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
     }
 
     @Override
-    public Object getChild(int listPosition, int expandedListPosition) {
+    public Food_Item getChild(int listPosition, int expandedListPosition) {
         return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
                 .get(expandedListPosition);
     }
@@ -37,17 +43,24 @@ public class ListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int listPosition, final int expandedListPosition,
+    public View getChildView(final int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        final String expandedListText = (String) getChild(listPosition, expandedListPosition);
+        final String expandedListText = getChild(listPosition, expandedListPosition).getName();
+        final String expandedListPrice = getChild(listPosition, expandedListPosition).getPrice() + "$";
+
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_item, null);
+
         }
-        TextView expandedListTextView = (TextView) convertView
-                .findViewById(R.id.expandedListItem);
+
+        TextView expandedListTextView = convertView.findViewById(R.id.expandedListItem);
+        TextView price =  convertView.findViewById(R.id.expandedListItemPrice);
+
         expandedListTextView.setText(expandedListText);
+        price.setText(expandedListPrice);
+
         return convertView;
     }
 
@@ -81,6 +94,7 @@ public class ListAdapter extends BaseExpandableListAdapter {
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_group, null);
         }
+
         TextView listTitleTextView = (TextView) convertView
                 .findViewById(R.id.listTitle);
         listTitleTextView.setTypeface(null, Typeface.BOLD);
@@ -97,4 +111,5 @@ public class ListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int listPosition, int expandedListPosition) {
         return true;
     }
+
 }
