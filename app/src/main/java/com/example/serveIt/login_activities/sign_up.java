@@ -70,8 +70,7 @@ public class sign_up extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     store_name.setVisibility(View.VISIBLE);
-                    Animation slide = new ScaleAnimation(1.0f,1.0f,0.0f,1.0f);
-                    slide.setDuration(300);
+                    Animation slide = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_open);
                     slide.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
@@ -80,7 +79,7 @@ public class sign_up extends AppCompatActivity {
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            store_name.setHint("Business Name");
+                            store_name.setHint("Business name");
                         }
 
                         @Override
@@ -89,13 +88,26 @@ public class sign_up extends AppCompatActivity {
                         }
                     });
                     store_name.startAnimation(slide);
-
                     isOwner = true;
                 }
                 else{
                     store_name.setHint("");
-                    Animation slide = new ScaleAnimation(1.0f,1.0f,1.0f,0.0f);
-                    slide.setDuration(300);
+                    Animation slide = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_close);
+                    slide.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            store_name.setText("");
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
                     store_name.startAnimation(slide);
                     store_name.setVisibility(View.GONE);
                     isOwner = false;
