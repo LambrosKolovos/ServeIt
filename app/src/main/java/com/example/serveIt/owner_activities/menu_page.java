@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import java.security.acl.Group;
 import java.util.ArrayList;
@@ -82,6 +84,25 @@ public class menu_page extends Fragment {
                 if (childPosition == content.get(category).size() - 1) {
                     showFoodItemDialog(v, category);
                 }
+                return false;
+            }
+        });
+
+
+        menu.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                long packedPosition = menu.getExpandableListPosition(position);
+
+                int itemType = ExpandableListView.getPackedPositionType(packedPosition);
+                int groupPosition = ExpandableListView.getPackedPositionGroup(packedPosition);
+
+                /*  if group item clicked */
+                if (itemType == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
+                    MenuListData.removeCategory(menuTitle.get(groupPosition));
+                    refreshScreen();
+                }
+
                 return false;
             }
         });

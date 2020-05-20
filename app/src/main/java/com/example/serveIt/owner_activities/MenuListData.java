@@ -23,6 +23,10 @@ public class MenuListData {
         categories.put(name, newCategory);
     }
 
+    public static void removeCategory(String name){
+            categories.remove(name);
+    }
+
     public static void addItem(Food_Item item, String category){
         for (LinkedHashMap.Entry<String, List<Food_Item>> entry : categories.entrySet()) {
             String categoryName = entry.getKey();
