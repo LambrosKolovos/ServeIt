@@ -123,13 +123,19 @@ public class menu_page extends Fragment {
     private void showFoodItemDialog(View v, final String category){
         Button closeBtn, addBtn;
         final EditText name, price;
+        final TextView alertName, alertPrice;
 
         foodItemDialog.setContentView(R.layout.add_item_popup);
 
         name = foodItemDialog.findViewById(R.id.name_field);
         price = foodItemDialog.findViewById(R.id.price_field);
+        alertName = foodItemDialog.findViewById(R.id.warning_name);
+        alertPrice = foodItemDialog. findViewById(R.id.warning_price);
         addBtn = foodItemDialog.findViewById(R.id.add_item);
         closeBtn = foodItemDialog.findViewById(R.id.close_btn);
+
+        alertName.setVisibility(View.INVISIBLE);
+        alertPrice.setVisibility(View.INVISIBLE);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,11 +143,22 @@ public class menu_page extends Fragment {
                 final String itemPrice = price.getText().toString();
                 final String itemName = name.getText().toString();
 
-                Food_Item food = new Food_Item(itemName, itemPrice);
-                MenuListData.addItem(food, category);
-
-                refreshScreen();
-                foodItemDialog.dismiss();
+                if(!itemPrice.isEmpty() && !itemName.isEmpty()){
+                    Food_Item food = new Food_Item(itemName, itemPrice);
+                    MenuListData.addItem(food, category);
+                    refreshScreen();
+                    foodItemDialog.dismiss();
+                }
+                else {
+                    if (itemName.isEmpty()) {
+                        alertName.setText("Item name can't be empty!");
+                        alertName.setVisibility(View.VISIBLE);
+                    }
+                    if (itemPrice.isEmpty()) {
+                        alertPrice.setText("Item price can't be empty!");
+                        alertPrice.setVisibility(View.VISIBLE);
+                    }
+                }
             }
         });
 
@@ -157,19 +174,32 @@ public class menu_page extends Fragment {
     private void showCategoryDialog(View v){
         Button closeBtn, addBtn;
         final EditText categoryInput;
+        final TextView alert;
 
         categoryDialog.setContentView(R.layout.category_popup);
 
         categoryInput = categoryDialog.findViewById(R.id.categoryField);
+        alert = categoryDialog.findViewById(R.id.warning);
         addBtn = categoryDialog.findViewById(R.id.add_category);
         closeBtn = categoryDialog.findViewById(R.id.close_btn);
+
+        alert.setVisibility(View.INVISIBLE);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MenuListData.addCategory(categoryInput.getText().toString());
-                refreshScreen();
-                categoryDialog.dismiss();
+                final String category = categoryInput.getText().toString();
+
+                if(inputIsCorrect(category)){
+                    MenuListData.addCategory(category);
+                    refreshScreen();
+                    categoryDialog.dismiss();
+                }
+                else {
+                    alert.setText("Category name can't be empty!");
+                    alert.setVisibility(View.VISIBLE);
+                }
+
             }
         });
 
@@ -183,7 +213,6 @@ public class menu_page extends Fragment {
         categoryDialog.show();
     }
 
-    @SuppressLint("SetTextI18n")
     private void showDeleteDialog(View v, final String category){
         Button closeBtn, addBtn;
         final TextView deleteMessage;
@@ -214,7 +243,9 @@ public class menu_page extends Fragment {
         deleteDialog.show();
     }
 
-
+    private boolean inputIsCorrect(String x){
+        return !x.isEmpty();
+    }
     private void refreshScreen(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();

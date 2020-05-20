@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="250dp"
-    android:layout_height="200dp"
+    android:layout_height="250dp"
     android:background="#ffffff"
     android:padding="5dp"
     android:layout_gravity="center">
@@ -19,17 +19,26 @@
             android:id="@+id/name_field"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
             android:background="@drawable/input_style"
             android:ems="10"
             android:hint="Item name"
             android:inputType="textPersonName"
             android:paddingLeft="15dp" />
+
+        <TextView
+            android:layout_below="@id/name_field"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="15dp"
+            android:paddingLeft="15dp"
+            android:id="@+id/warning_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0000 "/>
 
         <EditText
             android:id="@+id/price_field"
@@ -42,6 +51,17 @@
             android:hint="Price"
             android:inputType="numberDecimal"
             android:paddingLeft="15dp" />
+
+        <TextView
+            android:layout_below="@id/price_field"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="15dp"
+            android:paddingLeft="15dp"
+            android:id="@+id/warning_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0000 "/>
     </LinearLayout>
 
     <LinearLayout
