@@ -13,13 +13,12 @@ public class MenuListData {
     private static LinkedHashMap<String, List<Food_Item>> categories = new LinkedHashMap<>();
 
     public static LinkedHashMap<String, List<Food_Item>> getData() {
-
         return categories;
     }
 
     public static void addCategory(String name){
         List<Food_Item> newCategory = new ArrayList<>();
-        Food_Item addNew = new Food_Item("Add new");
+        Food_Item addNew = new Food_Item("Add new", "+", true);
         newCategory.add(addNew);
         categories.put(name, newCategory);
     }

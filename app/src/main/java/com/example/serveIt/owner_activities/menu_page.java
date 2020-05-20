@@ -20,8 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,6 +33,7 @@ public class menu_page extends Fragment {
     private FloatingActionButton categoryBtn;
     private Dialog categoryDialog, foodItemDialog;
     private int i = 0;
+    private int clickPos1, clickPos2;
 
     @Nullable
     @Override
@@ -44,16 +45,21 @@ public class menu_page extends Fragment {
         content = MenuListData.getData();
         categoryBtn = root.findViewById(R.id.category_btn);
 
-        ExpandableListView menu = root.findViewById(R.id.expandableListView);
+        final ExpandableListView menu = root.findViewById(R.id.expandableListView);
         final List<String> menuTitle = new ArrayList<String>(content.keySet());
         ExpandableListAdapter adapter = new ListAdapter(getContext(), menuTitle, content);
 
         menu.setAdapter(adapter);
+
         menu.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, final int childPosition, long id) {
 
+                if(i%2 != 0)
+                    clickPos1 = childPosition;
+                else
+                    clickPos2 = childPosition;
 
                 i++;
                 final String category = menuTitle.get(groupPosition);
@@ -63,7 +69,8 @@ public class menu_page extends Fragment {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if(i == 2){
+                        if(i == 2 && clickPos1 == clickPos2){
+                            System.out.println("YOU CLICKED THE SAME ITEM REMOVING!!");
                             MenuListData.removeItem(itemClicked, category);
                             refreshScreen();
                         }
@@ -71,6 +78,7 @@ public class menu_page extends Fragment {
                     }
                 }, 300);
 
+                //Handle last child
                 if (childPosition == content.get(category).size() - 1) {
                     showFoodItemDialog(v, category);
                 }
@@ -103,7 +111,7 @@ public class menu_page extends Fragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final double itemPrice = Double.parseDouble(price.getText().toString());
+                final String itemPrice = price.getText().toString();
                 final String itemName = name.getText().toString();
 
                 Food_Item food = new Food_Item(itemName, itemPrice);
