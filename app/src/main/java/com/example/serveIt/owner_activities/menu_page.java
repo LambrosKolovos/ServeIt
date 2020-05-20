@@ -1,5 +1,6 @@
 package com.example.serveIt.owner_activities;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.acl.Group;
@@ -33,7 +35,7 @@ public class menu_page extends Fragment {
 
     private LinkedHashMap<String, List<Food_Item>> content;
     private FloatingActionButton categoryBtn;
-    private Dialog categoryDialog, foodItemDialog;
+    private Dialog categoryDialog, foodItemDialog, deleteDialog;
     private int i = 0;
     private int clickPos1, clickPos2;
 
@@ -44,6 +46,8 @@ public class menu_page extends Fragment {
 
         categoryDialog = new Dialog(getContext());
         foodItemDialog = new Dialog(getContext());
+        deleteDialog = new Dialog(getContext());
+
         content = MenuListData.getData();
         categoryBtn = root.findViewById(R.id.category_btn);
 
@@ -97,10 +101,8 @@ public class menu_page extends Fragment {
                 int itemType = ExpandableListView.getPackedPositionType(packedPosition);
                 int groupPosition = ExpandableListView.getPackedPositionGroup(packedPosition);
 
-                /*  if group item clicked */
                 if (itemType == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
-                    MenuListData.removeCategory(menuTitle.get(groupPosition));
-                    refreshScreen();
+                    showDeleteDialog(view, menuTitle.get(groupPosition));
                 }
 
                 return false;
@@ -118,7 +120,7 @@ public class menu_page extends Fragment {
         return root;
     }
 
-    public void showFoodItemDialog(View v, final String category){
+    private void showFoodItemDialog(View v, final String category){
         Button closeBtn, addBtn;
         final EditText name, price;
 
@@ -179,6 +181,37 @@ public class menu_page extends Fragment {
         });
 
         categoryDialog.show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void showDeleteDialog(View v, final String category){
+        Button closeBtn, addBtn;
+        final TextView deleteMessage;
+
+        deleteDialog.setContentView(R.layout.delete_popup);
+
+        deleteMessage = deleteDialog.findViewById(R.id.message);
+        addBtn = deleteDialog.findViewById(R.id.del_btn);
+        closeBtn = deleteDialog.findViewById(R.id.close_btn);
+
+        deleteMessage.setText("Are you sure you want to delete " + category + "?");
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MenuListData.removeCategory(category);
+                refreshScreen();
+                deleteDialog.dismiss();
+            }
+        });
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDialog.dismiss();;
+            }
+        });
+        deleteDialog.show();
     }
 
 
