@@ -46,7 +46,7 @@ public class ListAdapter extends BaseExpandableListAdapter {
     public View getChildView(final int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final String expandedListText = getChild(listPosition, expandedListPosition).getName();
-        final String expandedListPrice = getChild(listPosition, expandedListPosition).getPrice() + "$";
+        final String expandedListPrice = String.valueOf(getChild(listPosition, expandedListPosition).getPrice());
 
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context
@@ -95,10 +95,11 @@ public class ListAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.list_group, null);
         }
 
-        TextView listTitleTextView = (TextView) convertView
+        TextView headerTitle = (TextView) convertView
                 .findViewById(R.id.listTitle);
-        listTitleTextView.setTypeface(null, Typeface.BOLD);
-        listTitleTextView.setText(listTitle);
+        headerTitle.setTypeface(null, Typeface.BOLD);
+        headerTitle.setText(listTitle);
+
         return convertView;
     }
 

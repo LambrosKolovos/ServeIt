@@ -2,17 +2,21 @@ package com.example.serveIt;
 
 public class Food_Item {
     private String name;
-    private double price;
+    private String price;
+    private boolean addItem;
 
-    public Food_Item(String name, double price) {
+    public Food_Item(String name, String price) {
+        this.name = name;
+        double tempPrice = Double.parseDouble(price);
+        this.price = String.valueOf(tempPrice);
+        this.addItem = false;
+    }
+
+    public Food_Item(String name, String price, boolean addItem){
+        this.addItem = addItem;
         this.name = name;
         this.price = price;
     }
-
-    public Food_Item(String name) {
-        this.name = name;
-    }
-
 
     public String getName() {
         return name;
@@ -22,11 +26,11 @@ public class Food_Item {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
+    public String getPrice() {
+        if(addItem)
+            return price;
+        else
+            return price + "$";
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
 }
