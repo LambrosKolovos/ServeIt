@@ -43,8 +43,8 @@ public class owner_activity extends AppCompatActivity {
                         case R.id.staff:
                             selectedFragment = new manage_staff();
                             break;
-                        case R.id.stats:
-                            selectedFragment = new stats_page();
+                        case R.id.settings:
+                            selectedFragment = new settings();
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

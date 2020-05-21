@@ -14,7 +14,7 @@
         android:icon="@drawable/ic_people_black_24dp"
         android:title="Staff" />
     <item
-        android:id="@+id/stats"
-        android:icon="@drawable/ic_show_chart_black_24dp"
-        android:title="Stats" />
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="Settings" />
 </menu>
