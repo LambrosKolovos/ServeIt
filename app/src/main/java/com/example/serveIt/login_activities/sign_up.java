@@ -169,9 +169,8 @@ public class sign_up extends AppCompatActivity {
                                             Toast.makeText(sign_up.this, "Sign up successful", Toast.LENGTH_SHORT).show();
 
                                             if(user.getIsOwner()){
-                                                Store store = new Store(store_name.getText().toString());
+                                                Store store = new Store(store_text,mAuth.getCurrentUser().getUid());
                                                 database.getReference("Store")
-                                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                         .push()
                                                         .setValue(store);
                                                 finish();

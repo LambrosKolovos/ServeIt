@@ -38,6 +38,9 @@ public class menu_page extends Fragment {
     private Dialog categoryDialog, foodItemDialog, deleteDialog;
     private int i = 0;
     private int clickPos1, clickPos2;
+    private ExpandableListView menu;
+    private ExpandableListAdapter adapter;
+
 
     @Nullable
     @Override
@@ -51,9 +54,9 @@ public class menu_page extends Fragment {
         content = MenuListData.getData();
         categoryBtn = root.findViewById(R.id.category_btn);
 
-        final ExpandableListView menu = root.findViewById(R.id.expandableListView);
+        menu = root.findViewById(R.id.expandableListView);
         final List<String> menuTitle = new ArrayList<String>(content.keySet());
-        ExpandableListAdapter adapter = new ListAdapter(getContext(), menuTitle, content);
+        adapter = new ListAdapter(getContext(), menuTitle, content);
 
         menu.setAdapter(adapter);
 
@@ -108,7 +111,6 @@ public class menu_page extends Fragment {
                 return false;
             }
         });
-
 
         categoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override

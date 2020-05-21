@@ -7,9 +7,11 @@ public class Store {
     private ArrayList<Category> menu;
     private ArrayList<Table> tables;
     private String name;
+    private String ownerID;
 
-    public Store(String name) {
+    public Store(String name, String ownerID) {
         this.name = name;
+        this.ownerID = ownerID;
     }
 
     public ArrayList<User> getEmployees() {
@@ -42,5 +44,13 @@ public class Store {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getOwnerID() {
+        return ownerID;
+    }
+
+    public void setOwnerID(String ownerID) {
+        this.ownerID = ownerID;
     }
 }

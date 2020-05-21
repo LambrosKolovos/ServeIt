@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.example.serveIt.Food_Item;
@@ -93,6 +94,9 @@ public class ListAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_group, null);
+            ExpandableListView elv = (ExpandableListView) parent;
+            for(int i=0; i < getGroupCount(); i++)
+                elv.expandGroup(i);
         }
 
         TextView headerTitle = (TextView) convertView
