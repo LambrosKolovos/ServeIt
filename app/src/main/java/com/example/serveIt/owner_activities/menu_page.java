@@ -76,6 +76,7 @@ public class menu_page extends Fragment {
 
         menu.setAdapter(adapter);
 
+        loadData();
 
         menu.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -139,9 +140,8 @@ public class menu_page extends Fragment {
         return root;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+
+    public void loadData() {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
