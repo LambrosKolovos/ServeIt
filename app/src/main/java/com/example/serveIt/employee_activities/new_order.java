@@ -21,11 +21,20 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.serveIt.Food_Item;
 import com.example.serveIt.R;
 import com.example.serveIt.login_activities.home_screen;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 
 public class new_order extends Fragment {
@@ -33,6 +42,9 @@ public class new_order extends Fragment {
     private TableLayout orderLayout;
     private TextView priceView;
     private SearchView searchMenu;
+
+    private FirebaseDatabase database;
+    private DatabaseReference ref;
 
     @Nullable
     @Override
@@ -43,21 +55,19 @@ public class new_order extends Fragment {
         orderLayout = root.findViewById(R.id.order_display);
         priceView = root.findViewById(R.id.totalPrice);
 
-        searchMenu.onActionViewExpanded();
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference("Menu");
 
-        searchMenu.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),search.class));
             }
         });
 
-        makerOrder();
+       // makerOrder();
+        readMenu();
+
 
         return root;
     }
@@ -138,5 +148,11 @@ public class new_order extends Fragment {
 
         return  view;
     }
+
+    public void readMenu(){
+
+    }
+
+
 
 }

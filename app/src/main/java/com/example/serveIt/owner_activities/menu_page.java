@@ -55,6 +55,7 @@ public class menu_page extends Fragment {
 
     private FirebaseDatabase database;
     private DatabaseReference ref;
+    
     String storeID;
 
     @Nullable
