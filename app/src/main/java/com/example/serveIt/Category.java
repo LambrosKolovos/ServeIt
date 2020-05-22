@@ -11,6 +11,10 @@ public class Category {
         this.name = name;
     }
 
+    public Category(String name){
+        this.name = name;
+    }
+
     public Category(ArrayList<Food_Item> list){
         this.list = list;
     }

@@ -32,6 +32,12 @@ public class ListAdapter extends BaseExpandableListAdapter {
         this.expandableListDetail = expandableListDetail;
     }
 
+    public void setNewItems(List<String> expandableListTitle,HashMap<String, List<Food_Item>> expandableListDetail) {
+        this.expandableListTitle = expandableListTitle;
+        this.expandableListDetail = expandableListDetail;
+        notifyDataSetChanged();
+    }
+
     @Override
     public Food_Item getChild(int listPosition, int expandedListPosition) {
         return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))

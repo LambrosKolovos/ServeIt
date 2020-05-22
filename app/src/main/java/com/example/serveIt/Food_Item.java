@@ -8,9 +8,12 @@ public class Food_Item {
     public Food_Item(String name, String price) {
         this.name = name;
         double tempPrice = Double.parseDouble(price);
-        this.price = String.valueOf(tempPrice);
+        this.price = tempPrice + "$";
         this.addItem = false;
     }
+
+    public Food_Item(){}
+
 
     public Food_Item(String name, String price, boolean addItem){
         this.addItem = addItem;
@@ -27,10 +30,12 @@ public class Food_Item {
     }
 
     public String getPrice() {
-        if(addItem)
             return price;
-        else
-            return price + "$";
     }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
 
 }

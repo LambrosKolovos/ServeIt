@@ -2,12 +2,21 @@ package com.example.serveIt.owner_activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.example.serveIt.Food_Item;
 import com.example.serveIt.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -29,18 +38,24 @@ import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class menu_page extends Fragment {
 
 
     private LinkedHashMap<String, List<Food_Item>> content;
+    private List<String> menuTitle;
     private FloatingActionButton categoryBtn;
     private Dialog categoryDialog, foodItemDialog, deleteDialog;
     private int i = 0;
     private int clickPos1, clickPos2;
     private ExpandableListView menu;
-    private ExpandableListAdapter adapter;
+    private ListAdapter adapter;
 
+    private FirebaseDatabase database;
+    private DatabaseReference ref;
+    String storeID;
 
     @Nullable
     @Override
@@ -55,10 +70,12 @@ public class menu_page extends Fragment {
         categoryBtn = root.findViewById(R.id.category_btn);
 
         menu = root.findViewById(R.id.expandableListView);
-        final List<String> menuTitle = new ArrayList<String>(content.keySet());
+        menuTitle = new ArrayList<>(content.keySet());
         adapter = new ListAdapter(getContext(), menuTitle, content);
 
+
         menu.setAdapter(adapter);
+
 
         menu.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -78,7 +95,7 @@ public class menu_page extends Fragment {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if(i == 2 && clickPos1 == clickPos2){
+                        if(i == 2 && clickPos1 == clickPos2 && !(childPosition == content.get(category).size() - 1)){
                             System.out.println("YOU CLICKED THE SAME ITEM REMOVING!!");
                             MenuListData.removeItem(itemClicked, category);
                             refreshScreen();
@@ -120,6 +137,74 @@ public class menu_page extends Fragment {
         });
 
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference("Store");
+        ref.orderByChild("ownerID").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                storeID = null;
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    storeID = data.getKey();
+                    System.out.println(storeID);
+                }
+
+                if(storeID != null){
+                    final DatabaseReference ref = database.getReference("Menu");
+                    ref.child(storeID).orderByChild("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(final DataSnapshot data: dataSnapshot.getChildren()){
+                                if(adapter.isEmpty() ){
+                                    MenuListData.addCategory(data.getKey());
+                                    if(data.getKey() != null){
+                                        ref.child(storeID).child(data.getKey()).orderByChild("price").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for(DataSnapshot data1: dataSnapshot.getChildren()){
+                                                    if(!data1.getKey().equals("name")){
+                                                        Food_Item food_item = data1.getValue(Food_Item.class);
+                                                        MenuListData.addItem(food_item, data.getKey());
+                                                        refreshScreen();
+                                                    }
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+                                    refreshScreen();
+                                }
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            throw databaseError.toException();
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+
     }
 
     private void showFoodItemDialog(View v, final String category){

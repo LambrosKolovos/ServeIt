@@ -42,7 +42,7 @@ public class MenuListData {
                         FirebaseDatabase.getInstance().getReference("Menu")
                                 .child(storeID)
                                 .child(name)
-                                .setValue(new Category(new ArrayList<Food_Item>(),name));
+                                .setValue(new Category(name));
                     }
 
                 }
@@ -83,6 +83,7 @@ public class MenuListData {
         });
 
     }
+
 
     public static void addItem(Food_Item item, final String category){
         for (LinkedHashMap.Entry<String, List<Food_Item>> entry : categories.entrySet()) {
