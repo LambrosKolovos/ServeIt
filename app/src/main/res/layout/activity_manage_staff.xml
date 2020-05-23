@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
         <TableLayout
+            android:id="@+id/members_table"
             android:padding="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -75,28 +76,17 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="6">
 
                     <TextView
+                        android:paddingTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="John Doe"
                         android:textColor="@color/colorPrimary"
                         android:gravity="center_horizontal"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:layout_weight="6"/>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColor="@color/colorPrimary"
-                        android:text="Waiter"
-                        android:gravity="center_horizontal"
-                        android:textAlignment="center"/>
-                </LinearLayout>
 
                 <TextView
                     android:paddingTop="10dp"
@@ -279,8 +269,6 @@
                     tools:ignore="VectorDrawableCompat" />
 
             </TableRow>
-
-
 
         </TableLayout>
     </LinearLayout>

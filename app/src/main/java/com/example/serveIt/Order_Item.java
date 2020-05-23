@@ -1,7 +1,9 @@
 package com.example.serveIt;
 
 
-public class Order_Item {
+import java.io.Serializable;
+
+public class Order_Item implements Serializable {
     private Food_Item item;
     private int quantity;
     private String notes;

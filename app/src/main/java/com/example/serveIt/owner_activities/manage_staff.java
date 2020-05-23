@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 
 import com.example.serveIt.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,6 +22,10 @@ public class manage_staff extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_manage_staff, container, false);
+        View root =  inflater.inflate(R.layout.activity_manage_staff, container, false);
+
+        return root;
     }
+
+
 }

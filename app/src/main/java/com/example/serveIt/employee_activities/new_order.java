@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import android.view.ViewGroup;
@@ -21,23 +20,15 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.serveIt.Food_Item;
+import com.example.serveIt.Order;
+import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
-import com.example.serveIt.login_activities.home_screen;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 
-public class new_order extends Fragment {
+
+public class new_order extends Fragment{
 
     private TableLayout orderLayout;
     private TextView priceView;
@@ -45,6 +36,8 @@ public class new_order extends Fragment {
 
     private FirebaseDatabase database;
     private DatabaseReference ref;
+
+    private Order order;
 
     @Nullable
     @Override
@@ -58,16 +51,27 @@ public class new_order extends Fragment {
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Menu");
 
+
+        Bundle b = getArguments();
+        if( b != null){
+            order = (Order) b.getSerializable("currentOrder");
+        }
+        else{
+            order = new Order();
+        }
+
+
         searchMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),search.class));
+                Intent intent = new Intent(getActivity(), search.class);
+                intent.putExtra("sampleOrder", order);
+                startActivity(intent);
             }
         });
 
-       // makerOrder();
 
-
+        makeOrder(order);
         return root;
     }
 
@@ -75,17 +79,11 @@ public class new_order extends Fragment {
         startActivity(new Intent(getActivity(), item_notes.class));
     }
 
-    public void makerOrder() {
-        int price = 0;
-        double foodcost = 6.00;
-        for(int i=1; i<150; i++){
-            price += i * foodcost;
-            TableRow item_row = build_row("Burger", Integer.toString(i), Double.toString(foodcost*i) + "$");
+    public void makeOrder(Order order) {
+        for(Order_Item x : order.getOrdered()){
+            TableRow item_row = build_row(x.getItem().getName(), "1",  x.getItem().getPrice());
             orderLayout.addView(item_row);
         }
-
-        String totalPrice = "Total: " + price + "$";
-        priceView.setText(totalPrice);
     }
 
 

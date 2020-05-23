@@ -21,7 +21,6 @@ public class employee_activity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         //I added this if statement to keep the selected fragment when rotating the device
         if (savedInstanceState == null) {
-
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new store_layout()).commit();
         }

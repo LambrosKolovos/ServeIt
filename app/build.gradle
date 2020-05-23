@@ -45,5 +45,4 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.3.1'
     implementation 'com.firebaseui:firebase-ui-database:6.2.1'
 
-
 }

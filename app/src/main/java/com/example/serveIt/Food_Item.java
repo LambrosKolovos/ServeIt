@@ -1,6 +1,8 @@
 package com.example.serveIt;
 
-public class Food_Item {
+import java.io.Serializable;
+
+public class Food_Item implements Serializable {
     private String name;
     private String price;
     private boolean addItem;
@@ -12,8 +14,9 @@ public class Food_Item {
         this.addItem = false;
     }
 
-    public Food_Item(){}
+    public Food_Item(){
 
+    }
 
     public Food_Item(String name, String price, boolean addItem){
         this.addItem = addItem;
@@ -30,7 +33,7 @@ public class Food_Item {
     }
 
     public String getPrice() {
-            return price;
+        return price;
     }
 
     public void setPrice(String price) {

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".employee_activities.search"></activity>
+        <activity android:name=".employee_activities.search"
+            android:parentActivityName=".employee_activities.employee_activity"/>
         <activity android:name=".owner_activities.owner_activity" />
         <activity android:name=".employee_activities.employee_activity" />
         <activity
