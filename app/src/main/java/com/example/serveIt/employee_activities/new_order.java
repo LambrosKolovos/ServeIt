@@ -66,7 +66,6 @@ public class new_order extends Fragment {
         });
 
        // makerOrder();
-        readMenu();
 
 
         return root;
@@ -148,11 +147,6 @@ public class new_order extends Fragment {
 
         return  view;
     }
-
-    public void readMenu(){
-
-    }
-
 
 
 }

@@ -107,6 +107,11 @@ public class MenuListData {
                                 .child(storeID)
                                 .child(category)
                                 .child(food_item.getName()).setValue(food_item);
+
+                        FirebaseDatabase.getInstance().getReference("Menu")
+                                .child(storeID)
+                                .child("ItemList")
+                                .child(food_item.getName()).setValue(food_item);
                     }
 
                 }
@@ -140,6 +145,11 @@ public class MenuListData {
                         FirebaseDatabase.getInstance().getReference("Menu")
                                 .child(storeID)
                                 .child(category)
+                                .child(item.getName()).removeValue();
+
+                        FirebaseDatabase.getInstance().getReference("Menu")
+                                .child(storeID)
+                                .child("ItemList")
                                 .child(item.getName()).removeValue();
                     }
 
