@@ -89,19 +89,14 @@ public class search extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(getApplicationContext(), employee_activity.class);
         Bundle b = new Bundle();
         b.putSerializable("currentOrder", currentOrder);
-        Fragment selectedFragment = null;
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                selectedFragment = new new_order();
-                selectedFragment.setArguments(b);
-                break;
-        }
-        setContentView(R.layout.activity_employee_activity);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                selectedFragment).commit();
+        intent.putExtras(b);
+
+        startActivity(intent);
         return true;
+
     }
 
     @Override
@@ -167,17 +162,29 @@ public class search extends AppCompatActivity {
             item_name.setText(item.getName());
             item_add.setText("+");
 
-           item_layout.setOnClickListener(new View.OnClickListener() {
+            item_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Order_Item orderItem = new Order_Item(item, 1, "");
-                    currentOrder.addItem(orderItem);
+                    if(!currentOrder.containsItem(item))
+                        currentOrder.addItem(item);
+                    else{
+                        currentOrder.getItem(item).incQuanity();
+                    }
                     Toast.makeText(ctx, "Added: " + item.getName(), Toast.LENGTH_SHORT).show();
                 }
             });
 
         }
+    }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), employee_activity.class);
+        Bundle b = new Bundle();
+        b.putSerializable("currentOrder", currentOrder);
+        intent.putExtras(b);
+
+        startActivity(intent);
     }
 }
 

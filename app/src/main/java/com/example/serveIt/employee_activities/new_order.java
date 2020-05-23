@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 
@@ -15,14 +16,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.serveIt.Food_Item;
 import com.example.serveIt.Order;
 import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,11 +38,13 @@ public class new_order extends Fragment{
 
     private TableLayout orderLayout;
     private TextView priceView;
-    private SearchView searchMenu;
+    private LinearLayout searchMenu;
+    private FloatingActionButton verifyFab;
 
     private FirebaseDatabase database;
     private DatabaseReference ref;
 
+    private Dialog verificationDialog;
     private Order order;
 
     @Nullable
@@ -51,6 +59,15 @@ public class new_order extends Fragment{
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Menu");
 
+        verifyFab = root.findViewById(R.id.sendOrder);
+        verificationDialog = new Dialog(getContext());
+
+        verifyFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showVerification(v);
+            }
+        });
 
         Bundle b = getArguments();
         if( b != null){
@@ -75,15 +92,29 @@ public class new_order extends Fragment{
         return root;
     }
 
+    private void showVerification(View v){
+        Button addBtn, closeBtn;
+
+        addBtn = verificationDialog.findViewById(R.id.send_btn);
+        closeBtn = verificationDialog.findViewById(R.id.close_btn);
+
+        verificationDialog.setContentView(R.layout.verify_order);
+
+
+        verificationDialog.show();
+    }
+
     public void loadItemNotes(View view) {
         startActivity(new Intent(getActivity(), item_notes.class));
     }
 
     public void makeOrder(Order order) {
-        for(Order_Item x : order.getOrdered()){
-            TableRow item_row = build_row(x.getItem().getName(), "1",  x.getItem().getPrice());
+        for(Food_Item x : order.getOrdered()){
+            TableRow item_row = build_row(x.getName(), String.valueOf(x.getQuantity()),  (x.getPriceOrder()*x.getQuantity()) + "$");
             orderLayout.addView(item_row);
         }
+
+       refreshPriceView();
     }
 
 
@@ -121,6 +152,9 @@ public class new_order extends Fragment{
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String text = ((TextView) row.getChildAt(0)).getText().toString();
+                        order.removeItem(text);
+                        refreshPriceView();
                         orderLayout.removeView(row);
                     }
                 });
@@ -146,5 +180,8 @@ public class new_order extends Fragment{
         return  view;
     }
 
+    private void refreshPriceView(){
+        priceView.setText("Total: " + order.getTotal_price() + "$");
+    }
 
 }

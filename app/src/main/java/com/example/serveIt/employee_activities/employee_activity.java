@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class employee_activity extends AppCompatActivity {
 
+    Bundle b;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,9 +20,17 @@ public class employee_activity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        //I added this if statement to keep the selected fragment when rotating the device
-        if (savedInstanceState == null) {
+
+        b = getIntent().getExtras();
+        if( b != null){
+            bottomNav.setSelectedItemId(R.id.new_order);
+            Fragment selectedFragment = new new_order();
+            selectedFragment.setArguments(b);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    selectedFragment).commit();
+        }
+        else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new store_layout()).commit();
         }
     }
@@ -38,6 +47,7 @@ public class employee_activity extends AppCompatActivity {
                             break;
                         case R.id.new_order:
                             selectedFragment = new new_order();
+                            selectedFragment.setArguments(b);
                             break;
                         case R.id.active_orders:
                             selectedFragment = new active_order();

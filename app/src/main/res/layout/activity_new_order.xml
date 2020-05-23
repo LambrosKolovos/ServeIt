@@ -23,98 +23,109 @@
             android:paddingRight="25dp"
             android:paddingBottom="30dp">
 
-            <SearchView
-                android:id="@+id/searchMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/search_style"
-                android:queryBackground="@null"
-                android:queryHint="Add items"
-                android:textColorHint="@color/colorPrimaryDark"
-                android:theme="@style/SearchTheme">
+        <LinearLayout
+            android:id="@+id/searchMenu"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/search_style"
+            android:orientation="horizontal"
+            android:paddingLeft="25dp"
+            android:paddingTop="10dp"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:theme="@style/SearchTheme">
 
-            </SearchView>
-
-            <TableLayout
-                android:id="@+id/order_display"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="25dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="6"
-                        android:text="Item"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="center_horizontal"
-                        android:text="Quantity"
-                        android:textAlignment="center"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="center_horizontal"
-                        android:text="Price"
-                        android:textAlignment="center"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
-
-
-                </TableRow>
-
-
-            </TableLayout>
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorPrimary" />
-
-            <TextView
-                android:id="@+id/totalPrice"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginRight="40dp"
-                android:text="Total: 19.50$"
-                android:textSize="20sp" />
+                android:background="@drawable/ic_search_black_24dp" />
 
-
-            <Button
-                android:layout_marginTop="40dp"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:background="@color/colorPrimary"
-                android:textColor="#ffffff"
-                android:text="Send Order" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:paddingTop="2dp"
+                android:text="Search Items"
+                android:textColor="@color/colorPrimary" />
 
         </LinearLayout>
 
+        <TableLayout
+            android:id="@+id/order_display"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="25dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:text="Item"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center_horizontal"
+                    android:text="Quantity"
+                    android:textAlignment="center"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center_horizontal"
+                    android:text="Price"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="16sp" />
+
+
+            </TableRow>
+
+
+        </TableLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/totalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginRight="40dp"
+            android:text="Total: 19.50$"
+            android:textSize="20sp" />
+        </LinearLayout>
+
     </ScrollView>
-
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/sendOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:src="@drawable/ic_check_black_24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        app:fabSize="mini"/>
 </LinearLayout>
