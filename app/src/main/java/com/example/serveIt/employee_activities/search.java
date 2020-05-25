@@ -162,11 +162,13 @@ public class search extends AppCompatActivity {
             item_name.setText(item.getName());
             item_add.setText("+");
 
+            final Order_Item order_item = new Order_Item(item, 1 , "");;
+
             item_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(!currentOrder.containsItem(item))
-                        currentOrder.addItem(item);
+                        currentOrder.addItem(order_item);
                     else{
                         currentOrder.getItem(item).incQuanity();
                     }

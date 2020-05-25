@@ -39,10 +39,16 @@ public class MenuListData {
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     String storeID = data.getKey();
                     if(storeID != null){
-                        FirebaseDatabase.getInstance().getReference("Menu")
-                                .child(storeID)
-                                .child(name)
-                                .setValue(new Category(name));
+                        for(DataSnapshot category: data.getChildren()){
+                            if(category!= null && category.hasChild(name)){
+                                FirebaseDatabase.getInstance().getReference("Menu")
+                                        .child(storeID)
+                                        .child(name)
+                                        .setValue(new Category(name));
+                            }
+
+                        }
+
                     }
 
                 }
