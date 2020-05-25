@@ -10,8 +10,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
+import com.example.serveIt.Food_Item;
+import com.example.serveIt.Order;
 import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
 import com.google.firebase.database.DataSnapshot;
@@ -22,10 +25,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Set;
 
 public class active_order extends Fragment {
@@ -35,7 +40,10 @@ public class active_order extends Fragment {
     private DatabaseReference database;
 
     private ArrayList<Order_Item> list_items;
+    private List<String> orderIDs;
     private OrderAdapter orderAdapter;
+    private Button prevBtn,nextBtn;
+    private int orderNumber;
 
 
     @Nullable
@@ -44,38 +52,95 @@ public class active_order extends Fragment {
         View root = inflater.inflate(R.layout.activity_active_order, container, false);
 
         order_list = root.findViewById(R.id.order_list);
+        nextBtn = root.findViewById(R.id.next_btn);
 
         database = FirebaseDatabase.getInstance().getReference("Order");
         order_list.setLayoutManager(new LinearLayoutManager(getContext()));
         list_items = new ArrayList<>();
+        orderIDs = new ArrayList<>();
         orderAdapter = new OrderAdapter(list_items);
-
+        orderNumber = 0;
 
         order_list.setAdapter(orderAdapter);
 
-        Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").orderByChild("quantity");
-        firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
+        readData(new FirebaseCallback() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               list_items.clear();
-              //  System.out.println("TRIGGERED");
-              //  orderAdapter.notifyDataSetChanged();
-                for(DataSnapshot order: dataSnapshot.getChildren()){
-                  //  if(order_list.getChildCount() == 0) {
-                       // System.out.println(order.getKey());
-                        for(DataSnapshot order_items: order.getChildren()){
-                            //System.out.println(order_items.getKey());
+            public void onCallback(List<String> list) {
+                System.out.println(list.toString());
+            }
+        });
 
+        prevBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                order_list.removeAllViews();
+                list_items.clear();
+                orderAdapter = new OrderAdapter(list_items);
+                Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber));
+                firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot order_items: dataSnapshot.getChildren()){
+                            //System.out.println(order_items.getKey());
                             Order_Item items = order_items.getValue(Order_Item.class);
                             if(items != null ){
                                 list_items.add(items);
                             }
 
                         }
-                 //   }
+                        order_list.setAdapter(orderAdapter);
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                if(orderNumber < orderIDs.size() - 1 )
+                    orderNumber++;
+                else
+                    orderNumber = 0;
+            }
+        });
+
+        return root;
+    }
+
+    private void readData(final FirebaseCallback firebaseCallback){
+        Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj");
+        firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list_items.clear();
+                //  System.out.println("TRIGGERED");
+                //  orderAdapter.notifyDataSetChanged();
+                for(DataSnapshot order: dataSnapshot.getChildren()){
+                    //  if(order_list.getChildCount() == 0) {
+                    //System.out.println(order.getKey());
+                    orderIDs.add(order.getKey());
+                    for(DataSnapshot order_items: order.getChildren()){
+                        //System.out.println(order_items.getKey());
+                        Order_Item items = order_items.getValue(Order_Item.class);
+                        if(items != null ){
+                            list_items.add(items);
+                        }
+
+                    }
+
+                    //   }
                 }
+                firebaseCallback.onCallback(orderIDs);
 
+                for(Order_Item x: list_items){
+                    System.out.println(x.getItem().getName());
+                }
                 Collections.sort(list_items, new QuantityComparator());
                 order_list.setAdapter(orderAdapter);
 
@@ -87,7 +152,6 @@ public class active_order extends Fragment {
             }
         });
 
-        return root;
     }
 
     @Override
@@ -106,5 +170,10 @@ public class active_order extends Fragment {
         public int compare(Order_Item o1, Order_Item o2) {
             return o2.getQuantity() - o1.getQuantity();
         }
+    }
+
+    private interface FirebaseCallback{
+
+        void onCallback(List<String> list);
     }
 }

@@ -37,8 +37,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
        Order_Item order_item = order_items.get(position);
 
-        holder.item_name.setText(order_item.getItem().getName());
-        holder.item_quantity.setText("x" + order_item.getQuantity() + "");
+      // if(!order_item.getItem().getName().equals("$last$")){
+           holder.item_name.setText(order_item.getItem().getName());
+           holder.item_quantity.setText("x" + order_item.getQuantity() + "");
+      // }
+
     }
 
     @Override
