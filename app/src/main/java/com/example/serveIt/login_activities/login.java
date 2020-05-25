@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
@@ -31,11 +33,9 @@ import com.google.firebase.database.ValueEventListener;
 public class login extends AppCompatActivity {
 
     FirebaseAuth mAuth;
-    //private FirebaseAuth.AuthStateListener mAuthState;
-
     EditText email, password;
     Button login_btn;
-    ProgressBar progressBar;
+    TextView register_view, alert;
 
     private DatabaseReference ref;
 
@@ -50,12 +50,21 @@ public class login extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         login_btn = findViewById(R.id.login_btn);
-        progressBar = findViewById(R.id.loading);
+        register_view = findViewById(R.id.register_message);
+        alert = findViewById(R.id.inputCheck);
+
+        register_view.setPaintFlags(register_view.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        register_view.setText("Don't have an account? Sign up here!");
+
+        register_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), sign_up.class));
+            }
+        });
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            progressBar.setVisibility(View.VISIBLE);
-
 
             DatabaseReference user = ref.child("Users").child(currentUser.getUid()).child("isOwner");
             user.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -65,12 +74,10 @@ public class login extends AppCompatActivity {
 
                     if(isOwner != null){
                         if(isOwner){
-                            progressBar.setVisibility(View.GONE);
                             finish();
                             startActivity(new Intent(getApplicationContext(), owner_activity.class));
                         }
                         else{
-                            progressBar.setVisibility(View.GONE);
                             finish();
                             startActivity(new Intent(getApplicationContext(), employee_activity.class));
                         }
@@ -82,17 +89,13 @@ public class login extends AppCompatActivity {
 
                 }
             });
-
-        }else{
-            Toast.makeText(this, "Please login", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
         }
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        alert.setVisibility(View.INVISIBLE);
     }
 
     public void loginClick(View view){
@@ -100,22 +103,22 @@ public class login extends AppCompatActivity {
         String pass_text = password.getText().toString();
 
         if(email_text.isEmpty()){
-            email.setError("Please enter email");
+            alert.setVisibility(View.VISIBLE);
+            alert.setText("Email can't be empty!");
             email.requestFocus();
         }
         else if (pass_text.isEmpty()){
-            password.setError("Please enter password");
+            alert.setVisibility(View.VISIBLE);
+            alert.setText("Password can't be empty!");
             password.requestFocus();
         }
         else{
-            progressBar.setVisibility(View.VISIBLE);
-
             mAuth.signInWithEmailAndPassword(email_text,pass_text).addOnCompleteListener(login.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(!task.isSuccessful()){
-                        Toast.makeText(login.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
+                        alert.setVisibility(View.VISIBLE);
+                        alert.setText("Wrong credentials!");
                     }
                     else{
 
@@ -129,12 +132,10 @@ public class login extends AppCompatActivity {
 
                                 if(isOwner != null){
                                     if(isOwner){
-                                        progressBar.setVisibility(View.GONE);
                                         finish();
                                         startActivity(new Intent(getApplicationContext(), owner_activity.class));
                                     }
                                     else{
-                                        progressBar.setVisibility(View.GONE);
                                         finish();
                                         startActivity(new Intent(getApplicationContext(), employee_activity.class));
                                     }
@@ -146,10 +147,6 @@ public class login extends AppCompatActivity {
 
                             }
                         });
-
-
-                        Toast.makeText(login.this, "Login successful", Toast.LENGTH_SHORT).show();
-
                     }
                 }
             });

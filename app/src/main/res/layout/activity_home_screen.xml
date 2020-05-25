@@ -7,10 +7,12 @@
     tools:context="com.example.serveIt.login_activities.home_screen">
 
     <LinearLayout
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginBottom="100dp">
 
         <Button
             android:id="@+id/login"
@@ -26,19 +28,6 @@
             android:layout_marginBottom="10dp"
             android:text="Register" />
 
-        <Button
-            android:id="@+id/owner_btn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Login Owner" />
-
-        <Button
-            android:id="@+id/login_btn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Login Employee" />
     </LinearLayout>
 
 </RelativeLayout>

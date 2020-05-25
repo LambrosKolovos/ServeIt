@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.serveIt.R;
 import com.example.serveIt.employee_activities.employee_activity;
@@ -15,31 +18,14 @@ import com.example.serveIt.owner_activities.owner_activity;
 
 public class home_screen extends AppCompatActivity {
 
-    Button login;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        login = findViewById(R.id.login);
-        Button loginBtn = findViewById(R.id.login_btn);
-        Button login_ownerBtn = findViewById(R.id.owner_btn);
+        Button login = findViewById(R.id.login);
         Button register_btn = findViewById(R.id.register_btn);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), employee_activity.class));
-            }
-        });
-
-        login_ownerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), owner_activity.class));
-            }
-        });
 
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
