@@ -7,12 +7,19 @@ public class Order_Item implements Serializable {
     private Food_Item item;
     private int quantity;
     private String notes;
+    private double price;
 
 
     public Order_Item(Food_Item item, int quantity, String notes) {
         this.item = item;
         this.quantity = quantity;
         this.notes = notes;
+        this.price = Double.parseDouble(item.getPrice());
+
+    }
+
+    public Order_Item(){
+
     }
 
     public Food_Item getItem() {
@@ -27,6 +34,14 @@ public class Order_Item implements Serializable {
         return quantity;
     }
 
+    public void incQuanity() {
+        this.quantity++;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
@@ -38,4 +53,6 @@ public class Order_Item implements Serializable {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+
 }

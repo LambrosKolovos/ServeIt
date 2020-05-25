@@ -162,7 +162,7 @@ public class menu_page extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(final DataSnapshot data: dataSnapshot.getChildren()){
-                                if(adapter.isEmpty() ){
+                                if(adapter.isEmpty() && !data.getKey().equals("ItemList")){
                                     MenuListData.addCategory(data.getKey());
                                     if(data.getKey() != null){
                                         ref.child(storeID).child(data.getKey()).orderByChild("price").addListenerForSingleValueEvent(new ValueEventListener() {

@@ -43,6 +43,7 @@ public class new_order extends Fragment{
 
     private FirebaseDatabase database;
     private DatabaseReference ref;
+    private DatabaseReference orderRef;
 
     private Dialog verificationDialog;
     private Order order;
@@ -58,6 +59,7 @@ public class new_order extends Fragment{
 
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Menu");
+        orderRef = database.getReference("Order");
 
         verifyFab = root.findViewById(R.id.sendOrder);
         verificationDialog = new Dialog(getContext());
@@ -95,10 +97,31 @@ public class new_order extends Fragment{
     private void showVerification(View v){
         Button addBtn, closeBtn;
 
+        verificationDialog.setContentView(R.layout.verify_order);
+
         addBtn = verificationDialog.findViewById(R.id.send_btn);
         closeBtn = verificationDialog.findViewById(R.id.close_btn);
 
-        verificationDialog.setContentView(R.layout.verify_order);
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    orderRef.child("-M7sKK7wobW-3QAIbUvj")
+                            .push()
+                            .setValue(order.getOrdered());
+
+                    verificationDialog.dismiss();
+            }
+
+        });
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verificationDialog.dismiss();
+            }
+        });
+
 
 
         verificationDialog.show();
@@ -109,8 +132,8 @@ public class new_order extends Fragment{
     }
 
     public void makeOrder(Order order) {
-        for(Food_Item x : order.getOrdered()){
-            TableRow item_row = build_row(x.getName(), String.valueOf(x.getQuantity()),  (x.getPriceOrder()*x.getQuantity()) + "$");
+        for(Order_Item x : order.getOrdered()){
+            TableRow item_row = build_row(x.getItem().getName(), String.valueOf(x.getQuantity()),  (x.getPrice()*x.getQuantity()) + "€");
             orderLayout.addView(item_row);
         }
 
@@ -181,7 +204,7 @@ public class new_order extends Fragment{
     }
 
     private void refreshPriceView(){
-        priceView.setText("Total: " + order.getTotal_price() + "$");
+        priceView.setText("Total: " + order.getTotal_price() + "€");
     }
 
 }
