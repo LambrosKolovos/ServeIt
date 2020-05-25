@@ -53,6 +53,7 @@ public class active_order extends Fragment {
 
         order_list = root.findViewById(R.id.order_list);
         nextBtn = root.findViewById(R.id.next_btn);
+        prevBtn = root.findViewById(R.id.prev_btn);
 
         database = FirebaseDatabase.getInstance().getReference("Order");
         order_list.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -73,16 +74,15 @@ public class active_order extends Fragment {
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-        });
-
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 order_list.removeAllViews();
                 list_items.clear();
                 orderAdapter = new OrderAdapter(list_items);
+
+                if(orderNumber > 0 )
+                    orderNumber--;
+                else
+                    orderNumber = orderIDs.size() - 1;
+
                 Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber));
                 firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -103,10 +103,42 @@ public class active_order extends Fragment {
 
                     }
                 });
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                order_list.removeAllViews();
+                list_items.clear();
+                orderAdapter = new OrderAdapter(list_items);
+
                 if(orderNumber < orderIDs.size() - 1 )
                     orderNumber++;
                 else
                     orderNumber = 0;
+
+                Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber));
+                firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot order_items: dataSnapshot.getChildren()){
+                            //System.out.println(order_items.getKey());
+                            Order_Item items = order_items.getValue(Order_Item.class);
+                            if(items != null ){
+                                list_items.add(items);
+                            }
+
+                        }
+                        order_list.setAdapter(orderAdapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
 
@@ -114,7 +146,7 @@ public class active_order extends Fragment {
     }
 
     private void readData(final FirebaseCallback firebaseCallback){
-        Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj");
+        final Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj");
         firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -125,17 +157,19 @@ public class active_order extends Fragment {
                     //  if(order_list.getChildCount() == 0) {
                     //System.out.println(order.getKey());
                     orderIDs.add(order.getKey());
+
                     for(DataSnapshot order_items: order.getChildren()){
                         //System.out.println(order_items.getKey());
                         Order_Item items = order_items.getValue(Order_Item.class);
                         if(items != null ){
                             list_items.add(items);
                         }
-
+                        break;
                     }
 
                     //   }
                 }
+
                 firebaseCallback.onCallback(orderIDs);
 
                 for(Order_Item x: list_items){
