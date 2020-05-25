@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -18,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
@@ -38,11 +40,11 @@ public class sign_up extends AppCompatActivity {
     RelativeLayout login_container;
     Button signUp_btn;
     EditText name, email, password;
-    ProgressBar pb;
     private FirebaseAuth mAuth;
     FirebaseDatabase database;
     Switch owner_switch;
     EditText store_name;
+    TextView login_view, alert;
 
     private boolean isOwner;
 
@@ -61,9 +63,21 @@ public class sign_up extends AppCompatActivity {
         password = findViewById(R.id.password);
         owner_switch = findViewById(R.id.owner_switch);
         store_name = findViewById(R.id.store_name);
+        alert = findViewById(R.id.inputCheck);
+        login_view = findViewById(R.id.login_message);
 
-        pb = findViewById(R.id.progressbar);
-        pb.setVisibility(View.GONE);
+
+        alert.setVisibility(View.INVISIBLE);
+
+        login_view.setPaintFlags(login_view.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        login_view.setText("Already a member? Login here!");
+        login_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), login.class));
+            }
+        });
+
 
         owner_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -125,23 +139,26 @@ public class sign_up extends AppCompatActivity {
                 final String store_text = store_name.getText().toString();
 
                 if(name_text.isEmpty()){
-                    name.setError("Please enter full name");
+                    alert.setVisibility(View.VISIBLE);
+                    alert.setText("Please enter full name.");
                     name.requestFocus();
                 }
                 else if(email_text.isEmpty()){
-                    email.setError("Please enter email");
+                    alert.setVisibility(View.VISIBLE);
+                    alert.setText("Please enter your email.");
                     email.requestFocus();
                 }
                 else if (pass_text.isEmpty()){
-                    password.setError("Please enter password");
+                    alert.setVisibility(View.VISIBLE);
+                    alert.setText("Please enter a password.");
                     password.requestFocus();
                 }
                 else if( isOwner && store_text.isEmpty()){
-                    store_name.setError("Please enter store name");
+                    alert.setVisibility(View.INVISIBLE);
+                    alert.setText("Please enter business name.");
                     store_name.requestFocus();
                 }
                 else{
-                    pb.setVisibility(View.VISIBLE);
                     login_container.setBackgroundColor(Color.parseColor("#dddddd"));
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -163,10 +180,8 @@ public class sign_up extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
 
                                         if(task.isSuccessful()){
-                                            pb.setVisibility(View.GONE);
                                             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                             login_container.setBackgroundColor(Color.WHITE);
-                                            Toast.makeText(sign_up.this, "Sign up successful", Toast.LENGTH_SHORT).show();
 
                                             if(user.getIsOwner()){
                                                 Store store = new Store(store_text,mAuth.getCurrentUser().getUid());
@@ -189,8 +204,9 @@ public class sign_up extends AppCompatActivity {
                                 });
                             }
                             else{
-                                Toast.makeText(sign_up.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                pb.setVisibility(View.GONE);
+                                alert.setVisibility(View.VISIBLE);
+                                alert.setText("Enter a valid email!");
+
                                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 login_container.setBackgroundColor(Color.WHITE);
                             }
