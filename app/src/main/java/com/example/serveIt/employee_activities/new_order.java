@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -32,6 +33,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
 
 
 public class new_order extends Fragment{
@@ -44,6 +46,7 @@ public class new_order extends Fragment{
     private FirebaseDatabase database;
     private DatabaseReference ref;
     private DatabaseReference orderRef;
+    private Bundle b;
 
     private Dialog verificationDialog;
     private Order order;
@@ -71,7 +74,7 @@ public class new_order extends Fragment{
             }
         });
 
-        Bundle b = getArguments();
+        b = getArguments();
         if( b != null){
             order = (Order) b.getSerializable("currentOrder");
         }
@@ -111,6 +114,13 @@ public class new_order extends Fragment{
                             .setValue(order.getOrdered());
 
                     verificationDialog.dismiss();
+
+                    if(order.getOrdered().size() != 0)
+                        Toast.makeText(getContext(), "Order successfully sent!", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getContext(), "Can't send empty order", Toast.LENGTH_SHORT).show();
+
+                    clearOrderView();
             }
 
         });
@@ -125,6 +135,13 @@ public class new_order extends Fragment{
 
 
         verificationDialog.show();
+    }
+
+    public void clearOrderView(){
+        order.removeAll();
+        orderLayout.removeAllViews();
+        refreshPriceView();
+        orderLayout.addView(build_header());
     }
 
     public void loadItemNotes(View view) {
@@ -165,6 +182,35 @@ public class new_order extends Fragment{
         return row;
     }
 
+    public TableRow build_header(){
+        int padding_in_dp = 25;
+        final float scale = getResources().getDisplayMetrics().density;
+        int padd_bottom = (int) (padding_in_dp * scale + 0.5f);
+
+        TableRow header = new TableRow(getContext());
+
+        TextView item = new TextView(getContext());
+        TextView quantity = new TextView(getContext());
+        TextView price = new TextView(getContext());
+
+        item.setText("Item");
+        item.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 6));
+
+        quantity.setText("Quantity");
+        quantity.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 3));
+
+        price.setText("Price");
+        price.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 3));
+
+        header.addView(item);
+        header.addView(quantity);
+        header.addView(price);
+
+        header.setPadding(0,0,0, padd_bottom);
+        return header;
+
+    }
+
     public TextView build_view(String name, int weight, boolean center, boolean clickable, final TableRow row){
         TextView view = new TextView(getContext());
         view.setText(name);
@@ -203,8 +249,7 @@ public class new_order extends Fragment{
         return  view;
     }
 
-    private void refreshPriceView(){
+    private void refreshPriceView() {
         priceView.setText("Total: " + order.getTotal_price() + "€");
     }
-
 }

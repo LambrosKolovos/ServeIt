@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_weight="8"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
 
@@ -34,11 +34,23 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary">
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/table_id"
+                    android:paddingTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="TABLE X"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/order_list"
+                    android:layout_marginTop="40dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </androidx.cardview.widget.CardView>
@@ -54,19 +66,26 @@
 
         </LinearLayout>
 
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Order is ready!"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="60dp"
+            android:textSize="14sp"
+            android:textColor="#00ff00"/>
+
         <Button
-            android:id="@+id/button"
-            android:layout_width="121dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="100dp"
-            android:layout_weight="1"
-            android:background="#269ffb"
-            android:text="DONE"
-            android:textColor="#ffffff" />
-
-
+            android:text="Ready!"
+            android:background="@drawable/input_style"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="40dp"/>
     </LinearLayout>
 
 

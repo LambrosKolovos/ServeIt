@@ -14,21 +14,27 @@
         android:paddingBottom="10dp">
 
         <TextView
+            android:id="@+id/item_quantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="1x"
+            android:layout_weight="1"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:gravity="end"
+            android:layout_marginRight="20dp" />
+
+        <TextView
             android:id="@+id/item_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:layout_weight="1"
+            android:layout_weight="2"
+            android:text="Item"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/item_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20sp"/>
+
     </LinearLayout>
 
 </RelativeLayout>

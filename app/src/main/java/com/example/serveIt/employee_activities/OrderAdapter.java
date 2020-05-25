@@ -39,7 +39,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
       // if(!order_item.getItem().getName().equals("$last$")){
            holder.item_name.setText(order_item.getItem().getName());
-           holder.item_quantity.setText("x" + order_item.getQuantity() + "");
+           holder.item_quantity.setText(order_item.getQuantity() + "x");
       // }
 
     }

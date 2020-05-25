@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.example.serveIt.Food_Item;
@@ -39,6 +41,7 @@ public class active_order extends Fragment {
     private RecyclerView order_list;
     private DatabaseReference database;
 
+    private TextView tableId;
     private ArrayList<Order_Item> list_items;
     private List<String> orderIDs;
     private OrderAdapter orderAdapter;
@@ -52,6 +55,7 @@ public class active_order extends Fragment {
         View root = inflater.inflate(R.layout.activity_active_order, container, false);
 
         order_list = root.findViewById(R.id.order_list);
+        tableId = root.findViewById(R.id.table_id);
         nextBtn = root.findViewById(R.id.next_btn);
         prevBtn = root.findViewById(R.id.prev_btn);
 
@@ -62,6 +66,8 @@ public class active_order extends Fragment {
         orderAdapter = new OrderAdapter(list_items);
         orderNumber = 0;
 
+        tableId.setPaintFlags(tableId.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        tableId.setText("Table: 3");
         order_list.setAdapter(orderAdapter);
 
         readData(new FirebaseCallback() {

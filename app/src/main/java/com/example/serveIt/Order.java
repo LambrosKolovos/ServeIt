@@ -48,6 +48,10 @@ public class Order implements Serializable {
         calculatePrice();
     }
 
+    public void removeAll(){
+        ordered.clear();
+    }
+
     private void calculatePrice(){
         total_price = 0;
         for(Order_Item x: ordered)

@@ -334,6 +334,7 @@ public class menu_page extends Fragment {
     private boolean inputIsCorrect(String x){
         return !x.isEmpty();
     }
+
     private void refreshScreen(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
