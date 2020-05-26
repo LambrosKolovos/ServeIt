@@ -8,12 +8,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.method.KeyListener;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +45,9 @@ public class settings extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthState;
     private FirebaseDatabase database;
     private DatabaseReference ref;
+
     TextView name;
-    TextView logout;
+    TableRow logout;
     String userID;
 
     @Nullable
@@ -48,8 +58,9 @@ public class settings extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        logout = root.findViewById(R.id.logoutView);
-        name = root.findViewById(R.id.name);
+        name = root.findViewById(R.id.name_view);
+        logout = root.findViewById(R.id.logout_row);
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,17 +77,5 @@ public class settings extends Fragment {
         return root;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        //load user credentials
-        FirebaseUser user = mAuth.getCurrentUser();
-        if(user != null){
-            userID = mAuth.getCurrentUser().getUid();
-            name.setText(mAuth.getCurrentUser().getEmail());
-        }
-
-    }
 
 }
