@@ -12,10 +12,6 @@ public class Table {
         return ID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     public String getStatus() {
         return status;
     }

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Store {
     private ArrayList<User> employees;
-    private ArrayList<Category> menu;
-    private ArrayList<Table> tables;
+    private ArrayList<Category> menu;    private ArrayList<Table> tables;
+
     private String name;
     private String ownerID;
 
