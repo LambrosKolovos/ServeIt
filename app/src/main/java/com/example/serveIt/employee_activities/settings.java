@@ -8,14 +8,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.method.KeyListener;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,19 +39,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.example.serveIt.*;
 import com.google.firebase.database.annotations.NotNull;
 
-import java.util.List;
-
 public class settings extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthState;
     private FirebaseDatabase database;
     private DatabaseReference ref;
-    TextView name;
-    TextView logout;
-    String userID;
 
-    private RelativeLayout layout;
+    TextView name;
+    TableRow logout;
+    String userID;
 
     @Nullable
     @Override
@@ -53,20 +57,9 @@ public class settings extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        ref = database.getReference("Users");
 
-        logout = root.findViewById(R.id.logoutView);
-        name = root.findViewById(R.id.name);
-        layout = root.findViewById(R.id.layout);
-        layout.setVisibility(View.INVISIBLE);
-
-        showName(new FirebaseCallback() {
-            @Override
-            public void onCallback(String list) {
-                name.setText(list);
-                layout.setVisibility(View.VISIBLE);
-            }
-        });
+        name = root.findViewById(R.id.name_view);
+        logout = root.findViewById(R.id.logout_row);
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -84,37 +77,5 @@ public class settings extends Fragment {
         return root;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-
-
-    }
-
-    private void showName(final FirebaseCallback firebaseCallback){
-        //load user credentials
-        FirebaseUser user = mAuth.getCurrentUser();
-        if(user != null){
-            userID = mAuth.getCurrentUser().getUid();
-            ref.child(userID).child("full_name")
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot username) {
-                            firebaseCallback.onCallback(username.getValue(String.class));
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-        }
-    }
-
-    private interface FirebaseCallback{
-
-        void onCallback(String list);
-    }
 
 }
