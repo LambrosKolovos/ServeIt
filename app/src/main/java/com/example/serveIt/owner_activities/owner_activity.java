@@ -24,7 +24,7 @@ public class owner_activity extends AppCompatActivity {
         if (savedInstanceState == null) {
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new store_layout()).commit();
+                    new build_layout()).commit();
         }
     }
 
