@@ -20,7 +20,8 @@
             android:layout_marginRight="50dp"
             android:text="TextView"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            />
 
         <TextView
             android:id="@+id/item_name"

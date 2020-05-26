@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,7 +32,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.order_list, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, parent.getContext());
     }
 
     @Override
@@ -51,16 +53,27 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         View itemView;
+        Context context;
 
         TextView item_name, item_quantity;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
 
             this.itemView = itemView;
+            this.context = context;
+
+
+            Animation a = AnimationUtils.loadAnimation(context, R.anim.slide_in_right);
 
             item_name = itemView.findViewById(R.id.item_name);
             item_quantity = itemView.findViewById(R.id.item_quantity);
+
+            item_name.clearAnimation();
+            item_quantity.clearAnimation();
+
+            item_name.startAnimation(a);
+            item_quantity.startAnimation(a);
         }
 
     }

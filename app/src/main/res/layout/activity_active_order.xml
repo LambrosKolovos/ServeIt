@@ -79,15 +79,34 @@
             android:textSize="14sp"
             android:textColor="#00ff00"/>
 
-        <Button
-            android:id="@+id/readyBtn"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Ready!"
-            android:background="@drawable/input_style"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginBottom="40dp"/>
+            android:layout_marginBottom="40dp">
+            <Button
+                android:id="@+id/readyBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Ready!"
+                android:background="@drawable/input_style"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginRight="50dp"
+              />
+
+            <Button
+                android:id="@+id/deleteBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Delete"
+                android:background="@drawable/input_style"
+                android:textColor="@color/colorPrimary"
+                />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 
