@@ -2,14 +2,14 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="250dp"
-    android:layout_height="150dp"
+    android:layout_height="180dp"
     android:background="#ffffff"
     android:padding="5dp"
     android:layout_gravity="center">
 
 
     <TextView
-        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/message"
         android:text="Proceed to send order?"
         android:layout_width="match_parent"
@@ -18,10 +18,26 @@
         android:textAlignment="center"
         android:gravity="center_horizontal" />
 
-    <LinearLayout
+    <EditText
+        android:paddingLeft="15dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_below="@+id/message"
+
+        android:layout_marginBottom="5dp"
+        android:id="@+id/tableField"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Table ID"
+        android:background="@drawable/input_style"
+        android:layout_below="@+id/message"/>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/tableField"
         android:id="@+id/button_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

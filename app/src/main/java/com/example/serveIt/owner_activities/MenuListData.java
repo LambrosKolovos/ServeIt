@@ -101,6 +101,7 @@ public class MenuListData {
         }
 
         final Food_Item food_item = item;
+        food_item.setCategory(category);
 
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseDatabase.getInstance().getReference("Store").orderByChild("ownerID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
