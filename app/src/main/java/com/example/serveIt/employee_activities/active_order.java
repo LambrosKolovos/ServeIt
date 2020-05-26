@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActionBar;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.example.serveIt.Food_Item;
 import com.example.serveIt.Order;
 import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,11 +43,11 @@ public class active_order extends Fragment {
     private RecyclerView order_list;
     private DatabaseReference database;
 
-    private TextView tableId;
+    private TextView tableId, ready_text;
     private ArrayList<Order_Item> list_items;
     private List<String> orderIDs;
     private OrderAdapter orderAdapter;
-    private Button prevBtn,nextBtn;
+    private Button prevBtn,nextBtn,readyBtn;
     private int orderNumber;
 
 
@@ -54,10 +56,14 @@ public class active_order extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.activity_active_order, container, false);
 
+
         order_list = root.findViewById(R.id.order_list);
         tableId = root.findViewById(R.id.table_id);
         nextBtn = root.findViewById(R.id.next_btn);
         prevBtn = root.findViewById(R.id.prev_btn);
+        readyBtn = root.findViewById(R.id.readyBtn);
+        ready_text = root.findViewById(R.id.ready_text);
+        ready_text.setVisibility(View.INVISIBLE);
 
         database = FirebaseDatabase.getInstance().getReference("Order");
         order_list.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -67,17 +73,84 @@ public class active_order extends Fragment {
         orderNumber = 0;
 
         tableId.setPaintFlags(tableId.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        tableId.setText("Table: 3");
         order_list.setAdapter(orderAdapter);
 
         readData(new FirebaseCallback() {
             @Override
             public void onCallback(List<String> list) {
                 System.out.println(list.toString());
+
+                orderNumber = list.size() - 1;
+                final Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child(list.get(list.size() - 1)).child("orderItems");
+                firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        list_items.clear();
+
+                        for(DataSnapshot order_items: dataSnapshot.getChildren()){
+                            //System.out.println(order_items.getKey());
+                            Order_Item items = order_items.getValue(Order_Item.class);
+                            if(items != null ){
+                                list_items.add(items);
+                            }
+
+                        }
+
+                     //   Collections.sort(list_items, new QuantityComparator());
+                        order_list.setAdapter(orderAdapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                tableID(orderNumber);
+                checkReady(orderNumber);
             }
         });
 
         prevBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                order_list.removeAllViews();
+                list_items.clear();
+                orderAdapter = new OrderAdapter(list_items);
+
+
+                if(orderNumber == orderIDs.size() - 1)
+                    orderNumber = 0;
+                else
+                    orderNumber++;
+
+                Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber)).child("orderItems");
+                firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot order_items: dataSnapshot.getChildren()){
+                            //System.out.println(order_items.getKey());
+                            Order_Item items = order_items.getValue(Order_Item.class);
+                            if(items != null ){
+                                list_items.add(items);
+                            }
+
+                        }
+                      //  Collections.sort(list_items, new QuantityComparator());
+                        order_list.setAdapter(orderAdapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                tableID(orderNumber);
+                checkReady(orderNumber);
+
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 order_list.removeAllViews();
@@ -89,7 +162,7 @@ public class active_order extends Fragment {
                 else
                     orderNumber = orderIDs.size() - 1;
 
-                Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber));
+                Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber)).child("orderItems");
                 firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -101,6 +174,7 @@ public class active_order extends Fragment {
                             }
 
                         }
+                       // Collections.sort(list_items, new QuantityComparator());
                         order_list.setAdapter(orderAdapter);
                     }
 
@@ -109,46 +183,35 @@ public class active_order extends Fragment {
 
                     }
                 });
+
+                tableID(orderNumber);
+                checkReady(orderNumber);
             }
         });
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
+        readyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order_list.removeAllViews();
-                list_items.clear();
-                orderAdapter = new OrderAdapter(list_items);
-
-                if(orderNumber < orderIDs.size() - 1 )
-                    orderNumber++;
-                else
-                    orderNumber = 0;
-
-                Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber));
-                firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot order_items: dataSnapshot.getChildren()){
-                            //System.out.println(order_items.getKey());
-                            Order_Item items = order_items.getValue(Order_Item.class);
-                            if(items != null ){
-                                list_items.add(items);
-                            }
-
-                        }
-                        order_list.setAdapter(orderAdapter);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
+               database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber)).child("ready").setValue(true);
             }
         });
 
         return root;
+    }
+
+    private void tableID(int orderNumber) {
+        database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber)).child("table")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot tableID) {
+                        tableId.setText("TABLE" + " " + tableID.getValue(String.class));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        throw databaseError.toException();
+                    }
+                });
     }
 
     private void readData(final FirebaseCallback firebaseCallback){
@@ -164,16 +227,6 @@ public class active_order extends Fragment {
                     //System.out.println(order.getKey());
                     orderIDs.add(order.getKey());
 
-                    for(DataSnapshot order_items: order.getChildren()){
-                        //System.out.println(order_items.getKey());
-                        Order_Item items = order_items.getValue(Order_Item.class);
-                        if(items != null ){
-                            list_items.add(items);
-                        }
-                        break;
-                    }
-
-                    //   }
                 }
 
                 firebaseCallback.onCallback(orderIDs);
@@ -181,7 +234,7 @@ public class active_order extends Fragment {
                 for(Order_Item x: list_items){
                     System.out.println(x.getItem().getName());
                 }
-                Collections.sort(list_items, new QuantityComparator());
+
                 order_list.setAdapter(orderAdapter);
 
             }
@@ -199,9 +252,28 @@ public class active_order extends Fragment {
         super.onStart();
     }
 
-    private void loadOrders(){
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
 
+    private void checkReady(int orderNumber){
 
+        database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber)).child("ready").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot readyValue) {
+                boolean value = readyValue.getValue(Boolean.class);
+                if (value)
+                    ready_text.setVisibility(View.VISIBLE);
+                else
+                    ready_text.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
     }
 
 

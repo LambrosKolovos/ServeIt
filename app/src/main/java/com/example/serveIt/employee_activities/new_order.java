@@ -18,6 +18,7 @@ import android.view.View;
 
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TableLayout;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.serveIt.Food_Item;
 import com.example.serveIt.Order;
+import com.example.serveIt.OrderDatabase;
 import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -99,19 +101,24 @@ public class new_order extends Fragment{
 
     private void showVerification(View v){
         Button addBtn, closeBtn;
+        final EditText tableField;
 
         verificationDialog.setContentView(R.layout.verify_order);
 
         addBtn = verificationDialog.findViewById(R.id.send_btn);
         closeBtn = verificationDialog.findViewById(R.id.close_btn);
+        tableField = verificationDialog.findViewById(R.id.tableField);
 
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                OrderDatabase orderDatabase = new OrderDatabase(order.getOrdered(), tableField.getText().toString());
+
                     orderRef.child("-M7sKK7wobW-3QAIbUvj")
                             .push()
-                            .setValue(order.getOrdered());
+                            .setValue(orderDatabase);
 
                     verificationDialog.dismiss();
 

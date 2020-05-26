@@ -38,6 +38,7 @@ public class Order implements Serializable {
         return false;
     }
 
+
     public void removeItem(String removeItem){
         for (Iterator<Order_Item> iterator = ordered.iterator(); iterator.hasNext(); ) {
             Order_Item value = iterator.next();

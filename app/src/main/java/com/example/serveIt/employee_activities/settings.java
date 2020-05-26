@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.example.serveIt.*;
 import com.google.firebase.database.annotations.NotNull;
 
+import java.util.List;
+
 public class settings extends Fragment {
 
     private FirebaseAuth mAuth;
@@ -40,6 +44,8 @@ public class settings extends Fragment {
     TextView logout;
     String userID;
 
+    private RelativeLayout layout;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,9 +53,21 @@ public class settings extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        ref = database.getReference("Users");
 
         logout = root.findViewById(R.id.logoutView);
         name = root.findViewById(R.id.name);
+        layout = root.findViewById(R.id.layout);
+        layout.setVisibility(View.INVISIBLE);
+
+        showName(new FirebaseCallback() {
+            @Override
+            public void onCallback(String list) {
+                name.setText(list);
+                layout.setVisibility(View.VISIBLE);
+            }
+        });
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,13 +88,33 @@ public class settings extends Fragment {
     public void onStart() {
         super.onStart();
 
+
+
+    }
+
+    private void showName(final FirebaseCallback firebaseCallback){
         //load user credentials
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null){
             userID = mAuth.getCurrentUser().getUid();
-            name.setText(mAuth.getCurrentUser().getEmail());
-        }
+            ref.child(userID).child("full_name")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot username) {
+                            firebaseCallback.onCallback(username.getValue(String.class));
+                        }
 
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+        }
+    }
+
+    private interface FirebaseCallback{
+
+        void onCallback(String list);
     }
 
 }

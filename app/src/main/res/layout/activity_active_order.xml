@@ -43,16 +43,17 @@
                     android:layout_height="40dp"
                     android:textStyle="bold"
                     android:textSize="20sp"
-                    android:text="TABLE X"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:text=""
+                    android:textColor="@color/colorPrimary"
                     android:textAlignment="center"
                     android:gravity="center_horizontal" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/order_list"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="60dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/notepad"/>
             </androidx.cardview.widget.CardView>
 
             <Button
@@ -67,7 +68,7 @@
         </LinearLayout>
 
         <TextView
-
+            android:id="@+id/ready_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Order is ready!"
@@ -79,6 +80,7 @@
             android:textColor="#00ff00"/>
 
         <Button
+            android:id="@+id/readyBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

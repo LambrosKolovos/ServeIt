@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layout"
     tools:context="com.example.serveIt.employee_activities.settings">
 
     <ScrollView
@@ -43,7 +44,6 @@
                     android:background="@color/backgroundColor"
                     android:gravity="center_horizontal"
                     android:paddingTop="15dp"
-                    android:text="John Doe"
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
