@@ -23,6 +23,11 @@ import com.example.serveIt.Table;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -30,8 +35,12 @@ public class build_layout extends Fragment {
 
     FloatingActionButton add_table;
     TableLayout table_view;
-    private int i=0 ,id = 0;
-    private ArrayList<Button> tablelist;
+    private int i=0 , id = 0;
+    private ArrayList<Table> tablelist;
+    private TableRow currentRow;
+
+    private FirebaseDatabase database;
+    private DatabaseReference table_ref;
 
     @Nullable
     @Override
@@ -40,28 +49,55 @@ public class build_layout extends Fragment {
 
         add_table = root.findViewById(R.id.table_btn);
         table_view = root.findViewById(R.id.table_view);
-        final TableRow[] currentRow = {new TableRow(getContext())};
+
+        currentRow = new TableRow(getContext());
         tablelist = new ArrayList<>();
+        database = FirebaseDatabase.getInstance();
+        table_ref = database.getReference("Table");
+
+       // loadFromDB();
 
         //Convert px to dp
         int padding = 10;
         final float scale = getResources().getDisplayMetrics().density;
         final int padd_bottom = (int) (padding * scale + 0.5f);
 
-        currentRow[0].setPadding(padd_bottom, padd_bottom, padd_bottom, padd_bottom);
+        currentRow.setPadding(padd_bottom, padd_bottom, padd_bottom, padd_bottom);
 
         add_table.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addTableView(id, currentRow[0]);
+                addTableView(id, currentRow);
                 id++;
                 if (id % 3  == 0) {
-                    currentRow[0] = new TableRow(getContext());
-                    currentRow[0].setPadding(padd_bottom, padd_bottom, padd_bottom, padd_bottom);
+                    currentRow = new TableRow(getContext());
+                    currentRow.setPadding(padd_bottom, padd_bottom, padd_bottom, padd_bottom);
                 }
             }
         });
         return root;
+    }
+
+    public void loadFromDB(){
+        table_ref.child("-M7sKK7wobW-3QAIbUvj").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    Table table = data.getValue(Table.class);
+                    addTableView(table.getID(), currentRow);
+                    if (table.getID() % 3  == 0) {
+                        currentRow = new TableRow(getContext());
+                        currentRow.setPadding(10, 10, 10, 10);
+                    }
+                    id = table.getID();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void addTableView(final int id, final TableRow row){
@@ -70,9 +106,10 @@ public class build_layout extends Fragment {
         final float scale = getResources().getDisplayMetrics().density;
         int  x = (int) (padding * scale + 0.5f);
 
-        final Button table = new Button(getContext());
+        final Button tableView = new Button(getContext());
+        final Table table = new Table(id+1, "AVAILABLE");
 
-        table.setOnClickListener(new View.OnClickListener() {
+        tableView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 i++;
@@ -82,7 +119,8 @@ public class build_layout extends Fragment {
                     public void run() {
                         if(i == 2){
                             tablelist.remove(table);
-                            row.removeView(table);
+                            row.removeView(tableView);
+                            deleteTableDB(String.valueOf(id+1));
                             Toast.makeText(getContext(), "Removing: " + (id+1), Toast.LENGTH_SHORT).show();
                         }
                         i = 0;
@@ -91,8 +129,8 @@ public class build_layout extends Fragment {
             }
         });
 
-        table.setText(String.valueOf(id+1));
-        table.setBackgroundResource(R.drawable.table_available);
+        tableView.setText(String.valueOf(id+1));
+        tableView.setBackgroundResource(R.drawable.table_available);
 
         TableRow.LayoutParams params = new TableRow.LayoutParams(
                 TableRow.LayoutParams.WRAP_CONTENT,
@@ -100,18 +138,33 @@ public class build_layout extends Fragment {
                 1
         );
         params.setMargins(x, 0, x, x);
-        table.setLayoutParams(params);
+        tableView.setLayoutParams(params);
 
         if( id % 3 == 0){
             table_view.addView(row);
-            row.addView(table);
+            row.addView(tableView);
 
         }
         else{
-            row.addView(table);
+            row.addView(tableView);
         }
 
         tablelist.add(table);
+        addTableToDB();
+    }
+
+    private void addTableToDB(){
+        table_ref.child("-M7sKK7wobW-3QAIbUvj")
+                .removeValue();
+
+        table_ref.child("-M7sKK7wobW-3QAIbUvj")
+                .setValue(tablelist);
+    }
+
+    private void deleteTableDB(String id){
+        table_ref.child("-M7sKK7wobW-3QAIbUvj")
+                .child(id)
+                .removeValue();
     }
 
 }
