@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,7 @@ public class settings extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference ref;
     TextView name;
-    TextView logout, stats;
+    TableRow logout;
     String userID;
 
     @Nullable
@@ -37,19 +38,9 @@ public class settings extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        logout = root.findViewById(R.id.logoutView);
+        logout = root.findViewById(R.id.logout_row);
         name = root.findViewById(R.id.name);
-        stats = root.findViewById(R.id.stats);
 
-        stats.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment stats= new stats_page();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, stats, "statsFragment")
-                        .commit();
-            }
-        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,19 +55,6 @@ public class settings extends Fragment {
         });
 
         return root;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        //load user credentials
-        FirebaseUser user = mAuth.getCurrentUser();
-        if(user != null){
-            userID = mAuth.getCurrentUser().getUid();
-            name.setText(mAuth.getCurrentUser().getEmail());
-        }
-
     }
 
 }
