@@ -178,21 +178,21 @@
                         android:src="@drawable/ic_mode_24dp" />
 
 
-                    <TextView
-                        android:paddingTop="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="Dark Mode"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:layout_weight="1"/>
+                        <TextView
+                            android:paddingTop="2dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="Dark Mode"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_weight="1"/>
 
-                    <Switch
-                        android:layout_gravity="right"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="25dp"
-                        android:paddingBottom="5dp"/>
+                        <Switch
+                            android:layout_gravity="right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:paddingBottom="5dp"/>
 
                 </TableRow>
 
