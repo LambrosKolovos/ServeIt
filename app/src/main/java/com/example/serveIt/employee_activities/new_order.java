@@ -45,6 +45,7 @@ public class new_order extends Fragment{
 
     private Dialog verificationDialog;
     private Order order;
+    private String storeID;
 
     @Nullable
     @Override
@@ -71,7 +72,12 @@ public class new_order extends Fragment{
 
         b = getArguments();
         if( b != null){
-            order = (Order) b.getSerializable("currentOrder");
+            if(b.getSerializable("storeID") != null){
+                storeID = (String) b.getSerializable("storeID");
+                order = new Order();
+            }
+            else
+                order = (Order) b.getSerializable("currentOrder");
         }
         else{
             order = new Order();

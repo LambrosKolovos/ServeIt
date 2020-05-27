@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.serveIt.R;
 import com.example.serveIt.*;
 import com.example.serveIt.employee_activities.employee_activity;
+import com.example.serveIt.employee_activities.search_store;
 import com.example.serveIt.employee_activities.settings;
 import com.example.serveIt.owner_activities.build_layout;
 import com.example.serveIt.owner_activities.owner_activity;
@@ -204,8 +205,10 @@ public class sign_up extends AppCompatActivity {
                                                 startActivity(new Intent(getApplicationContext(), owner_activity.class));
                                             }
                                             else{
+                                                Intent intent = new Intent(getApplicationContext(), employee_activity.class);
+                                                intent.putExtra("userLoggedIn", user);
+                                                startActivity(intent);
                                                 finish();
-                                                startActivity(new Intent(getApplicationContext(), employee_activity.class));
                                             }
 
                                         }

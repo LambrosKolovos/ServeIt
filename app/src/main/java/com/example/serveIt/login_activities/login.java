@@ -138,8 +138,8 @@ public class login extends AppCompatActivity {
                                         startActivity(new Intent(getApplicationContext(), owner_activity.class));
                                     }
                                     else{
-                                        finish();
                                         startActivity(new Intent(getApplicationContext(), employee_activity.class));
+                                        finish();
                                     }
                                 }
                             }

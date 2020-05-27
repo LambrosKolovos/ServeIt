@@ -1,8 +1,9 @@
 package com.example.serveIt;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Store {
+public class Store implements Serializable {
     private ArrayList<User> employees;
     private ArrayList<Category> menu;
     private ArrayList<Table> tables;

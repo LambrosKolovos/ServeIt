@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class employee_activity extends AppCompatActivity {
 
     Bundle b;
+    String storeID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +24,7 @@ public class employee_activity extends AppCompatActivity {
 
         b = getIntent().getExtras();
         if( b != null){
+            storeID = (String) b.getSerializable("storeID");
             bottomNav.setSelectedItemId(R.id.new_order);
             Fragment selectedFragment = new new_order();
             selectedFragment.setArguments(b);
@@ -44,6 +46,7 @@ public class employee_activity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.store:
                             selectedFragment = new store_layout();
+                            selectedFragment.setArguments(b);
                             break;
                         case R.id.new_order:
                             selectedFragment = new new_order();
@@ -51,9 +54,11 @@ public class employee_activity extends AppCompatActivity {
                             break;
                         case R.id.active_orders:
                             selectedFragment = new active_order();
+                            selectedFragment.setArguments(b);
                             break;
                         case R.id.settings:
                             selectedFragment = new settings();
+                            selectedFragment.setArguments(b);
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
