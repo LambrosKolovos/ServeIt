@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
 import android.text.Editable;
@@ -47,7 +49,8 @@ public class settings extends Fragment {
     private DatabaseReference ref;
 
     TextView name;
-    TableRow logout;
+    TableRow change_pass, leave, delete_acc, contact, help, logout;
+    Dialog alertDialog;
     String userID;
 
     @Nullable
@@ -58,9 +61,56 @@ public class settings extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
+        alertDialog = new Dialog(getContext());
+
         name = root.findViewById(R.id.name_view);
+        change_pass = root.findViewById(R.id.change_password_row);
+        leave = root.findViewById(R.id.leave_row);
+        delete_acc = root.findViewById(R.id.delete_row);
+        contact = root.findViewById(R.id.contact_row);
+        help = root.findViewById(R.id.help_row);
         logout = root.findViewById(R.id.logout_row);
 
+        addListeners();
+
+        return root;
+    }
+
+    private void addListeners(){
+        change_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        leave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlert(v, false);
+            }
+        });
+
+        delete_acc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlert(v, true);
+            }
+        });
+
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), contact_us.class));
+            }
+        });
+
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,8 +124,47 @@ public class settings extends Fragment {
             }
         });
 
-        return root;
     }
 
+    private void showAlert(View v, final boolean delete){
+        Button no_btn, yes_btn;
+        final TextView msg_view;
 
+        alertDialog.setContentView(R.layout.alert_popup);
+        msg_view = alertDialog.findViewById(R.id.message);
+        yes_btn = alertDialog.findViewById(R.id.del_btn);
+        no_btn = alertDialog.findViewById(R.id.close_btn);
+        msg_view.setTextSize(18);
+
+        if(delete){
+            msg_view.setTextColor(Color.parseColor("#ff0000"));
+            msg_view.setText("Delete this account?");
+        }
+        else{
+            yes_btn.setText("LEAVE");
+            msg_view.setText("Exit store?");
+        }
+
+
+        yes_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(delete){
+                    //HANDLE DELETE ACC
+                }
+                else{
+                    //HANDLE LEAVE STORE
+                }
+            }
+        });
+
+        no_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        alertDialog.show();
+    }
 }
