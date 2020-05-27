@@ -74,7 +74,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="15dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    android:id="@+id/change_password_row">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -92,6 +93,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/leave_row"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="15dp"
@@ -113,6 +115,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/delete_row"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="15dp"
@@ -197,6 +200,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/contact_row"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="15dp"
@@ -218,6 +222,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/help_row"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="15dp"

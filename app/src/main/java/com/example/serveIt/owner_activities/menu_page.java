@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 public class menu_page extends Fragment {
 
 
@@ -395,10 +396,6 @@ public class menu_page extends Fragment {
 
                         menuRef.child(storeID)
                                 .child(category)
-                                .child(item.getName()).removeValue();
-
-                        menuRef.child(storeID)
-                                .child("ItemList")
                                 .child(item.getName()).removeValue();
                     }
 
