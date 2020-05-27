@@ -32,7 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-public class search extends AppCompatActivity {
+public class search_food extends AppCompatActivity {
 
     private EditText search_bar;
     private RecyclerView resultList;

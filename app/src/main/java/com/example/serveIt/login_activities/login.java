@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.serveIt.R;
 import com.example.serveIt.employee_activities.employee_activity;
+import com.example.serveIt.employee_activities.search_store;
 import com.example.serveIt.owner_activities.build_layout;
 import com.example.serveIt.owner_activities.owner_activity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -80,7 +81,7 @@ public class login extends AppCompatActivity {
                         }
                         else{
                             finish();
-                            startActivity(new Intent(getApplicationContext(), employee_activity.class));
+                            startActivity(new Intent(getApplicationContext(), search_store.class));
                         }
                     }
                 }
