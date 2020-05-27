@@ -148,6 +148,7 @@ public class sign_up extends AppCompatActivity {
                 final String email_text = email.getText().toString();
                 final String pass_text = password.getText().toString();
                 final String store_text = store_name.getText().toString();
+                final String store_code = store_pass.getText().toString();
 
                 if(name_text.isEmpty()){
                     alert.setVisibility(View.VISIBLE);
@@ -195,7 +196,7 @@ public class sign_up extends AppCompatActivity {
                                             login_container.setBackgroundColor(Color.WHITE);
 
                                             if(user.getIsOwner()){
-                                                Store store = new Store(store_text,mAuth.getCurrentUser().getUid());
+                                                Store store = new Store(store_text,mAuth.getCurrentUser().getUid(), store_code);
                                                 database.getReference("Store")
                                                         .push()
                                                         .setValue(store);

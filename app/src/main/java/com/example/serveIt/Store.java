@@ -11,9 +11,14 @@ public class Store {
     private String ownerID;
     private String password;
 
-    public Store(String name, String ownerID) {
+    public Store(String name, String ownerID, String password) {
         this.name = name;
         this.ownerID = ownerID;
+        this.password = password;
+    }
+
+    public Store(){
+
     }
 
     public void setPassword(String password) {
