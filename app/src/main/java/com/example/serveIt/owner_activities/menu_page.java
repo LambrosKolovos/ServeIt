@@ -1,8 +1,6 @@
 package com.example.serveIt.owner_activities;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.example.serveIt.Food_Item;
@@ -23,23 +21,17 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class menu_page extends Fragment {
 
@@ -305,7 +297,7 @@ public class menu_page extends Fragment {
         Button closeBtn, addBtn;
         final TextView deleteMessage;
 
-        deleteDialog.setContentView(R.layout.delete_popup);
+        deleteDialog.setContentView(R.layout.alert_popup);
 
         deleteMessage = deleteDialog.findViewById(R.id.message);
         addBtn = deleteDialog.findViewById(R.id.del_btn);

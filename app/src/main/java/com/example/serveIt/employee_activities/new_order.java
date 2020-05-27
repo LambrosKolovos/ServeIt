@@ -2,11 +2,8 @@ package com.example.serveIt.employee_activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,13 +17,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.serveIt.Food_Item;
 import com.example.serveIt.Order;
 import com.example.serveIt.OrderDatabase;
 import com.example.serveIt.Order_Item;
@@ -34,8 +29,6 @@ import com.example.serveIt.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
 
 
 public class new_order extends Fragment{
@@ -88,7 +81,7 @@ public class new_order extends Fragment{
         searchMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), search.class);
+                Intent intent = new Intent(getActivity(), search_food.class);
                 intent.putExtra("sampleOrder", order);
                 startActivity(intent);
             }
