@@ -1,10 +1,17 @@
 package com.example.serveIt.owner_activities;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.icu.text.SymbolTable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.diegodobelo.expandingview.ExpandingItem;
+import com.diegodobelo.expandingview.ExpandingList;
+import com.example.serveIt.Category;
 import com.example.serveIt.Food_Item;
 import com.example.serveIt.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,6 +41,8 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -45,16 +54,15 @@ public class menu_page extends Fragment {
 
 
     private LinkedHashMap<String, List<Food_Item>> content;
-    private List<String> menuTitle;
+    private ArrayList<Food_Item> foodItems;
     private FloatingActionButton categoryBtn;
     private Dialog categoryDialog, foodItemDialog, deleteDialog;
     private int i = 0;
     private int clickPos1, clickPos2;
-    private ExpandableListView menu;
-    private ListAdapter adapter;
+    private ExpandingList menu;
 
     private FirebaseDatabase database;
-    private DatabaseReference ref;
+    private DatabaseReference ref, menuRef;
     
     String storeID;
 
@@ -67,69 +75,15 @@ public class menu_page extends Fragment {
         foodItemDialog = new Dialog(getContext());
         deleteDialog = new Dialog(getContext());
 
-        content = MenuListData.getData();
+        foodItems = new ArrayList<>();
         categoryBtn = root.findViewById(R.id.category_btn);
 
-        menu = root.findViewById(R.id.expandableListView);
-        menuTitle = new ArrayList<>(content.keySet());
-        adapter = new ListAdapter(getContext(), menuTitle, content);
+        menu = root.findViewById(R.id.expanding_list_main);
 
-
-        menu.setAdapter(adapter);
+        database = FirebaseDatabase.getInstance();
+        menuRef = database.getReference("Menu");
 
         loadData();
-
-        menu.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, final int childPosition, long id) {
-
-                if(i%2 != 0)
-                    clickPos1 = childPosition;
-                else
-                    clickPos2 = childPosition;
-
-                i++;
-                final String category = menuTitle.get(groupPosition);
-                final Food_Item itemClicked = content.get(menuTitle.get(groupPosition)).get(childPosition);
-
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(i == 2 && clickPos1 == clickPos2 && !(childPosition == content.get(category).size() - 1)){
-                            System.out.println("YOU CLICKED THE SAME ITEM REMOVING!!");
-                            MenuListData.removeItem(itemClicked, category);
-                            refreshScreen();
-                        }
-                        i = 0;
-                    }
-                }, 300);
-
-                //Handle last child
-                if (childPosition == content.get(category).size() - 1) {
-                    showFoodItemDialog(v, category);
-                }
-                return false;
-            }
-        });
-
-
-        menu.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                long packedPosition = menu.getExpandableListPosition(position);
-
-                int itemType = ExpandableListView.getPackedPositionType(packedPosition);
-                int groupPosition = ExpandableListView.getPackedPositionGroup(packedPosition);
-
-                if (itemType == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
-                    showDeleteDialog(view, menuTitle.get(groupPosition));
-                }
-
-                return false;
-            }
-        });
 
         categoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,7 +94,6 @@ public class menu_page extends Fragment {
 
         return root;
     }
-
 
     public void loadData() {
 
@@ -162,8 +115,9 @@ public class menu_page extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(final DataSnapshot data: dataSnapshot.getChildren()){
-                                if(adapter.isEmpty() && !data.getKey().equals("ItemList")){
-                                    MenuListData.addCategory(data.getKey());
+                                if(!data.getKey().equals("ItemList")){
+                                    //MenuListData.addCategory(data.getKey());
+                                    //addItem(data);
                                     if(data.getKey() != null){
                                         ref.child(storeID).child(data.getKey()).orderByChild("price").addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
@@ -171,11 +125,13 @@ public class menu_page extends Fragment {
                                                 for(DataSnapshot data1: dataSnapshot.getChildren()){
                                                     if(!data1.getKey().equals("name")){
                                                         Food_Item food_item = data1.getValue(Food_Item.class);
-                                                        MenuListData.addItem(food_item, data.getKey());
-                                                        refreshScreen();
+                                                        foodItems.add(food_item);
                                                     }
 
                                                 }
+
+                                                addItem(data.getKey(), foodItems);
+                                                foodItems.clear();
                                             }
 
                                             @Override
@@ -184,7 +140,6 @@ public class menu_page extends Fragment {
                                             }
                                         });
                                     }
-                                    refreshScreen();
                                 }
 
                             }
@@ -208,7 +163,121 @@ public class menu_page extends Fragment {
 
     }
 
-    private void showFoodItemDialog(View v, final String category){
+    private void createItems() {
+        ArrayList<String> list = new ArrayList<>();
+
+       // addItem("John", list);
+
+
+    }
+
+    private void addItem(final String title, ArrayList<Food_Item> subItems){
+        //Let's create an item with R.layout.expanding_layout
+        final ExpandingItem item = menu.createNewItem(R.layout.expanding_layout);
+
+        if(item != null){
+
+            item.setIndicatorColorRes(R.color.color);
+            item.setIndicatorIconRes(R.drawable.ic_restaurant_menu_black_24dp);
+
+            //It is possible to get any view inside the inflated layout. Let's set the text in the item
+            final TextView textView = item.findViewById(R.id.title);
+            textView.setText(title);
+
+
+            //We can create items in batch.
+            item.createSubItems(subItems.size());
+            for (int i =0; i < item.getSubItemsCount(); i++) {
+                //Let's get the created sub item by its index
+                View view = item.getSubItemView(i);
+
+                //Let's set some values in
+                configureSubItem(item, view, subItems.get(i));
+            }
+
+            item.findViewById(R.id.add_more_sub_items)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showFoodItemDialog(v ,title, new OnItemCreated() {
+                                @Override
+                                public void itemCreated(Food_Item food_item) {
+                                    View newSubItem = item.createSubItem();
+                                    assert newSubItem != null;
+                                    configureSubItem(item, newSubItem, food_item);
+                                }
+                            });
+                        }
+                    });
+
+
+            item.findViewById(R.id.remove_item).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    menu.removeItem(item);
+                    removeCategoryFromDatabase(textView.getText().toString());
+                }
+            });
+
+
+        }
+
+
+
+    }
+
+    private void configureSubItem(final ExpandingItem item, final View view, final Food_Item food_item) {
+        TextView title = view.findViewById(R.id.sub_title);
+        TextView price = view.findViewById(R.id.price);
+
+        title.setText(food_item.getName());
+        price.setText(food_item.getPrice());
+
+        view.findViewById(R.id.remove_sub_item)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        item.removeSubItem(view);
+                        removeItemFromDatabase(food_item.getCategory(), food_item);
+                    }
+                });
+    }
+
+    private void showCategoryDialog(View v){
+        Button closeBtn, addBtn;
+        final EditText categoryInput;
+        final TextView alert;
+
+        categoryDialog.setContentView(R.layout.category_popup);
+
+        categoryInput = categoryDialog.findViewById(R.id.categoryField);
+        alert = categoryDialog.findViewById(R.id.warning);
+        addBtn = categoryDialog.findViewById(R.id.add_category);
+        closeBtn = categoryDialog.findViewById(R.id.close_btn);
+
+        alert.setVisibility(View.INVISIBLE);
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String categoryName = categoryInput.getText().toString();
+                addItem(categoryName, new ArrayList<Food_Item>());
+                addCategoryToDatabase(categoryName);
+                categoryDialog.dismiss();
+            }
+        });
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                categoryDialog.dismiss();;
+            }
+        });
+
+        categoryDialog.show();
+    }
+
+    private void showFoodItemDialog(View v, final String category, final OnItemCreated positive){
         Button closeBtn, addBtn;
         final EditText name, price;
         final TextView alertName, alertPrice;
@@ -233,8 +302,8 @@ public class menu_page extends Fragment {
 
                 if(!itemPrice.isEmpty() && !itemName.isEmpty()){
                     Food_Item food = new Food_Item(itemName, itemPrice);
-                    MenuListData.addItem(food, category);
-                    refreshScreen();
+                    positive.itemCreated(food);
+                    addItemToDatabase(category, food);
                     foodItemDialog.dismiss();
                 }
                 else {
@@ -259,84 +328,116 @@ public class menu_page extends Fragment {
         foodItemDialog.show();
     }
 
-    private void showCategoryDialog(View v){
-        Button closeBtn, addBtn;
-        final EditText categoryInput;
-        final TextView alert;
+    private void addItemToDatabase(final String category, final Food_Item food_item){
 
-        categoryDialog.setContentView(R.layout.category_popup);
+        food_item.setCategory(category);
 
-        categoryInput = categoryDialog.findViewById(R.id.categoryField);
-        alert = categoryDialog.findViewById(R.id.warning);
-        addBtn = categoryDialog.findViewById(R.id.add_category);
-        closeBtn = categoryDialog.findViewById(R.id.close_btn);
-
-        alert.setVisibility(View.INVISIBLE);
-
-        addBtn.setOnClickListener(new View.OnClickListener() {
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        ref.orderByChild("ownerID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                final String category = categoryInput.getText().toString();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    String storeID = data.getKey();
+                    if(storeID != null){
+                        menuRef.child(storeID)
+                                .child(category)
+                                .child(food_item.getName()).setValue(food_item);
 
-                if(inputIsCorrect(category)){
-                    MenuListData.addCategory(category);
-                    refreshScreen();
-                    categoryDialog.dismiss();
+                        menuRef.child(storeID)
+                                .child("ItemList")
+                                .child(food_item.getName()).setValue(food_item);
+                    }
+
                 }
-                else {
-                    alert.setText("Category name can't be empty!");
-                    alert.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+
+
+    }
+
+    private void addCategoryToDatabase(final String name){
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        ref.orderByChild("ownerID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    String storeID = data.getKey();
+                    if(storeID != null){
+                                menuRef.child(storeID)
+                                        .child(name)
+                                        .setValue(new Category(name));
+
+                    }
+
                 }
-
             }
-        });
 
-        closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                categoryDialog.dismiss();;
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException();
             }
         });
-
-        categoryDialog.show();
     }
 
-    private void showDeleteDialog(View v, final String category){
-        Button closeBtn, addBtn;
-        final TextView deleteMessage;
-
-        deleteDialog.setContentView(R.layout.delete_popup);
-
-        deleteMessage = deleteDialog.findViewById(R.id.message);
-        addBtn = deleteDialog.findViewById(R.id.del_btn);
-        closeBtn = deleteDialog.findViewById(R.id.close_btn);
-
-        deleteMessage.setText("Are you sure you want to delete " + category + "?");
-
-        addBtn.setOnClickListener(new View.OnClickListener() {
+    private void removeItemFromDatabase(final String category, final Food_Item item){
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        ref.orderByChild("ownerID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                MenuListData.removeCategory(category);
-                refreshScreen();
-                deleteDialog.dismiss();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    String storeID = data.getKey();
+                    if(storeID != null){
+
+                        menuRef.child(storeID)
+                                .child(category)
+                                .child(item.getName()).removeValue();
+
+                        menuRef.child(storeID)
+                                .child("ItemList")
+                                .child(item.getName()).removeValue();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+    }
+
+    private void removeCategoryFromDatabase(final String name){
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        ref.orderByChild("ownerID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    final String storeID = data.getKey();
+                    if(storeID != null){
+                       menuRef.child(storeID)
+                                .child(name)
+                                .removeValue();
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException();
             }
         });
 
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteDialog.dismiss();;
-            }
-        });
-        deleteDialog.show();
     }
 
-    private boolean inputIsCorrect(String x){
-        return !x.isEmpty();
-    }
-
-    private void refreshScreen(){
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(this).attach(this).commit();
+    private interface OnItemCreated {
+        void itemCreated(Food_Item food_item);
     }
 }

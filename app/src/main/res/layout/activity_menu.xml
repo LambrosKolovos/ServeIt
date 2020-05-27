@@ -4,15 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.serveIt.owner_activities.menu_page">
+    tools:context="com.example.serveIt.owner_activities.menu_page"
+    android:background="#323232">
 
-    <ExpandableListView
-        android:id="@+id/expandableListView"
-        android:layout_height="match_parent"
+    <com.diegodobelo.expandingview.ExpandingList
+        android:id="@+id/expanding_list_main"
         android:layout_width="match_parent"
-        android:indicatorRight="?android:attr/expandableListPreferredItemIndicatorLeft"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="0.5dp" />
+        android:layout_height="match_parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/category_btn"
