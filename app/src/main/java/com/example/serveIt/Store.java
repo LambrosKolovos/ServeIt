@@ -4,14 +4,24 @@ import java.util.ArrayList;
 
 public class Store {
     private ArrayList<User> employees;
-    private ArrayList<Category> menu;    private ArrayList<Table> tables;
+    private ArrayList<Category> menu;
+    private ArrayList<Table> tables;
 
     private String name;
     private String ownerID;
+    private String password;
 
     public Store(String name, String ownerID) {
         this.name = name;
         this.ownerID = ownerID;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public ArrayList<User> getEmployees() {

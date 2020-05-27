@@ -64,15 +64,32 @@
                 android:text="Owner"
                 android:textColor="@color/colorPrimaryDark"/>
 
-            <EditText
-                android:id="@+id/store_name"
+            <LinearLayout
+                android:id="@+id/layout"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:visibility="gone"
-                android:background="@drawable/input_style"
-                android:paddingLeft="20dp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/store_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/input_style"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="20dp"
+                    android:layout_marginBottom="10dp"/>
+
+
+                <EditText
+                    android:id="@+id/store_pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/input_style"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    android:paddingLeft="20dp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/inputCheck"

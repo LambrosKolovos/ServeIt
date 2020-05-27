@@ -15,6 +15,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -47,6 +48,8 @@ public class sign_up extends AppCompatActivity {
     TextView login_view, alert;
 
     private boolean isOwner;
+    private LinearLayout layout;
+    private EditText store_pass;
 
 
     @Override
@@ -65,9 +68,13 @@ public class sign_up extends AppCompatActivity {
         store_name = findViewById(R.id.store_name);
         alert = findViewById(R.id.inputCheck);
         login_view = findViewById(R.id.login_message);
+        layout = findViewById(R.id.layout);
+        store_pass = findViewById(R.id.store_pass);
+
+        layout.setVisibility(View.GONE);
 
 
-        alert.setVisibility(View.INVISIBLE);
+        alert.setVisibility(View.GONE);
 
         login_view.setPaintFlags(login_view.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         login_view.setText("Already a member? Login here!");
@@ -84,7 +91,7 @@ public class sign_up extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    store_name.setVisibility(View.VISIBLE);
+                    layout.setVisibility(View.VISIBLE);
                     Animation slide = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_open);
                     slide.setAnimationListener(new Animation.AnimationListener() {
                         @Override
@@ -95,6 +102,7 @@ public class sign_up extends AppCompatActivity {
                         @Override
                         public void onAnimationEnd(Animation animation) {
                             store_name.setHint("Business name");
+                            store_pass.setHint("Store password");
                         }
 
                         @Override
@@ -102,16 +110,18 @@ public class sign_up extends AppCompatActivity {
 
                         }
                     });
-                    store_name.startAnimation(slide);
+                    layout.startAnimation(slide);
                     isOwner = true;
                 }
                 else{
                     store_name.setHint("");
+                    store_pass.setHint("");
                     Animation slide = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_close);
                     slide.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
                             store_name.setText("");
+                            store_pass.setText("");
                         }
 
                         @Override
@@ -123,8 +133,8 @@ public class sign_up extends AppCompatActivity {
 
                         }
                     });
-                    store_name.startAnimation(slide);
-                    store_name.setVisibility(View.GONE);
+                    layout.startAnimation(slide);
+                    layout.setVisibility(View.GONE);
                     isOwner = false;
                 }
             }

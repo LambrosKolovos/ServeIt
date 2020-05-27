@@ -55,7 +55,7 @@ public class build_layout extends Fragment {
         database = FirebaseDatabase.getInstance();
         table_ref = database.getReference("Table");
 
-       // loadFromDB();
+        // loadFromDB();
 
         //Convert px to dp
         int padding = 10;
@@ -154,8 +154,6 @@ public class build_layout extends Fragment {
     }
 
     private void addTableToDB(){
-        table_ref.child("-M7sKK7wobW-3QAIbUvj")
-                .removeValue();
 
         table_ref.child("-M7sKK7wobW-3QAIbUvj")
                 .setValue(tablelist);
