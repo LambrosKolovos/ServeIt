@@ -97,7 +97,7 @@ public class login extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        alert.setVisibility(View.INVISIBLE);
+        alert.setVisibility(View.GONE);
     }
 
     public void loginClick(View view){

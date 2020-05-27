@@ -5,11 +5,20 @@ public class User {
     private String email;
     private String full_name;
     private boolean isOwner;
+    private String storeID;
 
     public User(String email, String full_name, boolean isOwner){
         this.email = email;
         this.full_name = full_name;
         this.isOwner = isOwner;
+    }
+
+    public void setStoreID(String storeID) {
+        this.storeID = storeID;
+    }
+
+    public String getStoreID() {
+        return storeID;
     }
 
     public String getEmail() {
