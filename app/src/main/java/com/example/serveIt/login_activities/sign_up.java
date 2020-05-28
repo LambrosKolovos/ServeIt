@@ -205,7 +205,7 @@ public class sign_up extends AppCompatActivity {
                                                 startActivity(new Intent(getApplicationContext(), owner_activity.class));
                                             }
                                             else{
-                                                Intent intent = new Intent(getApplicationContext(), employee_activity.class);
+                                                Intent intent = new Intent(getApplicationContext(), search_store.class);
                                                 intent.putExtra("userLoggedIn", user);
                                                 startActivity(intent);
                                                 finish();

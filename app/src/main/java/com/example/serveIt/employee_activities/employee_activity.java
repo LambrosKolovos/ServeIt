@@ -25,15 +25,11 @@ public class employee_activity extends AppCompatActivity {
         b = getIntent().getExtras();
         if( b != null){
             storeID = (String) b.getSerializable("storeID");
-            bottomNav.setSelectedItemId(R.id.new_order);
-            Fragment selectedFragment = new new_order();
+            bottomNav.setSelectedItemId(R.id.store);
+            Fragment selectedFragment = new store_layout();
             selectedFragment.setArguments(b);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     selectedFragment).commit();
-        }
-        else {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new store_layout()).commit();
         }
     }
 

@@ -16,6 +16,9 @@ public class User implements Serializable {
         this.isOwner = isOwner;
     }
 
+    public User(){
+
+    }
     public void setStoreID(String storeID) {
         this.storeID = storeID;
     }

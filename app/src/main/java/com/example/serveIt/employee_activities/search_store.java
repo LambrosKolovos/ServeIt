@@ -3,6 +3,7 @@ package com.example.serveIt.employee_activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -151,7 +152,7 @@ public class search_store extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull ViewHolder viewHolder, int position, @NonNull Store model) {
-                viewHolder.setDetails(getApplicationContext(), model, currentUser);
+                viewHolder.setDetails(model, currentUser);
             }
 
         };
@@ -170,12 +171,12 @@ public class search_store extends AppCompatActivity {
         public ViewHolder(View itemView, Context context) {
             super(itemView);
             mView = itemView;
-
+            this.context = context;
             joinDialog = new Dialog(context);
 
         }
 
-        public void setDetails(Context context, final Store store, final User user){
+        public void setDetails(final Store store, final User user){
 
 
             TextView store_name = mView.findViewById(R.id.store_name);
@@ -202,7 +203,7 @@ public class search_store extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     final String pass_entered = password.getText().toString();
-                    ref.addValueEventListener(new ValueEventListener() {
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot x: dataSnapshot.getChildren()){
@@ -213,22 +214,25 @@ public class search_store extends AppCompatActivity {
                                         System.out.println("USER ENTERS THE STORE");
                                         System.out.println(storeID);
 
+
                                         //Update store's employees
                                         store.getEmployees().add(user);
                                         ref.child(storeID).child("employees").setValue(store.getEmployees());
 
 
                                         //Update user's workspace
-                                        FirebaseDatabase.getInstance().getReference("User")
+                                        user.setWorkID(storeID);
+                                        FirebaseDatabase.getInstance().getReference("Users")
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                 .child("workID")
-                                                .setValue(storeID);
-                                        user.setWorkID(storeID);
+                                                .setValue(user.getWorkID());
+
 
                                         //Load main application
                                         Intent i = new Intent(context, employee_activity.class);
                                         i.putExtra("storeID", user.getWorkID());
                                         context.startActivity(i);
+                                        break;
                                     }
                                     else
                                         System.out.println("IM AFRAID THIS IS NOT CORRECT");
@@ -247,8 +251,6 @@ public class search_store extends AppCompatActivity {
             joinDialog.show();
         }
     }
-
-
 
     public void goToApp(View view){
         startActivity(new Intent(getApplicationContext(), employee_activity.class));

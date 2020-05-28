@@ -50,7 +50,9 @@ public class store_layout extends Fragment {
 
         b = getArguments();
         if(b!=null){
+
             storeID =(String) b.getSerializable("storeID");
+            System.out.println(storeID);
         }
         readFromDB();
 
@@ -63,7 +65,6 @@ public class store_layout extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     Table table = data.getValue(Table.class);
-                    System.out.println("TABLE ID: " + table.getID());
                     addTableView(table.getID(), currentRow);
                     if (table.getID() % 3  == 0) {
                         currentRow = new TableRow(getContext());

@@ -40,6 +40,8 @@ public class search_food extends AppCompatActivity {
     private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
     private FirebaseRecyclerOptions<Food_Item> options;
     public Order currentOrder = new Order();
+    Bundle b;
+    private String storeID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,13 @@ public class search_food extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        Intent i = getIntent();
-        currentOrder = (Order) i.getSerializableExtra("sampleOrder");
+        b = getIntent().getExtras();
+
+        if( b.getSerializable("storeID") != null)
+            storeID = (String) b.getSerializable("storeID");
+
+        if( b.getSerializable("sampleOrder") != null)
+            currentOrder = (Order) b.getSerializable("sampleOrder");
 
         setContentView(R.layout.activity_search);
         database = FirebaseDatabase.getInstance().getReference("Menu");
@@ -92,6 +99,7 @@ public class search_food extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), employee_activity.class);
         Bundle b = new Bundle();
         b.putSerializable("currentOrder", currentOrder);
+        b.putSerializable("storeID", storeID);
         intent.putExtras(b);
 
         startActivity(intent);
@@ -111,9 +119,9 @@ public class search_food extends AppCompatActivity {
 
         Query firebaseSearchQuery;
         if(searchText == null)
-             firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child("ItemList").orderByChild("category");
+             firebaseSearchQuery = database.child(storeID).child("ItemList").orderByChild("category");
         else
-             firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child("ItemList").orderByChild("category").startAt(searchText).endAt(searchText + "\uf8ff");
+             firebaseSearchQuery = database.child(storeID).child("ItemList").orderByChild("category").startAt(searchText).endAt(searchText + "\uf8ff");
 
         options =
                 new FirebaseRecyclerOptions.Builder<Food_Item>()
