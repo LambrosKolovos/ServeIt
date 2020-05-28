@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
@@ -50,11 +51,11 @@ public class store_layout extends Fragment {
 
         b = getArguments();
         if(b!=null){
-
             storeID =(String) b.getSerializable("storeID");
             System.out.println(storeID);
         }
-        readFromDB();
+        //readFromDB();
+        addViews();
 
         return root;
     }
@@ -81,16 +82,43 @@ public class store_layout extends Fragment {
     }
 
 
+    public void addViews(){
+        for(int j=1 ; j<12; j++){
+            if (j % 3 == 0) {
+                currentRow = new TableRow(getContext());
+                currentRow.setPadding(10, 10, 10, 10);
+            }
+            addTableView(j, currentRow);
+
+        }
+    }
+
+
     public void addTableView(final int id, final TableRow row){
         //Convert px to dp
         int padding = 10;
         final float scale = getResources().getDisplayMetrics().density;
         int  x = (int) (padding * scale + 0.5f);
 
-        Button tableView = new Button(getContext());
+        final Button tableIcon = new Button(getContext());
 
-        tableView.setText(String.valueOf(id));
-        tableView.setBackgroundResource(R.drawable.table_available);
+        tableIcon.setText(String.valueOf(id));
+        //Check of table status - this needs to change
+        tableIcon.setBackgroundResource(R.drawable.table_available);
+
+        tableIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Open new fragment
+                openNewOrder(id);
+
+                //Update table's status in DB;
+
+                //This sould go
+                tableIcon.setBackgroundResource(R.drawable.order_taken);
+            }
+        });
+
 
         TableRow.LayoutParams params = new TableRow.LayoutParams(
                 TableRow.LayoutParams.WRAP_CONTENT,
@@ -98,15 +126,30 @@ public class store_layout extends Fragment {
                 1
         );
         params.setMargins(x, 0, x, x);
-        tableView.setLayoutParams(params);
+        tableIcon.setLayoutParams(params);
 
         if( id % 3 == 0){
             table_view.addView(row);
-            row.addView(tableView);
+            row.addView(tableIcon);
 
         }
         else{
-            row.addView(tableView);
+            row.addView(tableIcon);
         }
     }
+
+    public void openNewOrder(int ID){
+        Bundle a = new Bundle();
+        a.putSerializable("storeID", storeID);
+        a.putInt("tableID", ID);
+
+        Fragment nextFrag= new new_order();
+        nextFrag.setArguments(a);
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, nextFrag)
+                .addToBackStack(null)
+                .commit();
+    }
+
 }
