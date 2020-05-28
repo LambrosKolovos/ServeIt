@@ -34,7 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class new_order extends Fragment{
 
     private TableLayout orderLayout;
-    private TextView priceView;
+    private TextView priceView, tableID_view;
     private LinearLayout searchMenu;
     private FloatingActionButton verifyFab;
 
@@ -55,6 +55,7 @@ public class new_order extends Fragment{
         searchMenu = root.findViewById(R.id.searchMenu);
         orderLayout = root.findViewById(R.id.order_display);
         priceView = root.findViewById(R.id.totalPrice);
+        tableID_view = root.findViewById(R.id.table_id_view);
 
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Menu");
@@ -73,6 +74,13 @@ public class new_order extends Fragment{
         b = getArguments();
         if(b.getSerializable("storeID") != null){
                 storeID = (String) b.getSerializable("storeID");
+        }
+
+        if(b.getInt("tableID") != 0){
+            tableID_view.setText("Table: " + b.getInt("tableID"));
+        }
+        else{
+            tableID_view.setText("Table: ");
         }
 
         if(b.getSerializable("currentOrder") != null )

@@ -67,7 +67,6 @@ public class login extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), sign_up.class));
             }
         });
-
     }
 
     @Override
@@ -115,7 +114,7 @@ public class login extends AppCompatActivity {
                                     startActivity(new Intent(getApplicationContext(), owner_activity.class));
                                 }
                                 else{
-                                    if(user.getWorkID() == null){
+                                    if(user.getWorkID().equals(" ")){
                                         Intent i = new Intent(getApplicationContext(), search_store.class);
                                         i.putExtra("userLoggedIn", user);
                                         startActivity(i);
