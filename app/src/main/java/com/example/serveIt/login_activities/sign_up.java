@@ -51,6 +51,7 @@ public class sign_up extends AppCompatActivity {
     private boolean isOwner;
     private LinearLayout layout;
     private EditText store_pass;
+    private ProgressBar loading_bar;
 
 
     @Override
@@ -71,11 +72,11 @@ public class sign_up extends AppCompatActivity {
         login_view = findViewById(R.id.login_message);
         layout = findViewById(R.id.layout);
         store_pass = findViewById(R.id.store_pass);
+        loading_bar = findViewById(R.id.loading_bar);
 
         layout.setVisibility(View.GONE);
-
-
         alert.setVisibility(View.GONE);
+        loading_bar.setVisibility(View.GONE);
 
         login_view.setPaintFlags(login_view.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         login_view.setText("Already a member? Login here!");
@@ -161,21 +162,23 @@ public class sign_up extends AppCompatActivity {
                     alert.setText("Please enter your email.");
                     email.requestFocus();
                 }
-                else if (pass_text.isEmpty()){
+                else if (pass_text.length() < 6){
                     alert.setVisibility(View.VISIBLE);
-                    alert.setText("Please enter a password.");
+                    alert.setText("Please enter a valid password.");
                     password.requestFocus();
                 }
                 else if( isOwner && store_text.isEmpty()){
-                    alert.setVisibility(View.INVISIBLE);
+                    alert.setVisibility(View.VISIBLE);
                     alert.setText("Please enter business name.");
                     store_name.requestFocus();
                 }
+                else if( isOwner && store_code.length() < 6){
+                    alert.setVisibility(View.VISIBLE);
+                    alert.setText("Please enter a valid business password.");
+                }
                 else{
-                    login_container.setBackgroundColor(Color.parseColor("#dddddd"));
-                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
+                    alert.setVisibility(View.GONE);
+                    loading_bar.setVisibility(View.VISIBLE);
                     mAuth.createUserWithEmailAndPassword(email_text,pass_text).addOnCompleteListener(sign_up.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -185,7 +188,6 @@ public class sign_up extends AppCompatActivity {
                                         name_text,
                                         isOwner
                                 );
-
                                 database.getReference("Users")
                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -193,8 +195,6 @@ public class sign_up extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
 
                                         if(task.isSuccessful()){
-                                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                                            login_container.setBackgroundColor(Color.WHITE);
 
                                             if(user.getIsOwner()){
                                                 Store store = new Store(store_text,mAuth.getCurrentUser().getUid(), store_code);
@@ -221,9 +221,6 @@ public class sign_up extends AppCompatActivity {
                             else{
                                 alert.setVisibility(View.VISIBLE);
                                 alert.setText("Enter a valid email!");
-
-                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                                login_container.setBackgroundColor(Color.WHITE);
                             }
                         }
                     });

@@ -21,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
@@ -397,6 +398,10 @@ public class menu_page extends Fragment {
                         menuRef.child(storeID)
                                 .child(category)
                                 .child(item.getName()).removeValue();
+
+                        menuRef.child(storeID)
+                                .child("ItemList")
+                                .child(item.getName()).removeValue();
                     }
 
                 }
@@ -421,6 +426,29 @@ public class menu_page extends Fragment {
                                 .child(name)
                                 .removeValue();
 
+                        Query query = menuRef.child(storeID).child("ItemList");
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for(DataSnapshot food_items: dataSnapshot.getChildren()){
+                                    Food_Item food_item = food_items.getValue(Food_Item.class);
+                                    if(food_item != null && food_item.getCategory().equals(name)){
+                                        String foodName= food_item.getName();
+
+                                        System.out.println("FOOD NAME DELETE " + food_item.getName());
+                                        System.out.println("FOOD PRICE DELETE " + food_item.getPrice());
+                                        System.out.println("FOOD CAT DELETE " + food_item.getCategory());
+                                        menuRef.child(storeID).child("ItemList").child(foodName).removeValue();
+                                    }
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
                 }

@@ -38,6 +38,7 @@ public class login extends AppCompatActivity {
     EditText email, password;
     Button login_btn;
     TextView register_view, alert;
+    private ProgressBar loading_bar;
 
     private DatabaseReference ref;
 
@@ -54,6 +55,7 @@ public class login extends AppCompatActivity {
         login_btn = findViewById(R.id.login_btn);
         register_view = findViewById(R.id.register_message);
         alert = findViewById(R.id.inputCheck);
+        loading_bar = findViewById(R.id.loading_bar);
 
         register_view.setPaintFlags(register_view.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         register_view.setText("Don't have an account? Sign up here!");
@@ -66,47 +68,13 @@ public class login extends AppCompatActivity {
             }
         });
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-
-            DatabaseReference user = ref.child("Users").child(currentUser.getUid());
-            user.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    User user = dataSnapshot.getValue(User.class);
-                    boolean isOwner = user.getIsOwner();
-
-                    if(isOwner){
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), owner_activity.class));
-                    }
-                    else{
-                        if(user.getWorkID().isEmpty()){
-                            Intent i = new Intent(getApplicationContext(), search_store.class);
-                            i.putExtra("userLoggedIn", user);
-                            startActivity(i);
-                        }
-                        else{
-                            Intent i = new Intent(getApplicationContext(), employee_activity.class);
-                            i.putExtra("storeID", user.getWorkID());
-                            startActivity(i);
-                        }
-                        finish();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         alert.setVisibility(View.GONE);
+        loading_bar.setVisibility(View.GONE);
     }
 
     public void loginClick(View view){
@@ -132,7 +100,8 @@ public class login extends AppCompatActivity {
                         alert.setText("Wrong credentials!");
                     }
                     else{
-
+                        alert.setVisibility(View.GONE);
+                        loading_bar.setVisibility(View.VISIBLE);
                         FirebaseUser currentUser = mAuth.getCurrentUser();
                         DatabaseReference user = ref.child("Users").child(currentUser.getUid());
                         user.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -146,7 +115,7 @@ public class login extends AppCompatActivity {
                                     startActivity(new Intent(getApplicationContext(), owner_activity.class));
                                 }
                                 else{
-                                    if(user.getWorkID().isEmpty()){
+                                    if(user.getWorkID() == null){
                                         Intent i = new Intent(getApplicationContext(), search_store.class);
                                         i.putExtra("userLoggedIn", user);
                                         startActivity(i);

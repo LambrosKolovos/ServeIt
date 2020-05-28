@@ -102,6 +102,7 @@ public class search_food extends AppCompatActivity {
         b.putSerializable("storeID", storeID);
         intent.putExtras(b);
 
+        finish();
         startActivity(intent);
         return true;
 
@@ -192,8 +193,10 @@ public class search_food extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), employee_activity.class);
         Bundle b = new Bundle();
         b.putSerializable("currentOrder", currentOrder);
+        b.putSerializable("storeID", storeID);
         intent.putExtras(b);
 
+        finish();
         startActivity(intent);
     }
 }

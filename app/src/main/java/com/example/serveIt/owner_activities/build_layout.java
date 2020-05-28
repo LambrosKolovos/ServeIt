@@ -35,12 +35,13 @@ public class build_layout extends Fragment {
 
     FloatingActionButton add_table;
     TableLayout table_view;
-    private int i=0 , id = 0;
+    private int i=0 , tableID = 0;
     private ArrayList<Table> tablelist;
     private TableRow currentRow;
 
     private FirebaseDatabase database;
     private DatabaseReference table_ref;
+    private int table_number;
 
     @Nullable
     @Override
@@ -55,7 +56,7 @@ public class build_layout extends Fragment {
         database = FirebaseDatabase.getInstance();
         table_ref = database.getReference("Table");
 
-        // loadFromDB();
+        table_number = 0;
 
         //Convert px to dp
         int padding = 10;
@@ -64,33 +65,45 @@ public class build_layout extends Fragment {
 
         currentRow.setPadding(padd_bottom, padd_bottom, padd_bottom, padd_bottom);
 
-        add_table.setOnClickListener(new View.OnClickListener() {
+        loadFromDB(new FirebaseCallback() {
             @Override
-            public void onClick(View v) {
-                addTableView(id, currentRow);
-                id++;
-                if (id % 3  == 0) {
-                    currentRow = new TableRow(getContext());
-                    currentRow.setPadding(padd_bottom, padd_bottom, padd_bottom, padd_bottom);
-                }
+            public void onCallback(final int id) {
+                tableID = id;
+
+                add_table.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addTableView(tableID, currentRow);
+                        tableID++;
+                        if (tableID % 3  == 0) {
+                            currentRow = new TableRow(getContext());
+                            currentRow.setPadding(padd_bottom, padd_bottom, padd_bottom, padd_bottom);
+                        }
+                    }
+                });
             }
         });
+
+
         return root;
     }
 
-    public void loadFromDB(){
-        table_ref.child("-M7sKK7wobW-3QAIbUvj").addValueEventListener(new ValueEventListener() {
+    public void loadFromDB(final FirebaseCallback firebaseCallback){
+
+        table_ref.child("-M8NDc6gjHyDJiYoOLli").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot data: dataSnapshot.getChildren()){
-                    Table table = data.getValue(Table.class);
-                    addTableView(table.getID(), currentRow);
-                    if (table.getID() % 3  == 0) {
+                for(int i = 0; i < dataSnapshot.getChildrenCount(); i++){
+                    table_number++;
+                    addTableView(table_number - 1, currentRow);
+                    if (table_number % 3  == 0) {
                         currentRow = new TableRow(getContext());
                         currentRow.setPadding(10, 10, 10, 10);
                     }
-                    id = table.getID();
                 }
+
+                firebaseCallback.onCallback(table_number);
+
             }
 
             @Override
@@ -120,7 +133,7 @@ public class build_layout extends Fragment {
                         if(i == 2){
                             tablelist.remove(table);
                             row.removeView(tableView);
-                            deleteTableDB(String.valueOf(id+1));
+                            deleteTableDB(String.valueOf(id));
                             Toast.makeText(getContext(), "Removing: " + (id+1), Toast.LENGTH_SHORT).show();
                         }
                         i = 0;
@@ -154,15 +167,18 @@ public class build_layout extends Fragment {
     }
 
     private void addTableToDB(){
-
-        table_ref.child("-M7sKK7wobW-3QAIbUvj")
+        table_ref.child("-M8NDc6gjHyDJiYoOLli")
                 .setValue(tablelist);
     }
 
     private void deleteTableDB(String id){
-        table_ref.child("-M7sKK7wobW-3QAIbUvj")
+        table_ref.child("-M8NDc6gjHyDJiYoOLli")
                 .child(id)
                 .removeValue();
+    }
+
+    private interface FirebaseCallback{
+        void onCallback(int id);
     }
 
 }
