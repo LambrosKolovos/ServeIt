@@ -60,6 +60,7 @@ public class settings extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        ref = database.getReference("Users");
 
         alertDialog = new Dialog(getContext());
 
@@ -154,6 +155,30 @@ public class settings extends Fragment {
                 }
                 else{
                     //HANDLE LEAVE STORE
+                    final DatabaseReference userRef = ref.child(mAuth.getCurrentUser().getUid());
+                    userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            System.out.println("Removing user: " + user.getFull_name());
+                            System.out.println("From store: " + user.getWorkID());
+
+                            user.setWorkID(" ");
+                            userRef.child("workID").setValue(" ");
+
+                            getActivity().finish();
+
+                            Intent i = new Intent(getContext(), search_store.class);
+                            i.putExtra("userLoggedIn", user);
+                            startActivity(i);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
             }
         });
