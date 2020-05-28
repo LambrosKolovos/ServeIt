@@ -21,7 +21,17 @@
         <item>Employee</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="question_emp1">How can create a new order?</string>
+    <string name="question_emp2">How can I change a table\'s status?</string>
 
+    <string name="answer_emp1">
+        Simply click on the table which you want to make the order for
+        and you will be redirected to the order screen
+    </string>
+
+    <string name="answer_emp2">
+        Tables\' status change automatically when the order is taken (yellow color)
+        and then when the order is delivered(green color) and finally back to grey when
+        the table has no active customers
+    </string>
 </resources>
