@@ -1,9 +1,10 @@
 package com.example.serveIt;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Store {
-    private ArrayList<User> employees;
+public class Store implements Serializable {
+    private ArrayList<User> employees = new ArrayList<>();
     private ArrayList<Category> menu;
     private ArrayList<Table> tables;
 

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
+import com.example.serveIt.User;
 import com.example.serveIt.employee_activities.employee_activity;
 import com.example.serveIt.employee_activities.search_store;
 import com.example.serveIt.owner_activities.build_layout;
@@ -68,21 +69,29 @@ public class login extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
 
-            DatabaseReference user = ref.child("Users").child(currentUser.getUid()).child("isOwner");
+            DatabaseReference user = ref.child("Users").child(currentUser.getUid());
             user.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Boolean isOwner = dataSnapshot.getValue(Boolean.class);
+                    User user = dataSnapshot.getValue(User.class);
+                    boolean isOwner = user.getIsOwner();
 
-                    if(isOwner != null){
-                        if(isOwner){
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), owner_activity.class));
+                    if(isOwner){
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), owner_activity.class));
+                    }
+                    else{
+                        if(user.getWorkID().isEmpty()){
+                            Intent i = new Intent(getApplicationContext(), search_store.class);
+                            i.putExtra("userLoggedIn", user);
+                            startActivity(i);
                         }
                         else{
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), search_store.class));
+                            Intent i = new Intent(getApplicationContext(), employee_activity.class);
+                            i.putExtra("storeID", user.getWorkID());
+                            startActivity(i);
                         }
+                        finish();
                     }
                 }
 
@@ -125,22 +134,29 @@ public class login extends AppCompatActivity {
                     else{
 
                         FirebaseUser currentUser = mAuth.getCurrentUser();
-                        DatabaseReference user = ref.child("Users").child(currentUser.getUid()).child("isOwner");
-
+                        DatabaseReference user = ref.child("Users").child(currentUser.getUid());
                         user.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                Boolean isOwner = dataSnapshot.getValue(Boolean.class);
+                                User user = dataSnapshot.getValue(User.class);
+                                boolean isOwner = user.getIsOwner();
 
-                                if(isOwner != null){
-                                    if(isOwner){
-                                        finish();
-                                        startActivity(new Intent(getApplicationContext(), owner_activity.class));
+                                if(isOwner){
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(), owner_activity.class));
+                                }
+                                else{
+                                    if(user.getWorkID().isEmpty()){
+                                        Intent i = new Intent(getApplicationContext(), search_store.class);
+                                        i.putExtra("userLoggedIn", user);
+                                        startActivity(i);
                                     }
                                     else{
-                                        finish();
-                                        startActivity(new Intent(getApplicationContext(), employee_activity.class));
+                                        Intent i = new Intent(getApplicationContext(), employee_activity.class);
+                                        i.putExtra("storeID", user.getWorkID());
+                                        startActivity(i);
                                     }
+                                    finish();
                                 }
                             }
 

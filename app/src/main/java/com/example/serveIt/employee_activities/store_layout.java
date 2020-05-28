@@ -33,6 +33,8 @@ public class store_layout extends Fragment {
     private DatabaseReference ref;
     private TableLayout table_view;
     private TableRow currentRow;
+    Bundle b;
+    String storeID;
 
 
 
@@ -46,18 +48,23 @@ public class store_layout extends Fragment {
         ref = database.getReference("Table");
         table_view = root.findViewById(R.id.table_view);
 
+        b = getArguments();
+        if(b!=null){
+
+            storeID =(String) b.getSerializable("storeID");
+            System.out.println(storeID);
+        }
         readFromDB();
 
         return root;
     }
 
     private void readFromDB(){
-        ref.child("-M7sKK7wobW-3QAIbUvj").addValueEventListener(new ValueEventListener() {
+        ref.child(storeID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     Table table = data.getValue(Table.class);
-                    System.out.println("TABLE ID: " + table.getID());
                     addTableView(table.getID(), currentRow);
                     if (table.getID() % 3  == 0) {
                         currentRow = new TableRow(getContext());

@@ -45,6 +45,7 @@ public class new_order extends Fragment{
 
     private Dialog verificationDialog;
     private Order order;
+    private String storeID;
 
     @Nullable
     @Override
@@ -70,9 +71,12 @@ public class new_order extends Fragment{
         });
 
         b = getArguments();
-        if( b != null){
-            order = (Order) b.getSerializable("currentOrder");
+        if(b.getSerializable("storeID") != null){
+                storeID = (String) b.getSerializable("storeID");
         }
+
+        if(b.getSerializable("currentOrder") != null )
+            order = (Order) b.getSerializable("currentOrder");
         else{
             order = new Order();
         }
@@ -82,7 +86,10 @@ public class new_order extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), search_food.class);
-                intent.putExtra("sampleOrder", order);
+                Bundle args = new Bundle();
+                args.putSerializable("sampleOrder", order);
+                args.putSerializable("storeID", storeID);
+                intent.putExtras(args);
                 startActivity(intent);
             }
         });
@@ -109,7 +116,7 @@ public class new_order extends Fragment{
 
                 OrderDatabase orderDatabase = new OrderDatabase(order.getOrdered(), tableField.getText().toString());
 
-                    orderRef.child("-M7sKK7wobW-3QAIbUvj")
+                    orderRef.child(storeID)
                             .push()
                             .setValue(orderDatabase);
 

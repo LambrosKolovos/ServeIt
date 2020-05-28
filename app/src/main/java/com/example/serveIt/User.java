@@ -1,11 +1,14 @@
 package com.example.serveIt;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private String email;
     private String full_name;
     private boolean isOwner;
     private String storeID;
+    private String workID;
 
     public User(String email, String full_name, boolean isOwner){
         this.email = email;
@@ -13,8 +16,19 @@ public class User {
         this.isOwner = isOwner;
     }
 
+    public User(){
+
+    }
     public void setStoreID(String storeID) {
         this.storeID = storeID;
+    }
+
+    public String getWorkID() {
+        return workID;
+    }
+
+    public void setWorkID(String workID) {
+        this.workID = workID;
     }
 
     public String getStoreID() {
