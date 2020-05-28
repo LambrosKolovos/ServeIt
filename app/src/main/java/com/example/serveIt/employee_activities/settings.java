@@ -109,7 +109,7 @@ public class settings extends Fragment {
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getContext(), help_employee.class));
             }
         });
 
