@@ -23,7 +23,15 @@ public class employee_activity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         b = getIntent().getExtras();
-        if( b != null){
+        if( b.getSerializable("currentOrder") != null){
+            storeID = (String) b.getSerializable("storeID");
+            bottomNav.setSelectedItemId(R.id.new_order);
+            Fragment selectedFragment = new new_order();
+            selectedFragment.setArguments(b);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    selectedFragment).commit();
+        }
+        else{
             storeID = (String) b.getSerializable("storeID");
             bottomNav.setSelectedItemId(R.id.store);
             Fragment selectedFragment = new store_layout();

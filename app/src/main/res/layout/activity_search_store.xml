@@ -36,10 +36,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="skip"
+        android:text="Sign out"
         android:background="@null"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:onClick="goToApp"/>
+        android:onClick="sign_out"/>
 
 </RelativeLayout>

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -180,8 +181,10 @@ public class search_store extends AppCompatActivity {
 
 
             TextView store_name = mView.findViewById(R.id.store_name);
+            LinearLayout join = mView.findViewById(R.id.store);
+
             store_name.setText(store.getName());
-            store_name.setOnClickListener(new View.OnClickListener() {
+            join.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showJoinDialog(v, store.getOwnerID(), user);
@@ -252,7 +255,8 @@ public class search_store extends AppCompatActivity {
         }
     }
 
-    public void goToApp(View view){
-        startActivity(new Intent(getApplicationContext(), employee_activity.class));
+    public void sign_out(View view){
+        finish();
+        FirebaseAuth.getInstance().signOut();
     }
 }
