@@ -107,11 +107,17 @@ public class store_layout extends Fragment {
         tableIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Open new fragment
-                openNewOrder(table.getID());
-
-                //Update table's status in DB;
-                updateTableStatus(table.getID());
+                if(table.getStatus().equals("AVAILABLE")){
+                    //Open new fragment
+                    openNewOrder(table.getID());
+                    //Update table's status in DB;
+                    updateTableStatus(table.getID());
+                }
+                else if(table.getStatus().equals("ORDER_TAKEN")){
+                    Toast.makeText(ctx, "Order already taken!", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(ctx, "Order is delivered!", Toast.LENGTH_SHORT).show();
             }
         });
 
