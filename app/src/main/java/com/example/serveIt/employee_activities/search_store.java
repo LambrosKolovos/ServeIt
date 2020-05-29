@@ -70,6 +70,7 @@ public class search_store extends AppCompatActivity {
         if( b != null ){
             currentUser = (User) b.getSerializable("userLoggedIn");
         }
+
         noDataView = findViewById(R.id.no_data_view);
         storeView = findViewById(R.id.recycler_view);
         storeView.setLayoutManager(new LinearLayoutManager(this));
