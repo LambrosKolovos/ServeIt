@@ -19,6 +19,7 @@ public class User implements Serializable {
     public User(){
 
     }
+
     public void setStoreID(String storeID) {
         this.storeID = storeID;
     }

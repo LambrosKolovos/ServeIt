@@ -30,6 +30,7 @@ import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
 import com.example.serveIt.Store;
 import com.example.serveIt.User;
+import com.example.serveIt.login_activities.login;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,15 +50,19 @@ public class search_store extends AppCompatActivity {
     DatabaseReference ref;
     Bundle b;
     User currentUser;
+    private Button sign_out;
 
     private FirebaseRecyclerAdapter<Store, ViewHolder > firebaseRecyclerAdapter;
     private FirebaseRecyclerOptions<Store> options;
+    private FirebaseAuth mAuth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_store);
+        sign_out = findViewById(R.id.sign_out);
+        mAuth = FirebaseAuth.getInstance();
 
         ref = FirebaseDatabase.getInstance().getReference("Store");
 
@@ -69,6 +74,8 @@ public class search_store extends AppCompatActivity {
         storeView = findViewById(R.id.recycler_view);
         storeView.setLayoutManager(new LinearLayoutManager(this));
         storeView.setHasFixedSize(true);
+
+
 
     }
 
@@ -106,12 +113,15 @@ public class search_store extends AppCompatActivity {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
                 storeSearch(" ");
+                sign_out.setVisibility(View.GONE);
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 noDataView.setVisibility(View.VISIBLE);
+                firebaseRecyclerAdapter.stopListening();
+                sign_out.setVisibility(View.VISIBLE);
                 return true;
             }
         });
@@ -125,6 +135,12 @@ public class search_store extends AppCompatActivity {
         super.onStart();
         storeSearch(" ");
         firebaseRecyclerAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseRecyclerAdapter.stopListening();
     }
 
     private void storeSearch(String searchText){
@@ -168,12 +184,15 @@ public class search_store extends AppCompatActivity {
         View mView;
         Dialog joinDialog;
         Context context;
+        FirebaseAuth mAuth;
 
         public ViewHolder(View itemView, Context context) {
             super(itemView);
             mView = itemView;
             this.context = context;
             joinDialog = new Dialog(context);
+
+            mAuth = FirebaseAuth.getInstance();
 
         }
 
@@ -219,7 +238,7 @@ public class search_store extends AppCompatActivity {
 
 
                                         //Update store's employees
-                                        store.getEmployees().add(user);
+                                        store.getEmployees().put(mAuth.getCurrentUser().getUid(), user);
                                         ref.child(storeID).child("employees").setValue(store.getEmployees());
 
 
@@ -257,6 +276,8 @@ public class search_store extends AppCompatActivity {
 
     public void sign_out(View view){
         finish();
+        firebaseRecyclerAdapter.stopListening();
         FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(), login.class));
     }
 }

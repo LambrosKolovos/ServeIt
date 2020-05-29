@@ -91,16 +91,17 @@ public class login extends AppCompatActivity {
             password.requestFocus();
         }
         else{
+            loading_bar.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email_text,pass_text).addOnCompleteListener(login.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(!task.isSuccessful()){
+                        loading_bar.setVisibility(View.GONE);
                         alert.setVisibility(View.VISIBLE);
                         alert.setText("Wrong credentials!");
                     }
                     else{
                         alert.setVisibility(View.GONE);
-                        loading_bar.setVisibility(View.VISIBLE);
                         FirebaseUser currentUser = mAuth.getCurrentUser();
                         DatabaseReference user = ref.child("Users").child(currentUser.getUid());
                         user.addListenerForSingleValueEvent(new ValueEventListener() {

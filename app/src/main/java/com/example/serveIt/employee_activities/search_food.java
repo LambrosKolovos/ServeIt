@@ -115,6 +115,11 @@ public class search_food extends AppCompatActivity {
         firebaseRecyclerAdapter.startListening();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseRecyclerAdapter.stopListening();
+    }
 
     private void firebaseUserSearch(String searchText) {
 

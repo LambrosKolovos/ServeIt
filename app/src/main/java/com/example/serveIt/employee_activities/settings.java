@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -30,7 +31,11 @@ import android.widget.Toast;
 
 import com.example.serveIt.R;
 import com.example.serveIt.login_activities.*;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,11 +51,11 @@ public class settings extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthState;
     private FirebaseDatabase database;
-    private DatabaseReference ref;
+    private DatabaseReference ref, refStore;
 
     TextView name;
     TableRow change_pass, leave, delete_acc, contact, help, logout;
-    Dialog alertDialog;
+    Dialog alertDialog, passDialog;
     String userID;
 
     @Nullable
@@ -61,8 +66,10 @@ public class settings extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Users");
+        refStore = database.getReference("Store");
 
         alertDialog = new Dialog(getContext());
+        passDialog = new Dialog(getContext());
 
         name = root.findViewById(R.id.name_view);
         change_pass = root.findViewById(R.id.change_password_row);
@@ -81,7 +88,7 @@ public class settings extends Fragment {
         change_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showChangePassDialog(v);
             }
         });
 
@@ -127,6 +134,72 @@ public class settings extends Fragment {
 
     }
 
+    private void showChangePassDialog(View v) {
+        final EditText oldpass, newPass;
+        Button change, cancel;
+
+        passDialog.setContentView(R.layout.pass_dialog);
+
+        oldpass = passDialog.findViewById(R.id.old_pass);
+        newPass = passDialog.findViewById(R.id.new_pass);
+        change = passDialog.findViewById(R.id.change);
+        cancel = passDialog.findViewById(R.id.cancel);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                passDialog.dismiss();
+            }
+        });
+
+        final String old_text = oldpass.getText().toString();
+        final String new_text = newPass.getText().toString();
+
+        if(old_text.length() < 6){
+
+        }
+        else if(new_text.length() < 6){
+
+        }
+        else{
+            change.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final FirebaseUser user = mAuth.getCurrentUser();
+                    if(user != null){
+                        AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(),old_text);
+
+                        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    user.updatePassword(new_text).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(getContext(), "Password changed", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getContext(), "Password didn't change", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                }
+                                else{
+                                    Toast.makeText(getContext(), "Password didn't change", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+
+                }
+            });
+        }
+
+
+        passDialog.show();
+    }
+
+    @SuppressLint("SetTextI18n")
     private void showAlert(View v, final boolean delete){
         Button no_btn, yes_btn;
         final TextView msg_view;
@@ -138,8 +211,9 @@ public class settings extends Fragment {
         msg_view.setTextSize(18);
 
         if(delete){
-            msg_view.setTextColor(Color.parseColor("#ff0000"));
-            msg_view.setText("Delete this account?");
+            msg_view.setText("If you choose to delete ServeIt from your account, " +
+                    "keep in mind that you won't be able to sign up for ServeIt " +
+                    "with the same username in the future.");
         }
         else{
             yes_btn.setText("LEAVE");
@@ -152,6 +226,42 @@ public class settings extends Fragment {
             public void onClick(View v) {
                 if(delete){
                     //HANDLE DELETE ACC
+                    final FirebaseUser user = mAuth.getCurrentUser();
+                    refStore.child("-M8SwpTY_7LsTRQzHtYm").child("employees").child(user.getUid()).removeValue()
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        ref.child(user.getUid()).removeValue()
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if(task.isSuccessful()){
+                                                            user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if(task.isSuccessful()){
+                                                                        Toast.makeText(getContext(), "Account deleted", Toast.LENGTH_SHORT).show();
+                                                                        startActivity(new Intent(getContext(), login.class));
+                                                                    }
+                                                                    else{
+                                                                        Toast.makeText(getContext(), task.getException().getMessage(),
+                                                                                Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+                                                        else{
+                                                            Toast.makeText(getContext(), "User cannot deleted", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                    else{
+                                        Toast.makeText(getContext(), "User cannot leave store", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 }
                 else{
                     //HANDLE LEAVE STORE

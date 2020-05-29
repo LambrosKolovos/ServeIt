@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="250dp"
-    android:layout_height="150dp"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
     android:background="#ffffff"
     android:padding="5dp"
     android:layout_gravity="center">
 
 
     <TextView
+        android:id="@+id/sure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Are you sure?"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+
+    <TextView
         android:layout_margin="20dp"
         android:id="@+id/message"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
-        android:textAlignment="center"
-        android:gravity="center_horizontal" />
+        android:text="If you choose to delete ServeIt from your account, keep in mind that you won't be able to sign up for ServeIt with the same username in the future."
+        android:textAlignment="textStart"
+        android:gravity="start"
+        android:layout_below="@id/sure"/>
 
     <LinearLayout
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_below="@+id/message"
         android:id="@+id/button_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="right"
         android:orientation="horizontal">
 
         <Button
@@ -32,7 +47,8 @@
             android:id="@+id/close_btn"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="Cancel"/>
+            android:text="Cancel"
+            android:layout_gravity=""/>
 
         <Button
             android:textColor="#ffffff"

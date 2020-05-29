@@ -188,6 +188,10 @@ public class sign_up extends AppCompatActivity {
                                         name_text,
                                         isOwner
                                 );
+
+                                if(!user.getIsOwner())
+                                    user.setWorkID(" ");
+
                                 database.getReference("Users")
                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {

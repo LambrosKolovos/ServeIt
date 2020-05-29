@@ -2,9 +2,10 @@ package com.example.serveIt;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Store implements Serializable {
-    private ArrayList<User> employees = new ArrayList<>();
+    private HashMap<String,User> employees = new HashMap<>();
     private ArrayList<Category> menu;
     private ArrayList<Table> tables;
 
@@ -30,11 +31,11 @@ public class Store implements Serializable {
         return password;
     }
 
-    public ArrayList<User> getEmployees() {
+    public HashMap<String,User> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(ArrayList<User> employees) {
+    public void setEmployees(HashMap<String, User> employees) {
         this.employees = employees;
     }
 

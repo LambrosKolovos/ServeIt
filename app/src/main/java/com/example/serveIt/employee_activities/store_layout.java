@@ -54,14 +54,14 @@ public class store_layout extends Fragment {
             storeID =(String) b.getSerializable("storeID");
             System.out.println(storeID);
         }
-        //readFromDB();
+      //  readFromDB();
         addViews();
 
         return root;
     }
 
     private void readFromDB(){
-        ref.child(storeID).addValueEventListener(new ValueEventListener() {
+        ref.child(storeID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()){
