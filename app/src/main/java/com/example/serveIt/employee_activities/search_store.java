@@ -139,8 +139,8 @@ public class search_store extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         firebaseRecyclerAdapter.stopListening();
     }
 

@@ -4,11 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
+import com.example.serveIt.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -68,16 +72,78 @@ public class employee_activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild(storeID)){
                     Toast.makeText(employee_activity.this, "Store with id " + storeID + " deleted", Toast.LENGTH_SHORT).show();
-                    storeID = " ";
-                    refUser.child(user.getUid()).child("workID").setValue(" ");
-                   // finish();
-                    //startActivity();
+                   // storeID = " ";
+                    refUser.child(user.getUid()).child("workID").setValue(" ")
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        ref.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                User user = dataSnapshot.getValue(User.class);
+
+                                                finish();
+                                                Intent i = new Intent(getApplicationContext(), search_store.class);
+                                                i.putExtra("userLoggedIn", user);
+                                                startActivity(i);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
+
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                throw databaseError.toException();
+                //throw databaseError.toException();
+            }
+        });
+
+        ref.child(storeID).child("employees").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChild(user.getUid())){
+                    Toast.makeText(employee_activity.this, "You are kicked from store", Toast.LENGTH_SHORT).show();
+                //    storeID = " ";
+                    refUser.child(user.getUid()).child("workID").setValue(" ")
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                ref.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        User user = dataSnapshot.getValue(User.class);
+
+                                        finish();
+                                        Intent i = new Intent(getApplicationContext(), search_store.class);
+                                        i.putExtra("userLoggedIn", user);
+                                        startActivity(i);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+               // throw databaseError.toException();
             }
         });
 
