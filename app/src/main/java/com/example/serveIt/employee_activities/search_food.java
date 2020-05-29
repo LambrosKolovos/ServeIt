@@ -42,6 +42,7 @@ public class search_food extends AppCompatActivity {
     public Order currentOrder = new Order();
     Bundle b;
     private String storeID;
+    private int tableID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,10 @@ public class search_food extends AppCompatActivity {
 
         if( b.getSerializable("sampleOrder") != null)
             currentOrder = (Order) b.getSerializable("sampleOrder");
+
+        if( b.getInt("tableID") != 0 ){
+            tableID = b.getInt("tableID");
+        }
 
         setContentView(R.layout.activity_search);
         database = FirebaseDatabase.getInstance().getReference("Menu");
@@ -100,6 +105,7 @@ public class search_food extends AppCompatActivity {
         Bundle b = new Bundle();
         b.putSerializable("currentOrder", currentOrder);
         b.putSerializable("storeID", storeID);
+        b.putInt("tableID", tableID);
         intent.putExtras(b);
 
         finish();

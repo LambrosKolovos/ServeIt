@@ -46,6 +46,7 @@ public class new_order extends Fragment{
     private Dialog verificationDialog;
     private Order order;
     private String storeID;
+    private int tableID;
 
     @Nullable
     @Override
@@ -77,7 +78,8 @@ public class new_order extends Fragment{
         }
 
         if(b.getInt("tableID") != 0){
-            tableID_view.setText("Table: " + b.getInt("tableID"));
+            tableID = b.getInt("tableID");
+            tableID_view.setText("Table: " +  tableID);
         }
         else{
             tableID_view.setText("Table: ");
@@ -97,6 +99,7 @@ public class new_order extends Fragment{
                 Bundle args = new Bundle();
                 args.putSerializable("sampleOrder", order);
                 args.putSerializable("storeID", storeID);
+                args.putInt("tableID", tableID);
                 intent.putExtras(args);
                 startActivity(intent);
             }
