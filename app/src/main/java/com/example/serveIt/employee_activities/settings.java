@@ -86,6 +86,20 @@ public class settings extends Fragment {
         help = root.findViewById(R.id.help_row);
         logout = root.findViewById(R.id.logout_row);
 
+        DatabaseReference username = ref.child(mAuth.getUid()).child("full_name");
+        username.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String name_str = dataSnapshot.getValue(String.class);
+                name.setText(name_str);
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         addListeners();
 
         return root;
@@ -233,69 +247,11 @@ public class settings extends Fragment {
             public void onClick(View v) {
                 if(delete){
                     //HANDLE DELETE ACC
-                    final FirebaseUser user = mAuth.getCurrentUser();
-                    refStore.child(storeID).child("employees").child(user.getUid()).removeValue()
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        ref.child(user.getUid()).removeValue()
-                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        if(task.isSuccessful()){
-                                                            user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    if(task.isSuccessful()){
-                                                                        Toast.makeText(getContext(), "Account deleted", Toast.LENGTH_SHORT).show();
-                                                                        startActivity(new Intent(getContext(), login.class));
-                                                                    }
-                                                                    else{
-                                                                        Toast.makeText(getContext(), task.getException().getMessage(),
-                                                                                Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                }
-                                                            });
-                                                        }
-                                                        else{
-                                                            Toast.makeText(getContext(), "User cannot deleted", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-                                                });
-                                    }
-                                    else{
-                                        Toast.makeText(getContext(), "User cannot leave store", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                    deleteUser();
                 }
                 else{
                     //HANDLE LEAVE STORE
-                    final DatabaseReference userRef = ref.child(mAuth.getCurrentUser().getUid());
-                    userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            User user = dataSnapshot.getValue(User.class);
-                            System.out.println("Removing user: " + user.getFull_name());
-                            System.out.println("From store: " + user.getWorkID());
-
-                            user.setWorkID(" ");
-                            userRef.child("workID").setValue(" ");
-
-                            getActivity().finish();
-
-                            Intent i = new Intent(getContext(), search_store.class);
-                            i.putExtra("userLoggedIn", user);
-                            startActivity(i);
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
+                    leaveStore();
                 }
             }
         });
@@ -308,5 +264,71 @@ public class settings extends Fragment {
         });
 
         alertDialog.show();
+    }
+
+    private void deleteUser(){
+        final FirebaseUser user = mAuth.getCurrentUser();
+        refStore.child(storeID).child("employees").child(user.getUid()).removeValue()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            ref.child(user.getUid()).removeValue()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if(task.isSuccessful()){
+                                                            Toast.makeText(getContext(), "Account deleted", Toast.LENGTH_SHORT).show();
+                                                            startActivity(new Intent(getContext(), login.class));
+                                                        }
+                                                        else{
+                                                            Toast.makeText(getContext(), task.getException().getMessage(),
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                            else{
+                                                Toast.makeText(getContext(), "User cannot deleted", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                        }
+                        else{
+                            Toast.makeText(getContext(), "User cannot leave store", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void leaveStore(){
+        final DatabaseReference userRef = ref.child(mAuth.getCurrentUser().getUid());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                System.out.println("Removing user: " + user.getFull_name());
+                System.out.println("From store: " + user.getWorkID());
+
+                user.setWorkID(" ");
+                userRef.child("workID").setValue(" ");
+
+                getActivity().finish();
+
+                Intent i = new Intent(getContext(), search_store.class);
+                i.putExtra("userLoggedIn", user);
+                startActivity(i);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
