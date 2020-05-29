@@ -70,6 +70,7 @@ public class search_store extends AppCompatActivity {
         if( b != null ){
             currentUser = (User) b.getSerializable("userLoggedIn");
         }
+
         noDataView = findViewById(R.id.no_data_view);
         storeView = findViewById(R.id.recycler_view);
         storeView.setLayoutManager(new LinearLayoutManager(this));
@@ -138,8 +139,8 @@ public class search_store extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         firebaseRecyclerAdapter.stopListening();
     }
 

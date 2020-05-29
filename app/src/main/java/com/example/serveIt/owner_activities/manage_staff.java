@@ -20,6 +20,8 @@ import android.widget.TableRow;
 import com.example.serveIt.R;
 import com.example.serveIt.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +37,8 @@ public class manage_staff extends Fragment {
     private List<User> employees;
     private EmployeeAdapter adapter;
     private RecyclerView employees_list;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
     @Nullable
     @Override
@@ -49,6 +53,9 @@ public class manage_staff extends Fragment {
         employees = new ArrayList<>();
         adapter = new EmployeeAdapter(employees);
 
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
         employees_list.setAdapter(adapter);
 
         loadEmployees();
@@ -59,28 +66,48 @@ public class manage_staff extends Fragment {
 
     private void loadEmployees(){
 
-        ref.child("-M8SwpTY_7LsTRQzHtYm").child("employees")
-                .addValueEventListener(new ValueEventListener() {
+        ref.orderByChild("ownerID").equalTo(user.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        for(DataSnapshot data: dataSnapshot.getChildren()){
-                            User employee = data.getValue(User.class);
-
-                            if(employee != null){
-                                employees.add(employee);
-                            }
-
+                    public void onDataChange(@NonNull DataSnapshot data) {
+                        String storeID = null;
+                       // System.out.println("THE NUMBER IS: " + data.getChildrenCount());
+                        for(DataSnapshot store: data.getChildren()){
+                            storeID = store.getKey();
                         }
 
-                        employees_list.setAdapter(adapter);
+                        if(storeID != null){
+                            ref.child(storeID).child("employees")
+                                    .addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            employees.clear();
+                                            for(DataSnapshot data: dataSnapshot.getChildren()){
+                                                User employee = data.getValue(User.class);
+
+                                                if(employee != null){
+                                                    employees.add(employee);
+                                                }
+
+                                            }
+                                            employees_list.setAdapter(adapter);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                           // throw databaseError.toException();
+                                        }
+                                    });
+                        }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        throw databaseError.toException();
                     }
                 });
+
+
 
     }
 

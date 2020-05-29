@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,15 +16,31 @@ import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
 import com.example.serveIt.User;
 import com.example.serveIt.employee_activities.OrderAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHolder> {
 
     private List<User> employees;
+    private DatabaseReference ref;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
     public EmployeeAdapter(List<User> employees){
         this.employees = employees;
+
+        ref = FirebaseDatabase.getInstance().getReference("Store");
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
 
     @NonNull
@@ -35,10 +52,71 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EmployeeAdapter.ViewHolder holder, int position) {
-        User employee = employees.get(position);
+    public void onBindViewHolder(@NonNull final EmployeeAdapter.ViewHolder holder, int position) {
+        final User employee = employees.get(position);
 
         holder.employee_name.setText(employee.getFull_name());
+
+        holder.delete_ico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("tapped");
+                ref.orderByChild("ownerID").equalTo(user.getUid())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull final DataSnapshot data) {
+                                String storeID = null;
+                                for(DataSnapshot store: data.getChildren()){
+                                    storeID = store.getKey();
+                                }
+
+                                if(storeID != null){
+                                    final String finalStoreID = storeID;
+                                    ref.child(storeID)
+                                            .child("employees")
+                                            .orderByChild("email")
+                                            .equalTo(employee.getEmail())
+                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    String employeeID = null;
+                                                    for(DataSnapshot data: dataSnapshot.getChildren()){
+                                                        employeeID = data.getKey();
+                                                    }
+
+                                                    ref.child(finalStoreID).child("employees")
+                                                            .child(employeeID)
+                                                            .removeValue()
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if(task.isSuccessful()){
+                                                                        Toast.makeText(holder.context, "Employee " + employee.getFull_name()
+                                                                                + " kicked", Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                    else{
+                                                                        Toast.makeText(holder.context, "Employee cannot be deleted", Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                }
+                                                            });
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                    throw databaseError.toException();
+                                                }
+                                            });
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                throw databaseError.toException();
+                            }
+                        });
+            }
+        });
     }
 
     @Override
@@ -52,6 +130,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
         private TextView employee_name;
         private ImageView delete_ico;
 
+
         public ViewHolder(View view, Context context){
             super(view);
 
@@ -60,12 +139,6 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
             employee_name = view.findViewById(R.id.employee_name);
             delete_ico = view.findViewById(R.id.delete_ico);
 
-            delete_ico.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         }
 
     }
