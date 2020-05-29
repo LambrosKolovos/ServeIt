@@ -57,6 +57,8 @@ public class settings extends Fragment {
     TableRow change_pass, leave, delete_acc, contact, help, logout;
     Dialog alertDialog, passDialog;
     String userID;
+    String storeID;
+    Bundle b;
 
     @Nullable
     @Override
@@ -67,6 +69,11 @@ public class settings extends Fragment {
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Users");
         refStore = database.getReference("Store");
+
+        b = getArguments();
+        if ( b.getSerializable("storeID") != null){
+            storeID = (String) b.getSerializable("storeID");
+        }
 
         alertDialog = new Dialog(getContext());
         passDialog = new Dialog(getContext());
@@ -227,7 +234,7 @@ public class settings extends Fragment {
                 if(delete){
                     //HANDLE DELETE ACC
                     final FirebaseUser user = mAuth.getCurrentUser();
-                    refStore.child("-M8SwpTY_7LsTRQzHtYm").child("employees").child(user.getUid()).removeValue()
+                    refStore.child(storeID).child("employees").child(user.getUid()).removeValue()
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

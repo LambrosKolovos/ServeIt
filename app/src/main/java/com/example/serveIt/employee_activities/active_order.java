@@ -51,7 +51,8 @@ public class active_order extends Fragment {
     private OrderAdapter orderAdapter;
     private Button prevBtn,nextBtn,readyBtn, deleteBtn;
     private int orderNumber;
-
+    Bundle b;
+    String storeID;
 
     @Nullable
     @Override
@@ -68,6 +69,11 @@ public class active_order extends Fragment {
 
         ready_text = root.findViewById(R.id.ready_text);
         ready_text.setVisibility(View.INVISIBLE);
+
+        b = getArguments();
+        if(b.getSerializable("storeID") != null){
+            storeID = (String) b.getSerializable("storeID");
+        }
 
         database = FirebaseDatabase.getInstance().getReference("Order");
         order_list.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -119,7 +125,7 @@ public class active_order extends Fragment {
                             String orderID = list.get(orderNumber);
                             list.remove(orderNumber);
 
-                            database.child("-M7sKK7wobW-3QAIbUvj").child(orderID).removeValue()
+                            database.child(storeID).child(orderID).removeValue()
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
@@ -153,7 +159,7 @@ public class active_order extends Fragment {
                     else
                         orderNumber++;
 
-                    Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber)).child("orderItems");
+                    Query firebaseSearchQuery = database.child(storeID).child(orderIDs.get(orderNumber)).child("orderItems");
                     firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -196,7 +202,7 @@ public class active_order extends Fragment {
                     else
                         orderNumber = orderIDs.size() - 1;
 
-                    Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber)).child("orderItems");
+                    Query firebaseSearchQuery = database.child(storeID).child(orderIDs.get(orderNumber)).child("orderItems");
                     firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -229,7 +235,7 @@ public class active_order extends Fragment {
             @Override
             public void onClick(View v) {
                 if(orderIDs.size() > 0 ){
-                    database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber)).child("ready").setValue(true);
+                    database.child(storeID).child(orderIDs.get(orderNumber)).child("ready").setValue(true);
                 }
 
             }
@@ -239,7 +245,7 @@ public class active_order extends Fragment {
     }
 
     private void tableID(int orderNumber) {
-        database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber)).child("table")
+        database.child(storeID).child(orderIDs.get(orderNumber)).child("table")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot tableID) {
@@ -258,7 +264,7 @@ public class active_order extends Fragment {
     }
 
     private void readData(final FirebaseCallback firebaseCallback){
-        final Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj");
+        final Query firebaseSearchQuery = database.child(storeID);
         firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -302,7 +308,7 @@ public class active_order extends Fragment {
 
     private void checkReady(int orderNumber){
         if(orderIDs.size() > 0 ){
-            database.child("-M7sKK7wobW-3QAIbUvj").child(orderIDs.get(orderNumber)).child("ready").addListenerForSingleValueEvent(new ValueEventListener() {
+            database.child(storeID).child(orderIDs.get(orderNumber)).child("ready").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot readyValue) {
                     if(readyValue.getValue(Boolean.class)!= null){

@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,21 +55,20 @@ public class store_layout extends Fragment {
             storeID =(String) b.getSerializable("storeID");
             System.out.println(storeID);
         }
-      //  readFromDB();
-        addViews();
+        readFromDB(getContext());
 
         return root;
     }
 
-    private void readFromDB(){
+    private void readFromDB(final Context ctx){
         ref.child(storeID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     Table table = data.getValue(Table.class);
-                    addTableView(table.getID(), currentRow);
+                    addTableView(ctx, table.getID(), currentRow);
                     if (table.getID() % 3  == 0) {
-                        currentRow = new TableRow(getContext());
+                        currentRow = new TableRow(ctx);
                         currentRow.setPadding(10, 10, 10, 10);
                     }
                 }
@@ -82,25 +82,14 @@ public class store_layout extends Fragment {
     }
 
 
-    public void addViews(){
-        for(int j=1 ; j<12; j++){
-            if (j % 3 == 0) {
-                currentRow = new TableRow(getContext());
-                currentRow.setPadding(10, 10, 10, 10);
-            }
-            addTableView(j, currentRow);
 
-        }
-    }
-
-
-    public void addTableView(final int id, final TableRow row){
+    public void addTableView(final Context ctx, final int id, final TableRow row){
         //Convert px to dp
         int padding = 10;
-        final float scale = getResources().getDisplayMetrics().density;
+        final float scale = ctx.getResources().getDisplayMetrics().density;
         int  x = (int) (padding * scale + 0.5f);
 
-        final Button tableIcon = new Button(getContext());
+        final Button tableIcon = new Button(ctx);
 
         tableIcon.setText(String.valueOf(id));
         //Check of table status - this needs to change
