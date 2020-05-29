@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:padding="5dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"
+        android:text="Clear table?"
+        android:id="@+id/message"
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
+
+
+    <LinearLayout
+        android:layout_margin="20dp"
+        android:layout_below="@+id/message"
+        android:id="@+id/button_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:background="@drawable/input_style"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Cancel" />
+
+        <Button
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginLeft="27dp"
+            android:layout_gravity="right"
+            android:id="@+id/clear_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Clear" />
+    </LinearLayout>
+
+</RelativeLayout>

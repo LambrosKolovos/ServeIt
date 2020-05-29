@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class store_layout extends Fragment {
     private DatabaseReference ref;
     private TableLayout table_view;
     private TableRow currentRow;
+    private Dialog clearTableDialog;
     Bundle b;
     String storeID;
 
@@ -49,6 +51,7 @@ public class store_layout extends Fragment {
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Table");
         table_view = root.findViewById(R.id.table_view);
+        clearTableDialog = new Dialog(getContext());
 
         b = getArguments();
         if(b!=null){
@@ -66,7 +69,7 @@ public class store_layout extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     Table table = data.getValue(Table.class);
-                    addTableView(ctx, table.getID(), currentRow);
+                    addTableView(ctx, table, currentRow);
                     if (table.getID() % 3  == 0) {
                         currentRow = new TableRow(ctx);
                         currentRow.setPadding(10, 10, 10, 10);
@@ -83,7 +86,7 @@ public class store_layout extends Fragment {
 
 
 
-    public void addTableView(final Context ctx, final int id, final TableRow row){
+    public void addTableView(final Context ctx, final Table table, final TableRow row){
         //Convert px to dp
         int padding = 10;
         final float scale = ctx.getResources().getDisplayMetrics().density;
@@ -91,20 +94,32 @@ public class store_layout extends Fragment {
 
         final Button tableIcon = new Button(ctx);
 
-        tableIcon.setText(String.valueOf(id));
+        tableIcon.setText(String.valueOf(table.getID()));
         //Check of table status - this needs to change
-        tableIcon.setBackgroundResource(R.drawable.table_available);
+
+        if(table.getStatus().equals("AVAILABLE"))
+            tableIcon.setBackgroundResource(R.drawable.table_available);
+        else if(table.getStatus().equals("ORDER_TAKEN"))
+            tableIcon.setBackgroundResource(R.drawable.order_taken);
+        else
+            tableIcon.setBackgroundResource(R.drawable.order_delivered);
 
         tableIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Open new fragment
-                openNewOrder(id);
+                openNewOrder(table.getID());
 
                 //Update table's status in DB;
+                updateTableStatus(table.getID());
+            }
+        });
 
-                //This sould go
-                tableIcon.setBackgroundResource(R.drawable.order_taken);
+        tableIcon.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showClearDialog(v, table);
+                return true;
             }
         });
 
@@ -117,7 +132,7 @@ public class store_layout extends Fragment {
         params.setMargins(x, 0, x, x);
         tableIcon.setLayoutParams(params);
 
-        if( id % 3 == 0){
+        if( table.getID() % 3 == 0){
             table_view.addView(row);
             row.addView(tableIcon);
 
@@ -141,4 +156,40 @@ public class store_layout extends Fragment {
                 .commit();
     }
 
+    public void updateTableStatus(int id){
+        int tableID = id-1;
+        ref.child(storeID)
+                .child(String.valueOf(tableID))
+                .child("status")
+                .setValue("ORDER_TAKEN");
+    }
+
+    public void showClearDialog(View v, final Table table){
+        Button clear_btn, cancel_btn;
+
+        clearTableDialog.setContentView(R.layout.clear_table_popup);
+
+        clear_btn = clearTableDialog.findViewById(R.id.clear_btn);
+        cancel_btn = clearTableDialog.findViewById(R.id.close_btn);
+
+        clear_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ref.child(storeID)
+                        .child(String.valueOf(table.getID()-1))
+                        .child("status")
+                        .setValue("AVAILABLE");
+                clearTableDialog.dismiss();
+            }
+        });
+
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearTableDialog.dismiss();
+            }
+        });
+
+        clearTableDialog.show();
+    }
 }
