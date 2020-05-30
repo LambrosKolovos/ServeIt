@@ -51,22 +51,33 @@ public class store_layout extends Fragment {
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Table");
         table_view = root.findViewById(R.id.table_view);
-        clearTableDialog = new Dialog(getContext());
+
+
+        clearTableDialog = new Dialog(requireContext());
 
         b = getArguments();
         if(b!=null){
             storeID =(String) b.getSerializable("storeID");
             System.out.println(storeID);
         }
+
         readFromDB(getContext());
 
         return root;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(clearTableDialog != null)
+            clearTableDialog.dismiss();
+    }
+
     private void readFromDB(final Context ctx){
-        ref.child(storeID).addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.child(storeID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                table_view.removeAllViews();
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     Table table = data.getValue(Table.class);
                     addTableView(ctx, table, currentRow);
@@ -93,6 +104,7 @@ public class store_layout extends Fragment {
         int  x = (int) (padding * scale + 0.5f);
 
         final Button tableIcon = new Button(ctx);
+
 
         tableIcon.setText(String.valueOf(table.getID()));
         //Check of table status - this needs to change
@@ -149,6 +161,10 @@ public class store_layout extends Fragment {
     }
 
     public void openNewOrder(int ID){
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
+
+        bottomNavigationView.setSelectedItemId(R.id.new_order);
+
         Bundle a = new Bundle();
         a.putSerializable("storeID", storeID);
         a.putInt("tableID", ID);

@@ -94,7 +94,7 @@ public class active_order extends Fragment {
 
                     orderNumber = list.size() - 1;
 
-                    final Query firebaseSearchQuery = database.child("-M7sKK7wobW-3QAIbUvj").child(list.get(list.size() - 1)).child("orderItems");
+                    final Query firebaseSearchQuery = database.child(storeID).child(list.get(list.size() - 1)).child("orderItems");
                     firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -153,50 +153,6 @@ public class active_order extends Fragment {
                     list_items.clear();
                     orderAdapter = new OrderAdapter(list_items);
 
-
-                    if(orderNumber == orderIDs.size() - 1)
-                        orderNumber = 0;
-                    else
-                        orderNumber++;
-
-                    Query firebaseSearchQuery = database.child(storeID).child(orderIDs.get(orderNumber)).child("orderItems");
-                    firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for(DataSnapshot order_items: dataSnapshot.getChildren()){
-                                //System.out.println(order_items.getKey());
-                                Order_Item items = order_items.getValue(Order_Item.class);
-                                if(items != null ){
-                                    list_items.add(items);
-                                }
-
-                            }
-                            //  Collections.sort(list_items, new QuantityComparator());
-                            order_list.setAdapter(orderAdapter);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                    tableID(orderNumber);
-                    checkReady(orderNumber);
-
-                }
-
-
-            }
-        });
-
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(orderIDs.size() > 0 ){
-                    order_list.removeAllViews();
-                    list_items.clear();
-                    orderAdapter = new OrderAdapter(list_items);
-
                     if(orderNumber > 0 )
                         orderNumber--;
                     else
@@ -228,6 +184,50 @@ public class active_order extends Fragment {
                     checkReady(orderNumber);
                 }
 
+
+
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(orderIDs.size() > 0 ){
+                    order_list.removeAllViews();
+                    list_items.clear();
+                    orderAdapter = new OrderAdapter(list_items);
+
+
+                    if(orderNumber == orderIDs.size() - 1)
+                        orderNumber = 0;
+                    else
+                        orderNumber++;
+
+                    Query firebaseSearchQuery = database.child(storeID).child(orderIDs.get(orderNumber)).child("orderItems");
+                    firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot order_items: dataSnapshot.getChildren()){
+                                //System.out.println(order_items.getKey());
+                                Order_Item items = order_items.getValue(Order_Item.class);
+                                if(items != null ){
+                                    list_items.add(items);
+                                }
+
+                            }
+                            //  Collections.sort(list_items, new QuantityComparator());
+                            order_list.setAdapter(orderAdapter);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    tableID(orderNumber);
+                    checkReady(orderNumber);
+
+                }
             }
         });
 
@@ -237,9 +237,9 @@ public class active_order extends Fragment {
                 if(orderIDs.size() > 0 ){
                     database.child(storeID).child(orderIDs.get(orderNumber)).child("ready").setValue(true);
                 }
-
             }
         });
+
 
         return root;
     }

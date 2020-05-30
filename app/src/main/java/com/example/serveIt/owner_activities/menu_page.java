@@ -39,6 +39,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +67,8 @@ public class menu_page extends Fragment {
 
     private FirebaseDatabase database;
     private DatabaseReference ref, menuRef;
+    private RelativeLayout menu_display;
+    private ProgressBar load_menu;
     
     String storeID;
 
@@ -79,6 +83,8 @@ public class menu_page extends Fragment {
 
         foodItems = new ArrayList<>();
         categoryBtn = root.findViewById(R.id.category_btn);
+        load_menu = root.findViewById(R.id.load_menu);
+        menu_display = root.findViewById(R.id.menu_display);
 
         menu = root.findViewById(R.id.expanding_list_main);
 
@@ -134,6 +140,14 @@ public class menu_page extends Fragment {
 
                                                 addItem(data.getKey(), foodItems);
                                                 foodItems.clear();
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        load_menu.setVisibility(View.INVISIBLE);
+                                                        menu_display.setVisibility(View.VISIBLE);
+                                                    }
+                                                }, 100);
+
                                             }
 
                                             @Override
@@ -165,13 +179,6 @@ public class menu_page extends Fragment {
 
     }
 
-    private void createItems() {
-        ArrayList<String> list = new ArrayList<>();
-
-       // addItem("John", list);
-
-
-    }
 
     private void addItem(final String title, ArrayList<Food_Item> subItems){
         //Let's create an item with R.layout.expanding_layout

@@ -7,10 +7,27 @@
     tools:context="com.example.serveIt.owner_activities.menu_page"
     android:background="#323232">
 
+    <ProgressBar
+        android:id="@+id/load_menu"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:indeterminateTint="@color/color"
+        android:layout_centerInParent="true"/>
+
+    <RelativeLayout
+        android:id="@+id/menu_display"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
     <com.diegodobelo.expandingview.ExpandingList
         android:id="@+id/expanding_list_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+
+    </com.diegodobelo.expandingview.ExpandingList>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/category_btn"
@@ -23,5 +40,7 @@
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
         app:fabSize="mini"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

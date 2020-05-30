@@ -52,6 +52,8 @@ public class search_store extends AppCompatActivity {
     User currentUser;
     private Button sign_out;
 
+    private static Dialog joinDialog;
+
     private FirebaseRecyclerAdapter<Store, ViewHolder > firebaseRecyclerAdapter;
     private FirebaseRecyclerOptions<Store> options;
     private FirebaseAuth mAuth;
@@ -142,6 +144,10 @@ public class search_store extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         firebaseRecyclerAdapter.stopListening();
+
+        if(joinDialog != null)
+            joinDialog.dismiss();
+
     }
 
     private void storeSearch(String searchText){
@@ -183,7 +189,7 @@ public class search_store extends AppCompatActivity {
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
-        Dialog joinDialog;
+
         Context context;
         FirebaseAuth mAuth;
 
