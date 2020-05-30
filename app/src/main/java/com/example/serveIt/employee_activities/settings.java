@@ -105,6 +105,13 @@ public class settings extends Fragment {
         return root;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(alertDialog != null)
+            alertDialog.dismiss();
+    }
+
     private void addListeners(){
         change_pass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -268,12 +275,13 @@ public class settings extends Fragment {
 
     private void deleteUser(){
         final FirebaseUser user = mAuth.getCurrentUser();
-        refStore.child(storeID).child("employees").child(user.getUid()).removeValue()
+
+        ref.child(user.getUid()).removeValue()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            ref.child(user.getUid()).removeValue()
+                            refStore.child(storeID).child("employees").child(user.getUid()).removeValue()
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -283,7 +291,11 @@ public class settings extends Fragment {
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if(task.isSuccessful()){
                                                             Toast.makeText(getContext(), "Account deleted", Toast.LENGTH_SHORT).show();
-                                                            startActivity(new Intent(getContext(), login.class));
+                                                            Activity activity = getActivity();
+                                                            if(activity != null){
+                                                                activity.finish();
+                                                                startActivity(new Intent(getContext(), login.class));
+                                                            }
                                                         }
                                                         else{
                                                             Toast.makeText(getContext(), task.getException().getMessage(),

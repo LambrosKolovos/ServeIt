@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +24,8 @@ import com.example.serveIt.Table;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,8 +43,12 @@ public class build_layout extends Fragment {
     private TableRow currentRow;
 
     private FirebaseDatabase database;
-    private DatabaseReference table_ref;
+    private DatabaseReference table_ref, store_ref;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
     private int table_number;
+
+    private float scale;
 
     @Nullable
     @Override
@@ -51,75 +58,99 @@ public class build_layout extends Fragment {
         add_table = root.findViewById(R.id.table_btn);
         table_view = root.findViewById(R.id.table_view);
 
+        mAuth = FirebaseAuth.getInstance();
+
         currentRow = new TableRow(getContext());
         tablelist = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         table_ref = database.getReference("Table");
+        store_ref = database.getReference("Store");
+
+        user = mAuth.getCurrentUser();
 
         table_number = 0;
 
         //Convert px to dp
         int padding = 10;
-        final float scale = getResources().getDisplayMetrics().density;
+        scale = getResources().getDisplayMetrics().density;
         final int padd_bottom = (int) (padding * scale + 0.5f);
 
         currentRow.setPadding(padd_bottom, padd_bottom, padd_bottom, padd_bottom);
 
         loadFromDB(new FirebaseCallback() {
             @Override
-            public void onCallback(final int id) {
+            public void onCallback(final int id, final Context context) {
                 tableID = id;
 
                 add_table.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        addTableView(tableID, currentRow);
+                        addTableView(tableID, currentRow, context);
                         tableID++;
                         if (tableID % 3  == 0) {
-                            currentRow = new TableRow(getContext());
+                            currentRow = new TableRow(context);
                             currentRow.setPadding(padd_bottom, padd_bottom, padd_bottom, padd_bottom);
                         }
                     }
                 });
             }
-        });
+        }, getContext());
 
 
         return root;
     }
 
-    public void loadFromDB(final FirebaseCallback firebaseCallback){
+    public void loadFromDB(final FirebaseCallback firebaseCallback, final Context context){
+        store_ref.orderByChild("ownerID").equalTo(user.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String storeID = null;
+                        System.out.println("THE NUMBER IS: " + dataSnapshot.getChildrenCount());
+                        for(DataSnapshot store: dataSnapshot.getChildren()){
+                            storeID = store.getKey();
+                        }
 
-        table_ref.child("-M8WPlqp0Gz6s-V8b2or").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(int i = 0; i < dataSnapshot.getChildrenCount(); i++){
-                    table_number++;
-                    addTableView(table_number - 1, currentRow);
-                    if (table_number % 3  == 0) {
-                        currentRow = new TableRow(getContext());
-                        currentRow.setPadding(10, 10, 10, 10);
+                        if(storeID != null){
+                            table_ref.child(storeID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for(int i = 0; i < dataSnapshot.getChildrenCount(); i++){
+                                        table_number++;
+                                        addTableView(table_number - 1, currentRow, context);
+                                        if (table_number % 3  == 0) {
+                                            currentRow = new TableRow(context);
+                                            currentRow.setPadding(10, 10, 10, 10);
+                                        }
+                                    }
+
+                                    firebaseCallback.onCallback(table_number, context);
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
                     }
-                }
 
-                firebaseCallback.onCallback(table_number);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
+                    }
+                });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
-    public void addTableView(final int id, final TableRow row){
+    public void addTableView(final int id, final TableRow row, final Context context){
         //Convert px to dp
         int padding = 10;
-        final float scale = getResources().getDisplayMetrics().density;
+        scale = context.getResources().getDisplayMetrics().density;
         int  x = (int) (padding * scale + 0.5f);
 
-        final Button tableView = new Button(getContext());
+        final Button tableView = new Button(context);
         final Table table = new Table(id+1, "AVAILABLE");
 
         tableView.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +165,7 @@ public class build_layout extends Fragment {
                             tablelist.remove(table);
                             row.removeView(tableView);
                             deleteTableDB(String.valueOf(id));
-                            Toast.makeText(getContext(), "Removing: " + (id+1), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Removing: " + (id+1), Toast.LENGTH_SHORT).show();
                         }
                         i = 0;
                     }
@@ -167,18 +198,62 @@ public class build_layout extends Fragment {
     }
 
     private void addTableToDB(){
-        table_ref.child("-M8WPlqp0Gz6s-V8b2or")
-                .setValue(tablelist);
+        store_ref.orderByChild("ownerID").equalTo(user.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String storeID = null;
+                        System.out.println("THE NUMBER IS: " + dataSnapshot.getChildrenCount());
+                        for(DataSnapshot store: dataSnapshot.getChildren()){
+                            storeID = store.getKey();
+                        }
+
+                        if(storeID != null){
+                            table_ref.child(storeID)
+                                    .setValue(tablelist);
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
     }
 
-    private void deleteTableDB(String id){
-        table_ref.child("-M8WPlqp0Gz6s-V8b2or")
-                .child(id)
-                .removeValue();
+    private void deleteTableDB(final String id){
+
+        store_ref.orderByChild("ownerID").equalTo(user.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String storeID = null;
+                        System.out.println("THE NUMBER IS: " + dataSnapshot.getChildrenCount());
+                        for(DataSnapshot store: dataSnapshot.getChildren()){
+                            storeID = store.getKey();
+                        }
+
+                        if(storeID != null){
+                            table_ref.child(storeID)
+                                    .child(id)
+                                    .removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
     }
 
     private interface FirebaseCallback{
-        void onCallback(int id);
+        void onCallback(int id, Context context);
     }
 
 }

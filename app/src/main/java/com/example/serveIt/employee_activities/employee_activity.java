@@ -110,35 +110,46 @@ public class employee_activity extends AppCompatActivity {
 
         ref.child(storeID).child("employees").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.hasChild(user.getUid())){
-                    Toast.makeText(employee_activity.this, "You are kicked from store", Toast.LENGTH_SHORT).show();
-                //    storeID = " ";
-                    refUser.child(user.getUid()).child("workID").setValue(" ")
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                ref.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        User user = dataSnapshot.getValue(User.class);
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                refUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot userNode) {
+                        if(!dataSnapshot.hasChild(user.getUid()) && userNode.hasChild(user.getUid())){
+                            Toast.makeText(employee_activity.this, "You are kicked from store", Toast.LENGTH_SHORT).show();
+                            //    storeID = " ";
+                            refUser.child(user.getUid()).child("workID").setValue(" ")
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                ref.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        User user = dataSnapshot.getValue(User.class);
+                                                        finish();
 
-                                        finish();
-                                        Intent i = new Intent(getApplicationContext(), search_store.class);
-                                        i.putExtra("userLoggedIn", user);
-                                        startActivity(i);
-                                    }
+                                                        Intent i = new Intent(getApplicationContext(), search_store.class);
+                                                        i.putExtra("userLoggedIn", user);
+                                                        startActivity(i);
+                                                    }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                    }
-                                });
-                            }
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
                         }
-                    });
-                }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
 
             @Override

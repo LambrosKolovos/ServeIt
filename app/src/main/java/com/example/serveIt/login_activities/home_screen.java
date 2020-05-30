@@ -94,6 +94,8 @@ public class home_screen extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
                 boolean isOwner = user.getIsOwner();
 
+
+
                 if(isOwner){
                     finish();
                     startActivity(new Intent(getApplicationContext(), owner_activity.class));
