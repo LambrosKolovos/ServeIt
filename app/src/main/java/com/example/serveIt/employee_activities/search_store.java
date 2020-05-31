@@ -238,7 +238,7 @@ public class search_store extends AppCompatActivity {
                             for(DataSnapshot x: dataSnapshot.getChildren()){
                                 String storeID = x.getKey();
                                 Store store = x.getValue(Store.class);
-                                if(id.equals(store.getOwnerID())){
+                                if(id.equals(store.getOwnerID()) && storeID != null){
                                     if(pass_entered.equals(store.getPassword())){
                                         System.out.println("USER ENTERS THE STORE");
                                         System.out.println(storeID);
@@ -279,6 +279,12 @@ public class search_store extends AppCompatActivity {
 
             joinDialog.show();
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        firebaseRecyclerAdapter.stopListening();
     }
 
     public void sign_out(View view){

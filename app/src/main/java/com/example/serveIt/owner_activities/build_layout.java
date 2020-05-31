@@ -1,31 +1,27 @@
-package com.example.serveIt.owner_activities;
+ackage com.example.serveIt.owner_activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.serveIt.R;
+import com.example.serveIt.Store;
 import com.example.serveIt.Table;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,22 +31,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class build_layout extends Fragment {
 
     FloatingActionButton add_table;
-    TableLayout table_view;
     private int i=0 , tableID = 0;
-    private ArrayList<Table> tablelist;
-    private TableRow currentRow;
 
     private FirebaseDatabase database;
     private DatabaseReference table_ref, store_ref;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-    private int table_number;
 
-    private float scale;
+    private List<Table> tablelist;
+    private TableAdapter tableAdapter;
+
+    private RecyclerView table_view;
+    private TextView restaurant_name;
 
     @Nullable
     @Override
@@ -59,81 +56,94 @@ public class build_layout extends Fragment {
 
         add_table = root.findViewById(R.id.table_btn);
         table_view = root.findViewById(R.id.table_view);
+        restaurant_name = root.findViewById(R.id.restaurant_name);
+
+        tablelist = new ArrayList<>();
+        table_view.setLayoutManager(new GridLayoutManager(requireContext(), calculateNoOfColumns(requireContext(),130)));
+        tableAdapter = new TableAdapter(tablelist,requireContext());
+
+        table_view.setAdapter(tableAdapter);
+
         mAuth = FirebaseAuth.getInstance();
 
-        currentRow = new TableRow(getContext());
-        tablelist = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         table_ref = database.getReference("Table");
         store_ref = database.getReference("Store");
 
         user = mAuth.getCurrentUser();
 
-        table_number = 0;
+        showRestName();
 
-        //Convert px to dp
-        int padding = 10;
-        scale = getResources().getDisplayMetrics().density;
-        final int padd_bottom = (int) (padding * scale + 0.5f);
 
-        currentRow.setPadding(padd_bottom, padd_bottom, padd_bottom, padd_bottom);
-
-        loadFromDB(new FirebaseCallback() {
+        readFromDB(new FirebaseCallback() {
             @Override
-            public void onCallback(final int id, final Context context) {
+            public void onCallback(final int id) {
                 tableID = id;
+                if(id > 0)
+                    tableID = tablelist.get(id - 1).getID();
+                else
+                    tableID = 0;
 
                 add_table.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        addTableView(tableID, currentRow, context);
-                        tableID++;
-                        if (tableID % 3  == 0) {
-                            currentRow = new TableRow(context);
-                            currentRow.setPadding(padd_bottom, padd_bottom, padd_bottom, padd_bottom);
-                        }
-                    }
-                });
-            }
-        }, getContext());
+                @Override
+                public void onClick(View v) {
+                    if(!tablelist.isEmpty())
+                        tableID = tablelist.get(tableAdapter.getItemCount() - 1).getID();
+                    else
+                        tableID = 0;
+
+                    tableID++;
+
+                    tableAdapter.add(tableID);
+                    table_view.setAdapter(tableAdapter);
+                }
+            });
+        }
+        });
 
 
         return root;
     }
 
-    public void loadFromDB(final FirebaseCallback firebaseCallback, final Context context){
+    private void readFromDB(final FirebaseCallback firebaseCallback){
         store_ref.orderByChild("ownerID").equalTo(user.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot data) {
                         String storeID = null;
-                        System.out.println("THE NUMBER IS: " + dataSnapshot.getChildrenCount());
-                        for(DataSnapshot store: dataSnapshot.getChildren()){
+
+                        System.out.println("THE NUMBER IS: " + data.getChildrenCount());
+                        for(DataSnapshot store: data.getChildren()){
                             storeID = store.getKey();
                         }
 
                         if(storeID != null){
-                            table_ref.child(storeID).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for(int i = 0; i < dataSnapshot.getChildrenCount(); i++){
-                                        table_number++;
-                                        addTableView(table_number - 1, currentRow, context);
-                                        if (table_number % 3  == 0) {
-                                            currentRow = new TableRow(context);
-                                            currentRow.setPadding(10, 10, 10, 10);
+                            table_ref.child(storeID)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                                            int size_tables = 0;
+
+                                            for(DataSnapshot tables: dataSnapshot.getChildren()){
+                                                Table table = tables.getValue(Table.class);
+                                                tablelist.add(table);
+                                                size_tables++;
+                                            }
+
+                                            firebaseCallback.onCallback(size_tables);
+
+                                            tableAdapter.notifyDataSetChanged();
+                                          //  table_view.setAdapter(tableAdapter);
+                                          //  table_view.setAdapter(tableAdapter);
+
+
                                         }
-                                    }
 
-                                    firebaseCallback.onCallback(table_number, context);
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
+                                        }
+                                    });
                         }
                     }
 
@@ -142,106 +152,37 @@ public class build_layout extends Fragment {
 
                     }
                 });
-
     }
 
-    public void addTableView(final int id, final TableRow row, final Context context){
-        //Convert px to dp
-        int padding = 10;
-        scale = context.getResources().getDisplayMetrics().density;
-        int  x = (int) (padding * scale + 0.5f);
-
-        final Button tableView = new Button(context);
-        final Table table = new Table(id+1, "AVAILABLE");
-
-        tableView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                i++;
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(i == 2){
-                            tablelist.remove(table);
-                            row.removeView(tableView);
-                            deleteTableDB(String.valueOf(id));
-                            Toast.makeText(context, "Removing: " + (id+1), Toast.LENGTH_SHORT).show();
-                        }
-                        i = 0;
-                    }
-                }, 300);
-            }
-        });
-
-        tableView.setText(String.valueOf(id+1));
-        tableView.setBackgroundResource(R.drawable.table_available);
-
-        TableRow.LayoutParams params = new TableRow.LayoutParams(
-                TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT,
-                1
-        );
-        params.setMargins(x, 0, x, x);
-        tableView.setLayoutParams(params);
-
-        if( id % 3 == 0){
-            table_view.addView(row);
-            row.addView(tableView);
-
-        }
-        else{
-            row.addView(tableView);
-        }
-
-        tablelist.add(table);
-        addTableToDB();
-    }
-
-    private void addTableToDB(){
-        store_ref.orderByChild("ownerID").equalTo(user.getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String storeID = null;
-                        System.out.println("THE NUMBER IS: " + dataSnapshot.getChildrenCount());
-                        for(DataSnapshot store: dataSnapshot.getChildren()){
-                            storeID = store.getKey();
-                        }
-
-                        if(storeID != null){
-                            table_ref.child(storeID)
-                                    .setValue(tablelist);
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-
-    }
-
-    private void deleteTableDB(final String id){
+    private void showRestName(){
 
         store_ref.orderByChild("ownerID").equalTo(user.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot data) {
                         String storeID = null;
-                        System.out.println("THE NUMBER IS: " + dataSnapshot.getChildrenCount());
-                        for(DataSnapshot store: dataSnapshot.getChildren()){
+
+                        System.out.println("THE NUMBER IS: " + data.getChildrenCount());
+                        for(DataSnapshot store: data.getChildren()){
                             storeID = store.getKey();
                         }
 
-                        if(storeID != null){
-                            table_ref.child(storeID)
-                                    .child(id)
-                                    .removeValue();
+                        if(storeID != null) {
+                            store_ref.child(storeID)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            Store store = dataSnapshot.getValue(Store.class);
+
+                                            if(store != null)
+                                                restaurant_name.setText(store.getName());
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
                         }
                     }
 
@@ -250,10 +191,21 @@ public class build_layout extends Fragment {
 
                     }
                 });
-
     }
+
+
+    public static int calculateNoOfColumns(Context context, float columnWidthDp) { // For example columnWidthdp=180
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
+        int noOfColumns = (int) (screenWidthDp / columnWidthDp + 0.5); // +0.5 for correct rounding to int.
+        return noOfColumns;
+    }
+
 
     private interface FirebaseCallback{
-        void onCallback(int id, Context context);
+        void onCallback(int id);
     }
+
+
+
 }

@@ -71,6 +71,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/change_password_row"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="15dp"
