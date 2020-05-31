@@ -5,28 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Paint;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.serveIt.R;
 import com.example.serveIt.SharedPref;
 import com.example.serveIt.User;
 import com.example.serveIt.employee_activities.employee_activity;
 import com.example.serveIt.employee_activities.search_store;
-import com.example.serveIt.owner_activities.build_layout;
 import com.example.serveIt.owner_activities.owner_activity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.example.serveIt.employee_activities.settings;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,9 +67,16 @@ public class login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                startActivity(new Intent(getApplicationContext(), sign_up.class));
+                startActivity(new Intent(getApplication(), sign_up.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+
     }
 
     @Override

@@ -200,20 +200,16 @@ public class settings extends Fragment {
             }
         });
 
-        final String old_text = oldpass.getText().toString();
-        final String new_text = newPass.getText().toString();
 
-        if(old_text.length() < 6){
 
-        }
-        else if(new_text.length() < 6){
-
-        }
-        else{
-            change.setOnClickListener(new View.OnClickListener() {
+        change.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    final String old_text = oldpass.getText().toString();
+                    final String new_text = newPass.getText().toString();
                     final FirebaseUser user = mAuth.getCurrentUser();
+
+
                     if(user != null){
                         AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(),old_text);
 
@@ -226,6 +222,7 @@ public class settings extends Fragment {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(getContext(), "Password changed", Toast.LENGTH_SHORT).show();
+                                                passDialog.dismiss();
                                             } else {
                                                 Toast.makeText(getContext(), "Password didn't change", Toast.LENGTH_SHORT).show();
                                             }
@@ -241,7 +238,6 @@ public class settings extends Fragment {
 
                 }
             });
-        }
 
 
         passDialog.show();
@@ -259,9 +255,9 @@ public class settings extends Fragment {
         msg_view.setTextSize(18);
 
         if(delete){
-            msg_view.setText("If you choose to delete ServeIt from your account, " +
-                    "keep in mind that you won't be able to sign up for ServeIt " +
-                    "with the same username in the future.");
+            msg_view.setText("If you choose to delete your ServeIt account, " +
+                    "keep in mind that you won't be able to sign in for ServeIt " +
+                    "with the same credentials in the future.");
         }
         else{
             yes_btn.setText("LEAVE");

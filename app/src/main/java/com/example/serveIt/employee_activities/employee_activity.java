@@ -97,15 +97,19 @@ public class employee_activity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        ref.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        refUser.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 User user = dataSnapshot.getValue(User.class);
 
-                                                finish();
-                                                Intent i = new Intent(getApplicationContext(), search_store.class);
-                                                i.putExtra("userLoggedIn", user);
-                                                startActivity(i);
+                                                if(user != null){
+                                                  //  user.setWorkID(" ");
+                                                    finish();
+                                                    Intent i = new Intent(getApplicationContext(), search_store.class);
+                                                    i.putExtra("userLoggedIn", user);
+                                                    startActivity(i);
+                                                }
+
                                             }
 
                                             @Override
@@ -141,15 +145,19 @@ public class employee_activity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
-                                                ref.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                refUser.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                         User user = dataSnapshot.getValue(User.class);
-                                                        finish();
 
-                                                        Intent i = new Intent(getApplicationContext(), search_store.class);
-                                                        i.putExtra("userLoggedIn", user);
-                                                        startActivity(i);
+                                                        if(user != null){
+                                                           // user.setWorkID(" ");
+                                                            finish();
+                                                            Intent i = new Intent(getApplicationContext(), search_store.class);
+                                                            i.putExtra("userLoggedIn", user);
+                                                            startActivity(i);
+                                                        }
+
                                                     }
 
                                                     @Override

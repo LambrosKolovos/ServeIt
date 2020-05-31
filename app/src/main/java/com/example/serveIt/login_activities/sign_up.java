@@ -4,37 +4,29 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
 import com.example.serveIt.*;
-import com.example.serveIt.employee_activities.employee_activity;
 import com.example.serveIt.employee_activities.search_store;
-import com.example.serveIt.employee_activities.settings;
-import com.example.serveIt.owner_activities.build_layout;
 import com.example.serveIt.owner_activities.owner_activity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class sign_up extends AppCompatActivity {
@@ -85,6 +77,7 @@ public class sign_up extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
                 startActivity(new Intent(getApplicationContext(), login.class));
+                overridePendingTransition(R.anim.left_in, R.anim.right_out);
             }
         });
 
@@ -234,4 +227,9 @@ public class sign_up extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+
+    }
 }

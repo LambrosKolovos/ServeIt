@@ -122,6 +122,11 @@ public class menu_page extends Fragment {
                     ref.child(storeID).orderByChild("name").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.getChildrenCount() == 0){
+                                load_menu.setVisibility(View.GONE);
+                                menu_display.setVisibility(View.VISIBLE);
+                            }
+
                             for(final DataSnapshot data: dataSnapshot.getChildren()){
                                 if(!data.getKey().equals("ItemList")){
                                     //MenuListData.addCategory(data.getKey());
