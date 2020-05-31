@@ -1,30 +1,20 @@
 package com.example.serveIt.employee_activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.method.KeyListener;
-import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +23,6 @@ import com.example.serveIt.R;
 import com.example.serveIt.login_activities.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,7 +33,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.example.serveIt.*;
-import com.google.firebase.database.annotations.NotNull;
 
 public class settings extends Fragment {
 
@@ -56,9 +44,11 @@ public class settings extends Fragment {
     TextView name;
     TableRow change_pass, leave, delete_acc, contact, help, logout;
     Dialog alertDialog, passDialog;
+    Switch darkModeSwitch;
     String userID;
     String storeID;
     Bundle b;
+    SharedPref sharedPref;
 
     @Nullable
     @Override
@@ -70,6 +60,7 @@ public class settings extends Fragment {
         ref = database.getReference("Users");
         refStore = database.getReference("Store");
 
+        sharedPref = new SharedPref(getContext());
         b = getArguments();
         if ( b.getSerializable("storeID") != null){
             storeID = (String) b.getSerializable("storeID");
@@ -85,6 +76,33 @@ public class settings extends Fragment {
         contact = root.findViewById(R.id.contact_row);
         help = root.findViewById(R.id.help_row);
         logout = root.findViewById(R.id.logout_row);
+        darkModeSwitch = root.findViewById(R.id.dark_switch);
+
+        if(sharedPref.loadNightMode())
+            darkModeSwitch.setChecked(true);
+        else
+            darkModeSwitch.setChecked(false);
+
+
+        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Intent i = new Intent(getContext(), employee_activity.class);
+                    b.putBoolean("trigger", true);
+                    sharedPref.setNightMode(true);
+                    i.putExtras(b);
+                    startActivity(i);
+                }
+                else{
+                    Intent i = new Intent(getContext(), employee_activity.class);
+                    b.putBoolean("trigger", true);
+                    sharedPref.setNightMode(false);
+                    i.putExtras(b);
+                    startActivity(i);
+                }
+            }
+        });
 
         DatabaseReference username = ref.child(mAuth.getUid()).child("full_name");
         username.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -155,7 +173,9 @@ public class settings extends Fragment {
                 Activity activity = getActivity();
                 if(activity != null){
                     activity.finish();
-                    startActivity(new Intent(getActivity(),login.class));
+                    Intent i = new  Intent(getActivity(),login.class);
+                    i.putExtra("darkPref", b.getBoolean("drakPref"));
+                    startActivity(i);
                 }
             }
         });

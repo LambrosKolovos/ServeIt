@@ -9,10 +9,10 @@
     tools:context="com.example.serveIt.employee_activities.active_order">
 
     <LinearLayout
+        android:background="?attr/bgColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#ffffff">
+        android:orientation="vertical">
 
 
         <LinearLayout
@@ -37,6 +37,7 @@
                 android:layout_weight="1">
 
                 <TextView
+                    android:background="?attr/bgColor"
                     android:id="@+id/table_id"
                     android:paddingTop="10dp"
                     android:layout_width="match_parent"
