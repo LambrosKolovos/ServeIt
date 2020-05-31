@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="?attr/bgColor"
     tools:context="com.example.serveIt.employee_activities.new_order">
 
     <ScrollView

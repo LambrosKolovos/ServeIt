@@ -15,8 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
@@ -57,7 +59,6 @@ public class build_layout extends Fragment {
 
         add_table = root.findViewById(R.id.table_btn);
         table_view = root.findViewById(R.id.table_view);
-
         mAuth = FirebaseAuth.getInstance();
 
         currentRow = new TableRow(getContext());
@@ -255,5 +256,4 @@ public class build_layout extends Fragment {
     private interface FirebaseCallback{
         void onCallback(int id, Context context);
     }
-
 }

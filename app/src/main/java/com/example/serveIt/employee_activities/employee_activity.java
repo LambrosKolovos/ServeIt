@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
+import com.example.serveIt.SharedPref;
 import com.example.serveIt.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,6 +38,7 @@ public class employee_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_activity);
 
+        SharedPref sharedPref = new SharedPref(this);
         ref = FirebaseDatabase.getInstance().getReference("Store");
         refUser = FirebaseDatabase.getInstance().getReference("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -47,6 +49,21 @@ public class employee_activity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         b = getIntent().getExtras();
+        if(sharedPref.loadNightMode())
+            setTheme(R.style.darkTheme);
+        else
+            setTheme(R.style.AppTheme);
+
+
+        if( b.getBoolean("trigger")){
+            storeID = (String) b.getSerializable("storeID");
+            bottomNav.setSelectedItemId(R.id.settings);
+            Fragment selectedFragment = new settings();
+            selectedFragment.setArguments(b);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    selectedFragment).commit();
+            return;
+        }
         if( b.getSerializable("currentOrder") != null){
             storeID = (String) b.getSerializable("storeID");
             bottomNav.setSelectedItemId(R.id.new_order);
@@ -74,7 +91,7 @@ public class employee_activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild(storeID)){
                     Toast.makeText(employee_activity.this, "Store with id " + storeID + " deleted", Toast.LENGTH_SHORT).show();
-                   // storeID = " ";
+                    // storeID = " ";
                     refUser.child(user.getUid()).child("workID").setValue(" ")
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -156,7 +173,7 @@ public class employee_activity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-               // throw databaseError.toException();
+                // throw databaseError.toException();
             }
         });
 

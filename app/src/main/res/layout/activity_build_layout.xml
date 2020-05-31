@@ -9,12 +9,11 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <TableLayout
-            android:padding="20dp"
-            android:id="@+id/table_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TableLayout
+                android:padding="20dp"
+                android:id="@+id/table_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
+import com.example.serveIt.SharedPref;
 import com.example.serveIt.User;
 import com.example.serveIt.employee_activities.employee_activity;
 import com.example.serveIt.employee_activities.search_store;
@@ -39,7 +40,7 @@ public class login extends AppCompatActivity {
     Button login_btn;
     TextView register_view, alert;
     private ProgressBar loading_bar;
-
+    SharedPref sharedPref;
     private DatabaseReference ref;
 
 
@@ -49,6 +50,12 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
         ref = FirebaseDatabase.getInstance().getReference();
+        sharedPref = new SharedPref(this);
+
+        if(sharedPref.loadNightMode())
+            setTheme(R.style.darkTheme);
+        else
+            setTheme(R.style.AppTheme);
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
