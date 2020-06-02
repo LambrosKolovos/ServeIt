@@ -30,8 +30,11 @@ import com.example.serveIt.SharedPref;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class new_order extends Fragment{
@@ -44,6 +47,7 @@ public class new_order extends Fragment{
     private FirebaseDatabase database;
     private DatabaseReference ref;
     private DatabaseReference orderRef;
+    private DatabaseReference tableRef;
     private Bundle b;
 
     private Dialog verificationDialog;
@@ -63,6 +67,7 @@ public class new_order extends Fragment{
         priceView = root.findViewById(R.id.totalPrice);
         tableID_view = root.findViewById(R.id.table_id_view);
 
+        tableRef = FirebaseDatabase.getInstance().getReference("Table");
         sharedPref = new SharedPref(getContext());
 
         database = FirebaseDatabase.getInstance();
@@ -142,11 +147,14 @@ public class new_order extends Fragment{
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
+                                            updateTableStatus(tableID);
                                             Toast.makeText(getContext(), "Order successfully sent!", Toast.LENGTH_SHORT).show();
+                                            clearOrderView();
                                         }
                                         else{
                                             Toast.makeText(getContext(), "Order can't be sent!", Toast.LENGTH_SHORT).show();
                                         }
+
                                     }
                                 });
                         verificationDialog.dismiss();
@@ -154,7 +162,6 @@ public class new_order extends Fragment{
                     else
                         Toast.makeText(getContext(), "Can't send empty order", Toast.LENGTH_SHORT).show();
 
-                    clearOrderView();
             }
 
         });
@@ -296,5 +303,33 @@ public class new_order extends Fragment{
 
     private void refreshPriceView() {
         priceView.setText("Total: " + order.getTotal_price() + "€");
+    }
+
+
+    public void updateTableStatus(int id){
+        tableRef.child(storeID)
+                .orderByChild("id")
+                .equalTo(id)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String tableID = null;
+                        for(DataSnapshot data: dataSnapshot.getChildren())
+                            tableID = data.getKey();
+
+                        if (tableID != null) {
+                            tableRef.child(storeID)
+                                    .child(tableID)
+                                    .child("status")
+                                    .setValue("ORDER_TAKEN");
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 }

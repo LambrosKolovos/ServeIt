@@ -98,8 +98,6 @@ public class TableAdapterEmployee extends RecyclerView.Adapter<TableAdapterEmplo
                 if(table.getStatus().equals("AVAILABLE")){
                     //Open new fragment
                     openNewOrder(table.getID());
-                    //Update table's status in DB;
-                    updateTableStatus(table.getID());
                 }
                 else if(table.getStatus().equals("ORDER_TAKEN")){
                     Toast.makeText(context, "Order already taken!", Toast.LENGTH_SHORT).show();
@@ -129,34 +127,6 @@ public class TableAdapterEmployee extends RecyclerView.Adapter<TableAdapterEmplo
                 .replace(R.id.fragment_container, nextFrag)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    public void updateTableStatus(int id){
-
-        tableRef.child(storeID)
-                .orderByChild("id")
-                .equalTo(id)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String tableID = null;
-                        for(DataSnapshot data: dataSnapshot.getChildren())
-                            tableID = data.getKey();
-
-                        if (tableID != null) {
-                            tableRef.child(storeID)
-                                    .child(tableID)
-                                    .child("status")
-                                    .setValue("ORDER_TAKEN");
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
     }
 
 
