@@ -137,33 +137,31 @@ public class new_order extends Fragment{
             @Override
             public void onClick(View v) {
 
-                OrderDatabase orderDatabase = new OrderDatabase(order.getOrdered(), tableField.getText().toString());
+                OrderDatabase orderDatabase = new OrderDatabase(order.getOrdered(), String.valueOf(tableID));
 
                 if(order.getOrdered().size() != 0){
-                        orderRef.child(storeID)
-                                .push()
-                                .setValue(orderDatabase)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            updateTableStatus(tableID);
-                                            Toast.makeText(getContext(), "Order successfully sent!", Toast.LENGTH_SHORT).show();
-                                            clearOrderView();
-                                        }
-                                        else{
-                                            Toast.makeText(getContext(), "Order can't be sent!", Toast.LENGTH_SHORT).show();
-                                        }
-
+                    orderRef.child(storeID)
+                            .push()
+                            .setValue(orderDatabase)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        updateTableStatus(tableID);
+                                        Toast.makeText(getContext(), "Order successfully sent!", Toast.LENGTH_SHORT).show();
                                     }
-                                });
-                        verificationDialog.dismiss();
-                    }
-                    else
-                        Toast.makeText(getContext(), "Can't send empty order", Toast.LENGTH_SHORT).show();
+                                    else{
+                                        Toast.makeText(getContext(), "Order can't be sent!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                    verificationDialog.dismiss();
+                }
+                else
+                    Toast.makeText(getContext(), "Can't send empty order", Toast.LENGTH_SHORT).show();
 
+                clearOrderView();
             }
-
         });
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +175,7 @@ public class new_order extends Fragment{
     }
 
     public void clearOrderView(){
+        tableID_view.setText("Table: ");
         order.removeAll();
         orderLayout.removeAllViews();
         refreshPriceView();
@@ -235,13 +234,27 @@ public class new_order extends Fragment{
         TextView quantity = new TextView(getContext());
         TextView price = new TextView(getContext());
 
+        if(sharedPref.loadNightMode()){
+            item.setTextColor(Color.parseColor("#EEEEEE"));
+            quantity.setTextColor(Color.parseColor("#EEEEEE"));
+            price.setTextColor(Color.parseColor("#EEEEEE"));
+        }
+        else{
+            item.setTextColor(Color.parseColor("#252525"));
+            quantity.setTextColor(Color.parseColor("#252525"));
+            price.setTextColor(Color.parseColor("#252525"));
+        }
+
         item.setText("Item");
+        item.setTextSize(16);
         item.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 6));
 
         quantity.setText("Quantity");
+        quantity.setTextSize(14);
         quantity.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 3));
 
         price.setText("Price");
+        price.setTextSize(16);
         price.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 3));
 
         header.addView(item);

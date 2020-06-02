@@ -22,6 +22,7 @@ import com.example.serveIt.Food_Item;
 import com.example.serveIt.Order;
 import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
+import com.example.serveIt.Table;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -44,7 +45,7 @@ public class active_order extends Fragment {
 
 
     private RecyclerView order_list;
-    private DatabaseReference database;
+    private DatabaseReference database, tableRef;
 
     private TextView tableId, ready_text;
     private ArrayList<Order_Item> list_items;
@@ -62,6 +63,7 @@ public class active_order extends Fragment {
         View root = inflater.inflate(R.layout.activity_active_order, container, false);
 
 
+        tableRef = FirebaseDatabase.getInstance().getReference("Table");
         order_list = root.findViewById(R.id.order_list);
         tableId = root.findViewById(R.id.table_id);
         nextBtn = root.findViewById(R.id.next_btn);
@@ -239,7 +241,40 @@ public class active_order extends Fragment {
             public void onClick(View v) {
                 if(orderIDs.size() > 0 ){
                     database.child(storeID).child(orderIDs.get(orderNumber)).child("ready").setValue(true);
+                    database.child(storeID).child(orderIDs.get(orderNumber)).child("table").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String tableID = dataSnapshot.getValue(String.class);
+                            System.out.println("TABLE ID FOR ORDER: " + tableID);
+                            if(tableID != null){
+                                tableRef.child(storeID).orderByChild("id").equalTo(Integer.parseInt(tableID)).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        String table = null;
+                                        for(DataSnapshot data: dataSnapshot.getChildren()){
+                                            table = data.getKey();
+                                        }
+
+                                        if(table != null){
+                                            tableRef.child(storeID).child(table).child("status").setValue("ORDER_DELIVERED");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
+
             }
         });
 
