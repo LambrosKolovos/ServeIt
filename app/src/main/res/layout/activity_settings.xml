@@ -8,6 +8,7 @@
     tools:context="com.example.serveIt.employee_activities.settings">
 
     <ScrollView
+        android:id="@+id/setting_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

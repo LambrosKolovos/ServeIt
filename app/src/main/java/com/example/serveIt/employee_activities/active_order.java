@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ActionBar;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class active_order extends Fragment {
     private OrderAdapter orderAdapter;
     private Button prevBtn,nextBtn,readyBtn, deleteBtn;
     private int orderNumber;
+    private long orders;
     Bundle b;
     String storeID;
 
@@ -79,7 +81,7 @@ public class active_order extends Fragment {
         order_list.setLayoutManager(new LinearLayoutManager(getContext()));
         list_items = new ArrayList<>();
         orderIDs = new ArrayList<>();
-        orderAdapter = new OrderAdapter(list_items);
+        orderAdapter = new OrderAdapter(list_items, requireContext());
         orderNumber = 0;
 
         tableId.setPaintFlags(tableId.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -87,8 +89,10 @@ public class active_order extends Fragment {
 
         readData(new FirebaseCallback() {
             @Override
-            public void onCallback(final List<String> list) {
+            public void onCallback(final List<String> list,final long number) {
                 System.out.println(list.toString());
+
+                orders = number;
 
                 if(list.size() > 0) {
 
@@ -122,17 +126,19 @@ public class active_order extends Fragment {
                     deleteBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String orderID = list.get(orderNumber);
-                            list.remove(orderNumber);
 
-                            database.child(storeID).child(orderID).removeValue()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(getContext(), "Order deleted", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
+                            if(orders > 0){
+                                String orderID = list.get(orderNumber);
+                                list.remove(orderNumber);
+                                orders--;
+                                database.child(storeID).child(orderID).removeValue()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(getContext(), "Order deleted", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
                         }
                     });
 
@@ -151,7 +157,7 @@ public class active_order extends Fragment {
                 if(orderIDs.size() > 0 ){
                     order_list.removeAllViews();
                     list_items.clear();
-                    orderAdapter = new OrderAdapter(list_items);
+                    orderAdapter = new OrderAdapter(list_items, requireContext());
 
                     if(orderNumber > 0 )
                         orderNumber--;
@@ -183,9 +189,6 @@ public class active_order extends Fragment {
                     tableID(orderNumber);
                     checkReady(orderNumber);
                 }
-
-
-
             }
         });
 
@@ -195,7 +198,7 @@ public class active_order extends Fragment {
                 if(orderIDs.size() > 0 ){
                     order_list.removeAllViews();
                     list_items.clear();
-                    orderAdapter = new OrderAdapter(list_items);
+                    orderAdapter = new OrderAdapter(list_items, requireContext());
 
 
                     if(orderNumber == orderIDs.size() - 1)
@@ -264,6 +267,7 @@ public class active_order extends Fragment {
     }
 
     private void readData(final FirebaseCallback firebaseCallback){
+
         final Query firebaseSearchQuery = database.child(storeID);
         firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
             @Override
@@ -278,7 +282,7 @@ public class active_order extends Fragment {
 
                 }
 
-                firebaseCallback.onCallback(orderIDs);
+                firebaseCallback.onCallback(orderIDs, dataSnapshot.getChildrenCount());
 
                 for(Order_Item x: list_items){
                     System.out.println(x.getItem().getName());
@@ -339,6 +343,6 @@ public class active_order extends Fragment {
 
     private interface FirebaseCallback{
 
-        void onCallback(List<String> list);
+        void onCallback(List<String> list, long number);
     }
 }

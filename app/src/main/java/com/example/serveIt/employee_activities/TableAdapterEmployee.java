@@ -132,11 +132,31 @@ public class TableAdapterEmployee extends RecyclerView.Adapter<TableAdapterEmplo
     }
 
     public void updateTableStatus(int id){
-        int tableID = id-1;
+
         tableRef.child(storeID)
-                .child(String.valueOf(tableID))
-                .child("status")
-                .setValue("ORDER_TAKEN");
+                .orderByChild("id")
+                .equalTo(id)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String tableID = null;
+                        for(DataSnapshot data: dataSnapshot.getChildren())
+                            tableID = data.getKey();
+
+                        if (tableID != null) {
+                            tableRef.child(storeID)
+                                    .child(tableID)
+                                    .child("status")
+                                    .setValue("ORDER_TAKEN");
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 
 
@@ -151,11 +171,36 @@ public class TableAdapterEmployee extends RecyclerView.Adapter<TableAdapterEmplo
         clear_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 tableRef.child(storeID)
-                        .child(String.valueOf(table.getID()-1))
-                        .child("status")
-                        .setValue("AVAILABLE");
-                clearTableDialog.dismiss();
+                        .orderByChild("id")
+                        .equalTo(table.getID())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                String tableID = null;
+                                for(DataSnapshot data: dataSnapshot.getChildren()){
+                                    tableID = data.getKey();
+                                }
+
+                                if(tableID != null){
+                                    tableRef.child(storeID)
+                                            .child(tableID)
+                                            .child("status")
+                                            .setValue("AVAILABLE");
+
+                                }
+
+                                clearTableDialog.dismiss();
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
             }
         });
 

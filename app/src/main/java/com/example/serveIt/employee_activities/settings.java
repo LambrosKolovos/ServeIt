@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ public class settings extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference ref, refStore;
 
+    ScrollView setting_page;
     TextView name;
     TableRow change_pass, leave, delete_acc, contact, help, logout;
     Dialog alertDialog, passDialog;
@@ -69,6 +71,7 @@ public class settings extends Fragment {
         alertDialog = new Dialog(getContext());
         passDialog = new Dialog(getContext());
 
+        setting_page = root.findViewById(R.id.setting_page);
         name = root.findViewById(R.id.name_view);
         change_pass = root.findViewById(R.id.change_password_row);
         leave = root.findViewById(R.id.leave_row);
@@ -77,6 +80,8 @@ public class settings extends Fragment {
         help = root.findViewById(R.id.help_row);
         logout = root.findViewById(R.id.logout_row);
         darkModeSwitch = root.findViewById(R.id.dark_switch);
+
+        setting_page.setVisibility(View.INVISIBLE);
 
         if(sharedPref.loadNightMode())
             darkModeSwitch.setChecked(true);
@@ -112,7 +117,7 @@ public class settings extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name_str = dataSnapshot.getValue(String.class);
                 name.setText(name_str);
-
+                setting_page.setVisibility(View.VISIBLE);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

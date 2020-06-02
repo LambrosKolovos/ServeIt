@@ -27,6 +27,8 @@ import com.example.serveIt.OrderDatabase;
 import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
 import com.example.serveIt.SharedPref;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -132,14 +134,23 @@ public class new_order extends Fragment{
 
                 OrderDatabase orderDatabase = new OrderDatabase(order.getOrdered(), tableField.getText().toString());
 
-                    orderRef.child(storeID)
-                            .push()
-                            .setValue(orderDatabase);
-
-                    verificationDialog.dismiss();
-
-                    if(order.getOrdered().size() != 0)
-                        Toast.makeText(getContext(), "Order successfully sent!", Toast.LENGTH_SHORT).show();
+                if(order.getOrdered().size() != 0){
+                        orderRef.child(storeID)
+                                .push()
+                                .setValue(orderDatabase)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            Toast.makeText(getContext(), "Order successfully sent!", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else{
+                                            Toast.makeText(getContext(), "Order can't be sent!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                        verificationDialog.dismiss();
+                    }
                     else
                         Toast.makeText(getContext(), "Can't send empty order", Toast.LENGTH_SHORT).show();
 
@@ -154,8 +165,6 @@ public class new_order extends Fragment{
                 verificationDialog.dismiss();
             }
         });
-
-
 
         verificationDialog.show();
     }
@@ -255,12 +264,10 @@ public class new_order extends Fragment{
                 });
             }
             else{
-                final String text = ((TextView) row.getChildAt(0)).getText().toString();
-                if(!order.findItem(text).getNotes().isEmpty())
-                    view.setText(text + "*");
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        final String text = ((TextView) row.getChildAt(0)).getText().toString();
                         Order_Item item = order.findItem(text);
                         loadItemNotes(v, item);
                     }
