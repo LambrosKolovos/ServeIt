@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.serveIt.Category;
 import com.example.serveIt.R;
+import com.example.serveIt.SharedPref;
 import com.example.serveIt.login_activities.login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,6 +46,7 @@ public class settings extends Fragment {
     TextView name;
     TableRow logout, delete_acc, change_pass;
     String userID;
+    Switch darkMode;
 
     private Dialog deleteDialog, passDialog;
 
@@ -50,6 +54,9 @@ public class settings extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.activity_settings_owner, container, false);
+
+        final SharedPref sharedPref = new SharedPref(getContext());
+        final Bundle b = new Bundle();
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -66,6 +73,34 @@ public class settings extends Fragment {
         delete_acc = root.findViewById(R.id.delete_acc);
         name = root.findViewById(R.id.name_view);
         change_pass = root.findViewById(R.id.change_password_row);
+        darkMode = root.findViewById(R.id.darkModeSwitch);
+
+        if(sharedPref.loadNightMode())
+            darkMode.setChecked(true);
+        else
+            darkMode.setChecked(false);
+
+        darkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Intent i = new Intent(getContext(), owner_activity.class);
+                    b.putBoolean("trigger", true);
+                    sharedPref.setNightMode(true);
+                    i.putExtras(b);
+                    getActivity().finish();
+                    startActivity(i);
+                }
+                else{
+                    Intent i = new Intent(getContext(), owner_activity.class);
+                    b.putBoolean("trigger", true);
+                    sharedPref.setNightMode(false);
+                    i.putExtras(b);
+                    getActivity().finish();
+                    startActivity(i);
+                }
+            }
+        });
 
         user = mAuth.getCurrentUser();
         delete_acc.setOnClickListener(new View.OnClickListener() {

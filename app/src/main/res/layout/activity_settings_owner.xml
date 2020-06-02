@@ -8,7 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?attr/bgColor">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:background="@color/colorPrimaryDark">
+                android:background="?settingsSectionColor">
 
                 <TextView
                     android:id="@+id/personal_header"
@@ -29,7 +30,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="30dp"
                     android:text="Personal Information"
-                    android:textColor="#ffffff"
+                    android:textColor="?attr/contentSectionColor"
                     android:layout_weight="1"/>
 
                 <ImageView
@@ -65,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="Your name"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="?txtColor"
                         android:layout_weight="1"/>
 
                 </TableRow>
@@ -89,7 +90,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="Privacy"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:textColor="?txtColor"
+                        />
                 </TableRow>
 
                 <TableRow
@@ -110,32 +112,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="Store settings"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:textColor="?txtColor" />
 
                 </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="50dp"
-                        android:src="@drawable/ic_next_week_black_24dp" />
-
-                    <TextView
-                        android:paddingTop="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="Delete store"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </TableRow>
-
 
                 <TableRow
                     android:id="@+id/delete_acc"
@@ -165,7 +144,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:background="@color/colorPrimaryDark">
+                android:background="?settingsSectionColor">
 
                 <TextView
                     android:id="@+id/app_header"
@@ -175,7 +154,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="30dp"
                     android:text="App Settings"
-                    android:textColor="#ffffff"
+                    android:textColor="?attr/contentSectionColor"
                     android:layout_weight="1"/>
 
                 <ImageView
@@ -210,10 +189,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="Dark Mode"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="?txtColor"
                         android:layout_weight="1"/>
 
                     <Switch
+                        android:id="@+id/darkModeSwitch"
                         android:layout_gravity="right"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -240,7 +220,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="Contact us"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:textColor="?txtColor" />
                 </TableRow>
 
                 <TableRow
@@ -261,7 +241,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="Help"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:textColor="?txtColor"
+                        />
                 </TableRow>
 
                 <TableRow
@@ -283,7 +264,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="Logout"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:textColor="?txtColor"
+                        />
                 </TableRow>
 
 

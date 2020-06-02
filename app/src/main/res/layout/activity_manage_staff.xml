@@ -10,21 +10,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="?bgColor">
 
         <TableLayout
             android:id="@+id/members_table"
-            android:padding="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TableRow
-                android:background="#f2f2f2"
+                android:padding="15dp"
+                android:background="?bgColor"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:layout_marginBottom="15dp">
+                android:layout_height="match_parent">
 
 
                 <ImageView
@@ -43,7 +41,7 @@
                     android:layout_weight="1"
                     android:textStyle="bold"
                     android:textSize="20sp"
-                    android:textColor="#000000"
+                    android:textColor="?staffText"
                     android:gravity="center_vertical"
                     />
 
@@ -54,25 +52,34 @@
                     android:text="Since"
                     android:textStyle="bold"
                     android:textSize="20sp"
-                    android:textColor="#000000"
+                    android:textColor="?staffText"
                     android:layout_weight="1"
                     android:gravity="center_vertical"/>
 
-                <ImageButton
-                    android:background="#f2f2f2"
+                <ImageView
                     android:id="@+id/imageButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_delete_black_42dp"
-                    tools:ignore="VectorDrawableCompat" />
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_delete_black_42dp"
+                    android:paddingTop="1dp"
+                    android:layout_marginLeft="15dp" />
             </TableRow>
 
         </TableLayout>
 
+        <View
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?borderColor" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/employees_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="?attr/bgColor" />
 
     </LinearLayout>
 

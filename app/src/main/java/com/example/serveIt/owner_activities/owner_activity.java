@@ -8,24 +8,41 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.serveIt.R;
+import com.example.serveIt.SharedPref;
 import com.example.serveIt.employee_activities.store_layout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class owner_activity extends AppCompatActivity {
 
+    Bundle b;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner);
 
+        b = getIntent().getExtras();
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        //I added this if statement to keep the selected fragment when rotating the device
-        if (savedInstanceState == null) {
 
+        SharedPref sharedPref = new SharedPref(this);
+        if(sharedPref.loadNightMode())
+            setTheme(R.style.darkTheme);
+        else
+            setTheme(R.style.AppTheme);
+
+        if(b != null) {
+            if (b.getBoolean("trigger")) {
+                bottomNav.setSelectedItemId(R.id.settings);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new settings()).commit();
+            }
+        }
+        else {
+            bottomNav.setSelectedItemId(R.id.layout);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new build_layout()).commit();
         }
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

@@ -13,11 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="10dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:padding="15dp"
+        android:background="?attr/bgColor">
 
         <ImageView
             android:id="@+id/store_ico"
@@ -34,8 +31,7 @@
             android:layout_height="match_parent"
             android:text="TextView"
             android:layout_weight="1"
-            android:textColor="#393636"
-            android:textSize="20sp"
+            android:textColor="?staffText"
             android:gravity="center_vertical"
             />
 
@@ -45,8 +41,7 @@
             android:layout_height="match_parent"
             android:text="30/5/2020"
             android:layout_weight="1"
-            android:textColor="#393636"
-            android:textSize="20sp"
+            android:textColor="?staffText"
             android:gravity="center_vertical"
             />
 

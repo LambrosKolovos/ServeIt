@@ -20,6 +20,6 @@
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
         app:menu="@menu/owner_nav"
-        android:background="@color/colorPrimary"/>
+        android:background="?attr/navBarColor"/>
 
 </RelativeLayout>

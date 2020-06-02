@@ -6,7 +6,7 @@
         <item name="bgColor">#EEEEEE</item>
         <item name="txtColor">#252525</item>
         <item name="colorPrimary">#252525</item>
-        <item name="navBarColor">#252525</item>
+        <item name="navBarColor">#303030</item>
         <item name="itemSelectedColor">#eb620e</item>
         <item name="itemNotSelectedColor">#EEEEEE</item>
         <item name="colorPrimaryDark">#252525</item>
@@ -17,13 +17,13 @@
         <item name="secondaryTxtColor">#eb620e</item>
         <item name="btnBgColor">#eb620e</item>
         <item name="btnTxtColor">#252525</item>
+        <item name="staffText">#eb620e</item>
 
     </style>
 
     <style name="darkTheme"  parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="bgColor">#252525</item>
         <item name="txtColor">#EEEEEE</item>
-        <item name="navBarColor">#ff5722</item>
         <item name="itemSelectedColor">#252525</item>
         <item name="itemNotSelectedColor">#EEEEEE</item>
         <item name="colorPrimary">#252525</item>
@@ -34,6 +34,7 @@
         <item name="settingsIconsColor">#eb620e</item>
         <item name="btnBgColor">#eb620e</item>
         <item name="btnTxtColor">#252525</item>
+        <item name="staffText">#eeeeee</item>
     </style>
 
     <style name="SearchTheme">

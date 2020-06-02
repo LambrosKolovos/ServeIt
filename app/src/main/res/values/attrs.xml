@@ -13,4 +13,5 @@
     <attr name="secondaryTxtColor" format="color"/>
     <attr name="btnBgColor" format="color" />
     <attr name="btnTxtColor" format="color"/>
+    <attr name="staffText" format="color" />
 </resources>
