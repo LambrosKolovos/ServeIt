@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="25dp">
+        android:padding="25dp"
+        android:background="?attr/bgColor">
 
         <EditText
             android:id="@+id/search_bar"
@@ -29,6 +30,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layout" />
+        android:layout_below="@+id/layout"
+        android:background="?attr/bgColor"/>
 
 </RelativeLayout>

@@ -33,11 +33,11 @@
             android:background="@drawable/search_style"
             android:orientation="horizontal"
             android:paddingLeft="25dp"
-            android:paddingTop="10dp"
             android:textColorHint="@color/colorPrimaryDark"
             android:theme="@style/SearchTheme">
 
             <ImageView
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_search_black_24dp" />
@@ -46,9 +46,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="10dp"
-                android:paddingTop="2dp"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
                 android:text="Search Items"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="#252525" />
 
         </LinearLayout>
             <TextView
@@ -58,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="TABLE: "
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="?attr/secondaryTxtColor"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:gravity="center_horizontal" />
@@ -79,9 +80,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:text="Item"
+                    android:textColor="?attr/txtColor"
                     android:textSize="16sp" />
 
                 <TextView
+                    android:textColor="?attr/txtColor"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
@@ -91,6 +94,8 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:textColor="?attr/txtColor"
+
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
@@ -112,10 +117,11 @@
         </TableLayout>
 
         <View
+            android:layout_marginTop="10dp"
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorPrimary" />
+            android:background="?attr/txtColor" />
 
         <TextView
             android:id="@+id/totalPrice"
@@ -124,6 +130,7 @@
             android:layout_gravity="end"
             android:layout_marginRight="40dp"
             android:text="Total: 19.50$"
+            android:textColor="?attr/secondaryTxtColor"
             android:textSize="20sp" />
         </LinearLayout>
 
@@ -133,7 +140,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        app:backgroundTint="@color/colorPrimaryDark"
+        app:backgroundTint="?attr/secondaryTxtColor"
         android:src="@drawable/ic_check_black_24dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

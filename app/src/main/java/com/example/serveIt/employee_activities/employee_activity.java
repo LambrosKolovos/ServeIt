@@ -62,6 +62,7 @@ public class employee_activity extends AppCompatActivity {
             selectedFragment.setArguments(b);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     selectedFragment).commit();
+            checkWorkID();
             return;
         }
         if( b.getSerializable("currentOrder") != null){

@@ -3,20 +3,37 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="bgColor">#ffffff</item>
-        <item name="txtColor">#000000</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="bgColor">#EEEEEE</item>
+        <item name="txtColor">#252525</item>
+        <item name="colorPrimary">#252525</item>
+        <item name="navBarColor">#252525</item>
+        <item name="itemSelectedColor">#eb620e</item>
+        <item name="itemNotSelectedColor">#EEEEEE</item>
+        <item name="colorPrimaryDark">#252525</item>
+        <item name="borderColor">#252525</item>
+        <item name="settingsSectionColor">#252525</item>
+        <item name="contentSectionColor">#eb620e</item>
+        <item name="settingsIconsColor">#252525</item>
+        <item name="secondaryTxtColor">#eb620e</item>
+        <item name="btnBgColor">#eb620e</item>
+        <item name="btnTxtColor">#252525</item>
 
     </style>
 
-    <style name="darkTheme">
-        <item name="bgColor">#000000</item>
-        <item name="txtColor">#ffffff</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="darkTheme"  parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="bgColor">#252525</item>
+        <item name="txtColor">#EEEEEE</item>
+        <item name="navBarColor">#ff5722</item>
+        <item name="itemSelectedColor">#252525</item>
+        <item name="itemNotSelectedColor">#EEEEEE</item>
+        <item name="colorPrimary">#252525</item>
+        <item name="colorPrimaryDark">#252525</item>
+        <item name="borderColor">#eb620e</item>
+        <item name="settingsSectionColor">#eb620e</item>
+        <item name="contentSectionColor">#252525</item>
+        <item name="settingsIconsColor">#eb620e</item>
+        <item name="btnBgColor">#eb620e</item>
+        <item name="btnTxtColor">#252525</item>
     </style>
 
     <style name="SearchTheme">

@@ -26,6 +26,7 @@ import com.example.serveIt.Order;
 import com.example.serveIt.OrderDatabase;
 import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
+import com.example.serveIt.SharedPref;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -48,6 +49,8 @@ public class new_order extends Fragment{
     private String storeID;
     private int tableID;
 
+    private SharedPref sharedPref;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,6 +60,8 @@ public class new_order extends Fragment{
         orderLayout = root.findViewById(R.id.order_display);
         priceView = root.findViewById(R.id.totalPrice);
         tableID_view = root.findViewById(R.id.table_id_view);
+
+        sharedPref = new SharedPref(getContext());
 
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Menu");
@@ -162,8 +167,11 @@ public class new_order extends Fragment{
         orderLayout.addView(build_header());
     }
 
-    public void loadItemNotes(View view) {
-        startActivity(new Intent(getActivity(), item_notes.class));
+    public void loadItemNotes(View view, Order_Item item) {
+        Intent i = new Intent(getActivity(), item_notes.class);
+        b.putSerializable("item", item);
+        i.putExtras(b);
+        startActivity(i);
     }
 
     public void makeOrder(Order order) {
@@ -247,20 +255,32 @@ public class new_order extends Fragment{
                 });
             }
             else{
+                final String text = ((TextView) row.getChildAt(0)).getText().toString();
+                if(!order.findItem(text).getNotes().isEmpty())
+                    view.setText(text + "*");
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        loadItemNotes(v);
+                        Order_Item item = order.findItem(text);
+                        loadItemNotes(v, item);
                     }
                 });
             }
-
         }
+
+        if(name.equals("x")){
+            if(sharedPref.loadNightMode())
+                view.setTextColor(Color.parseColor("#EEEEEE"));
+            else
+                view.setTextColor(Color.parseColor("#252525"));
+        }
+        else
+            view.setTextColor(Color.parseColor("#eb620e"));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && center) {
             view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
-        view.setTextColor(Color.parseColor("#2196F3"));
+
         view.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, weight));
 
 

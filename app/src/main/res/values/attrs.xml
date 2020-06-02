@@ -3,4 +3,14 @@
 
     <attr name="bgColor" format="color"/>
     <attr name="txtColor" format="color"/>
+    <attr name="navBarColor" format="color"/>
+    <attr name="itemSelectedColor" format="color"/>
+    <attr name="itemNotSelectedColor" format="color"/>
+    <attr name="settingsIconsColor" format="color" />
+    <attr name="borderColor" format="color" />
+    <attr name="settingsSectionColor" format="color"/>
+    <attr name="contentSectionColor" format="color"/>
+    <attr name="secondaryTxtColor" format="color"/>
+    <attr name="btnBgColor" format="color" />
+    <attr name="btnTxtColor" format="color"/>
 </resources>

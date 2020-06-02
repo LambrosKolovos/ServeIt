@@ -64,6 +64,16 @@ public class Order implements Serializable {
         return total_price;
     }
 
+    public Order_Item findItem(String text){
+        for (Iterator<Order_Item> iterator = ordered.iterator(); iterator.hasNext(); ) {
+            Order_Item value = iterator.next();
+            if (value.getItem().getName().equals(text)) {
+               return value;
+            }
+        }
+        return null;
+    }
+
 
 
 }

@@ -26,6 +26,7 @@ import com.example.serveIt.Food_Item;
 import com.example.serveIt.Order;
 import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
+import com.example.serveIt.SharedPref;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -50,7 +51,12 @@ public class search_food extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        SharedPref sharedPref = new SharedPref(this);
 
+        if(sharedPref.loadNightMode())
+            setTheme(R.style.darkTheme);
+        else
+            setTheme(R.style.AppTheme);
         b = getIntent().getExtras();
 
         if( b.getSerializable("storeID") != null)

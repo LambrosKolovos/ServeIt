@@ -92,6 +92,7 @@ public class settings extends Fragment {
                     b.putBoolean("trigger", true);
                     sharedPref.setNightMode(true);
                     i.putExtras(b);
+                    getActivity().finish();
                     startActivity(i);
                 }
                 else{
@@ -99,6 +100,7 @@ public class settings extends Fragment {
                     b.putBoolean("trigger", true);
                     sharedPref.setNightMode(false);
                     i.putExtras(b);
+                    getActivity().finish();
                     startActivity(i);
                 }
             }
