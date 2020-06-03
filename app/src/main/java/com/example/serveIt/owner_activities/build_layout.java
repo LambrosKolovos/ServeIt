@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -53,6 +54,8 @@ public class build_layout extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.activity_build_layout, container, false);
+
+        getActivity().setTitle("Table layout");
 
         add_table = root.findViewById(R.id.table_btn);
         table_view = root.findViewById(R.id.table_view);

@@ -1,20 +1,14 @@
-package com.example.serveIt.employee_activities;
+package com.example.serveIt.owner_activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.serveIt.R;
 import com.example.serveIt.SharedPref;
 
-
-public class help_employee extends AppCompatActivity {
-
+public class help_owner extends AppCompatActivity {
     SharedPref sharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +24,7 @@ public class help_employee extends AppCompatActivity {
         else
             setTheme(R.style.AppTheme);
 
-        setContentView(R.layout.activity_help_employee);
+        setContentView(R.layout.activity_help_owner);
     }
 
     @Override
@@ -38,5 +32,4 @@ public class help_employee extends AppCompatActivity {
         finish();
         return true;
     }
-
 }
