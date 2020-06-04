@@ -217,7 +217,8 @@ public class sign_up extends AppCompatActivity {
                             }
                             else{
                                 alert.setVisibility(View.VISIBLE);
-                                alert.setText("Enter a valid email!");
+                                loading_bar.setVisibility(View.GONE);
+                                alert.setText("Email invalid format");
                             }
                         }
                     });

@@ -60,6 +60,9 @@ public class store_layout extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.activity_store_layout, container, false);
 
+
+        requireActivity().setTitle("Store layout");
+
         currentRow= new TableRow(getContext());
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Table");

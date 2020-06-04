@@ -57,6 +57,8 @@ public class settings extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.activity_settings, container, false);
 
+        requireActivity().setTitle("Settings");
+
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Users");
@@ -98,6 +100,7 @@ public class settings extends Fragment {
                     sharedPref.setNightMode(true);
                     i.putExtras(b);
                     getActivity().finish();
+                    getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                     startActivity(i);
                 }
                 else{
@@ -106,6 +109,7 @@ public class settings extends Fragment {
                     sharedPref.setNightMode(false);
                     i.putExtras(b);
                     getActivity().finish();
+                    getActivity().overridePendingTransition(R.anim.left_in,R.anim.right_out);
                     startActivity(i);
                 }
             }

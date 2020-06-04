@@ -15,5 +15,5 @@
     app:show_indicator="true"
     app:start_collapsed="true"
     app:sub_item_layout="@layout/expanding_sub_item"
-    android:background="#323232"
+    android:background="#303030"
     />
