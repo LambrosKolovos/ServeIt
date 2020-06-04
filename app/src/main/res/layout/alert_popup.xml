@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
+    android:background="@drawable/dialog_style"
     android:padding="5dp"
     android:layout_gravity="center">
 
@@ -15,7 +15,7 @@
         android:text="Are you sure?"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="?secondaryTxtColor"
         android:textStyle="bold"
         android:textSize="20sp"/>
 
@@ -24,7 +24,7 @@
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="?txtColor"
         android:text="If you choose to delete ServeIt from your account, keep in mind that you won't be able to sign up for ServeIt with the same username in the future."
         android:textAlignment="textStart"
         android:gravity="start"
@@ -42,23 +42,22 @@
         android:orientation="horizontal">
 
         <Button
-            android:background="@drawable/input_style"
-            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/help_border"
+            android:textColor="?txtColor"
             android:id="@+id/close_btn"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="Cancel"
-            android:layout_gravity=""/>
+            android:text="Cancel"/>
 
         <Button
-            android:textColor="#ffffff"
-            android:background="@color/colorPrimaryDark"
+            android:textColor="?btnTxtColor"
+            android:background="@drawable/button_style"
             android:layout_marginLeft="27dp"
             android:layout_gravity="right"
             android:id="@+id/del_btn"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="Delete" />
+            android:text="SEND" />
     </LinearLayout>
 
 </RelativeLayout>

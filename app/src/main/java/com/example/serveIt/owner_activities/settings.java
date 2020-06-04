@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.example.serveIt.Category;
 import com.example.serveIt.R;
 import com.example.serveIt.SharedPref;
+import com.example.serveIt.change_password;
 import com.example.serveIt.contact_us;
 import com.example.serveIt.login_activities.login;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,7 +47,7 @@ public class settings extends Fragment {
     private FirebaseUser user;
     private DatabaseReference userRef, storeRef, tableRef, ordersRef, menuRef;
     TextView name;
-    TableRow logout, delete_acc, change_pass, contact, help;
+    TableRow logout, delete_acc, change_pass, contact, help, storeSettings;
     String userID;
     Switch darkMode;
 
@@ -80,6 +81,7 @@ public class settings extends Fragment {
         change_pass = root.findViewById(R.id.change_password_row);
         darkMode = root.findViewById(R.id.darkModeSwitch);
         help = root.findViewById(R.id.help_row);
+        storeSettings = root.findViewById(R.id.store_settings_row);
 
         if(sharedPref.loadNightMode())
             darkMode.setChecked(true);
@@ -119,7 +121,14 @@ public class settings extends Fragment {
         change_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showChangePassDialog(v);
+                startActivity(new Intent(getContext(), change_password.class));
+            }
+        });
+
+        storeSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), store_settings.class));
             }
         });
 
@@ -261,63 +270,6 @@ public class settings extends Fragment {
                         throw  databaseError.toException();
                     }
                 });
-    }
-
-    private void showChangePassDialog(View v) {
-        final EditText oldpass, newPass;
-        Button change, cancel;
-
-        passDialog.setContentView(R.layout.pass_dialog);
-
-        oldpass = passDialog.findViewById(R.id.old_pass);
-        newPass = passDialog.findViewById(R.id.new_pass);
-        change = passDialog.findViewById(R.id.change);
-        cancel = passDialog.findViewById(R.id.cancel);
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                passDialog.dismiss();
-            }
-        });
-
-        change.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final String old_text = oldpass.getText().toString();
-                    final String new_text = newPass.getText().toString();
-                    final FirebaseUser user = mAuth.getCurrentUser();
-
-                    if(user != null){
-                        AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(),old_text);
-
-                        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    user.updatePassword(new_text).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(getContext(), "Password changed", Toast.LENGTH_SHORT).show();
-                                                passDialog.dismiss();
-                                            } else {
-                                                Toast.makeText(getContext(), "Password didn't change", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
-                                }
-                                else{
-                                    Toast.makeText(getContext(), "Password didn't change", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    }
-
-                }
-            });
-
-        passDialog.show();
     }
 
 }

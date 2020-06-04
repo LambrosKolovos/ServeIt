@@ -211,6 +211,7 @@ public class search_food extends AppCompatActivity {
         Bundle b = new Bundle();
         b.putSerializable("currentOrder", currentOrder);
         b.putSerializable("storeID", storeID);
+        b.putInt("tableID", tableID);
         intent.putExtras(b);
 
         finish();
