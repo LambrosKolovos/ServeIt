@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -44,6 +45,8 @@ public class manage_staff extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root =  inflater.inflate(R.layout.activity_manage_staff, container, false);
+
+        getActivity().setTitle("Manage Staff");
 
         ref = FirebaseDatabase.getInstance().getReference("Store");
         employees_list = root.findViewById(R.id.employees_list);

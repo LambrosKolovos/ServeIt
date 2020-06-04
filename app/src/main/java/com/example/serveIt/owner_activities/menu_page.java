@@ -1,6 +1,7 @@
 package com.example.serveIt.owner_activities;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -76,6 +77,8 @@ public class menu_page extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.activity_menu, container, false);
+
+        getActivity().setTitle("Food Menu");
 
         categoryDialog = new Dialog(getContext());
         foodItemDialog = new Dialog(getContext());

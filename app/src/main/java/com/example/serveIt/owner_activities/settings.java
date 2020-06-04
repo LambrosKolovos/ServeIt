@@ -1,6 +1,7 @@
 package com.example.serveIt.owner_activities;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.example.serveIt.Category;
 import com.example.serveIt.R;
 import com.example.serveIt.SharedPref;
+import com.example.serveIt.contact_us;
 import com.example.serveIt.login_activities.login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,7 +46,7 @@ public class settings extends Fragment {
     private FirebaseUser user;
     private DatabaseReference userRef, storeRef, tableRef, ordersRef, menuRef;
     TextView name;
-    TableRow logout, delete_acc, change_pass;
+    TableRow logout, delete_acc, change_pass, contact, help;
     String userID;
     Switch darkMode;
 
@@ -54,6 +56,8 @@ public class settings extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.activity_settings_owner, container, false);
+
+        getActivity().setTitle("Settings");
 
         final SharedPref sharedPref = new SharedPref(getContext());
         final Bundle b = new Bundle();
@@ -72,8 +76,10 @@ public class settings extends Fragment {
         logout = root.findViewById(R.id.logout_row);
         delete_acc = root.findViewById(R.id.delete_acc);
         name = root.findViewById(R.id.name_view);
+        contact = root.findViewById(R.id.contact_row);
         change_pass = root.findViewById(R.id.change_password_row);
         darkMode = root.findViewById(R.id.darkModeSwitch);
+        help = root.findViewById(R.id.help_row);
 
         if(sharedPref.loadNightMode())
             darkMode.setChecked(true);
@@ -114,6 +120,19 @@ public class settings extends Fragment {
             @Override
             public void onClick(View v) {
                 showChangePassDialog(v);
+            }
+        });
+
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent((getContext()), help_owner.class));
+            }
+        });
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), contact_us.class));
             }
         });
 
