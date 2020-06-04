@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:layout_weight="1"
-            android:textColor="?secondaryTxtColor"
+            android:textColor="?txtColor"
             android:textSize="20sp" />
 
         <TextView

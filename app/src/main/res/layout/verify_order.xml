@@ -3,35 +3,37 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="250dp"
     android:layout_height="180dp"
-    android:background="#ffffff"
+    android:background="@drawable/dialog_style"
     android:padding="5dp"
     android:layout_gravity="center">
 
 
     <TextView
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
         android:id="@+id/message"
         android:text="Proceed to send order?"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="?secondaryTxtColor"
+        android:textSize="18sp"
         android:textAlignment="center"
         android:gravity="center_horizontal" />
 
     <EditText
-        android:paddingLeft="15dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-
-        android:layout_marginBottom="5dp"
+        android:paddingTop="5dp"
+        android:textColor="?txtColor"
         android:id="@+id/tableField"
-        android:layout_width="match_parent"
+        android:layout_width="80dp"
+        android:layout_centerInParent="true"
         android:layout_height="35dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textAlignment="center"
         android:hint="Table ID"
-        android:background="@drawable/input_style"
-        android:layout_below="@+id/message"/>
+        android:background="@drawable/help_border"
+        android:layout_below="@+id/message"
+        android:gravity="center_horizontal" />
 
     <LinearLayout
         android:layout_marginTop="20dp"
@@ -44,16 +46,16 @@
         android:orientation="horizontal">
 
         <Button
-            android:background="@drawable/input_style"
-            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/help_border"
+            android:textColor="?txtColor"
             android:id="@+id/close_btn"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="Cancel"/>
 
         <Button
-            android:textColor="#ffffff"
-            android:background="@color/colorPrimaryDark"
+            android:textColor="?btnTxtColor"
+            android:background="@drawable/button_style"
             android:layout_marginLeft="27dp"
             android:layout_gravity="right"
             android:id="@+id/send_btn"

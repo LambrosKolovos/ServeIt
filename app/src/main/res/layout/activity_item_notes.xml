@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="40dp">
+            android:padding="40dp"
+            android:background="?bgColor">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:text="Quantity"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="?secondaryTxtColor"
                     android:textSize="24sp" />
 
                 <Button
@@ -38,6 +39,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:text="-"
+                    android:textColor="?txtColor"
                     android:textSize="20sp" />
 
                 <TextView
@@ -48,7 +50,7 @@
                     android:gravity="center_horizontal"
                     android:text="1"
                     android:textAlignment="center"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="?secondaryTxtColor"
                     android:textSize="24sp" />
 
                 <Button
@@ -58,6 +60,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:text="+"
+                    android:textColor="?txtColor"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -67,13 +70,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/input_style"
+                android:background="@drawable/help_border"
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="Add comments..."
-
                 android:padding="20dp"
-                android:textColorHint="@color/colorPrimary" />
+                android:textColorHint="?txtColor"
+                android:textColor="?txtColor"/>
 
             <Button
 
@@ -83,22 +86,12 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
                 android:layout_marginBottom="50dp"
-                android:background="@color/colorPrimary"
+                android:background="?btnBgColor"
                 android:text="Add"
-                android:textColor="#ffffff" />
+                android:textColor="?btnTxtColor" />
 
 
         </LinearLayout>
     </FrameLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bottom_nav"
-        app:itemBackground="@color/colorPrimary"
-        app:itemTextColor="@drawable/selector"
-        app:itemIconTint="@drawable/selector"
-        app:menu="@menu/employee_nav"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"/>
 </RelativeLayout>

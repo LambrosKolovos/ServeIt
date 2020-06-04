@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.serveIt.Order;
 import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
+import com.example.serveIt.SharedPref;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class item_notes extends AppCompatActivity {
@@ -30,6 +31,11 @@ public class item_notes extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPref sharedPref = new SharedPref(this);
+        if(sharedPref.loadNightMode())
+            setTheme(R.style.darkTheme);
+        else
+            setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_item_notes);
 
         notes = findViewById(R.id.notes_text);
@@ -51,6 +57,9 @@ public class item_notes extends AppCompatActivity {
         }
 
         currentOrder.removeItem(item.getItem().getName());
+
+        if(!item.getNotes().isEmpty())
+            notes.setText(item.getNotes());
 
         final Button incBtn = findViewById(R.id.incBtn);
         final Button decBtn = findViewById(R.id.decBtn);

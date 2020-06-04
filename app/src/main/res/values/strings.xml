@@ -26,6 +26,17 @@
     <string name="question_emp3">When do I know an order is ready to serve?</string>
     <string name="question_emp4">I left my job! Help!</string>
 
+    <string name="question_own1">How can I add tables to my store?</string>
+    <string name="question_own2">How can I add a menu to my store?</string>
+    <string name="question_own3">How can I invite my employees to my store?</string>
+    <string name="question_own4">An employee left the job. How can I kick him out?</string>
+    <string name="question_own5">Can I change my store name / enter code?</string>
+
+    <string name="common_1">I have suggestion / found a bug!</string>
+    <string name="common_2">I don\'t want to use the app anymore.</string>
+
+
+
     <string name="answer_emp1">
         Simply click on the table which you want to make the order for
         and you will be redirected to the order screen.
@@ -43,8 +54,7 @@
     </string>
 
     <string name="answer_emp4">
-        Well thats unfortunate! \n
-        Don\'t worry you can still use the same account just click the option "Leave workspace"
+        Well thats unfortunate!\nDon\'t worry you can still use the same account just click the option "Leave workspace"
         in your settings and you will be redirected to a new page where you can join your new store
         that you are working.
     </string>

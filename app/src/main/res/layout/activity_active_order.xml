@@ -45,7 +45,7 @@
                     android:layout_height="40dp"
                     android:textStyle="bold"
                     android:textSize="20sp"
-                    android:textColor="?attr/txtColor"
+                    android:textColor="?attr/secondaryTxtColor"
                     android:textAlignment="center"
                     android:gravity="center_horizontal" />
 
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="?attr/btnBgColor"
+                android:background="@drawable/button_style"
                 android:textColor="?attr/btnTxtColor"
                 android:text="Ready!"
                 android:layout_marginRight="50dp"
@@ -102,7 +102,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:text="Delete"
-                android:background="?attr/btnBgColor"
+                android:background="@drawable/button_style"
                 android:textColor="?attr/btnTxtColor"
                 />
         </LinearLayout>
