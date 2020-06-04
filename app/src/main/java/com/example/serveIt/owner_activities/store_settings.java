@@ -1,4 +1,4 @@
-package com.example.serveIt;
+package com.example.serveIt.owner_activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,25 +7,28 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class contact_us extends AppCompatActivity {
+import com.example.serveIt.R;
+import com.example.serveIt.SharedPref;
+
+public class store_settings extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setTitle("Contact");
+        setTitle("Store Settings");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         SharedPref sharedPref = new SharedPref(this);
+
         if(sharedPref.loadNightMode())
             setTheme(R.style.darkTheme);
         else
             setTheme(R.style.AppTheme);
 
-        setContentView(R.layout.activity_contact_us);
+        setContentView(R.layout.activity_store_settings);
 
-        Spinner dropdown = findViewById(R.id.subject_pick);
-        String[] items = new String[]{"-SELECT A SUBJECT-", "Report an issue", "Give feedback"};
+
+        Spinner dropdown = findViewById(R.id.currency);
+        String[] items = new String[]{"Euros (€)", "US Dollars ($)"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.contact_spinner_item, items);
         dropdown.setAdapter(adapter);
     }

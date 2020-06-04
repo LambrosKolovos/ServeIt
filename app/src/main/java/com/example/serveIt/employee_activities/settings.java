@@ -145,7 +145,8 @@ public class settings extends Fragment {
         change_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showChangePassDialog(v);
+                //showChangePassDialog(v);
+                startActivity(new Intent(getContext(), change_password.class));
             }
         });
 
@@ -216,42 +217,10 @@ public class settings extends Fragment {
         change.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final String old_text = oldpass.getText().toString();
-                    final String new_text = newPass.getText().toString();
-                    final FirebaseUser user = mAuth.getCurrentUser();
-
-
-                    if(user != null){
-                        AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(),old_text);
-
-                        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    user.updatePassword(new_text).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(getContext(), "Password changed", Toast.LENGTH_SHORT).show();
-                                                passDialog.dismiss();
-                                            } else {
-                                                Toast.makeText(getContext(), "Password didn't change", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
-                                }
-                                else{
-                                    Toast.makeText(getContext(), "Password didn't change", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    }
-
+                    startActivity(new Intent(getContext(), change_password.class));
                 }
             });
 
-
-        passDialog.show();
     }
 
     @SuppressLint("SetTextI18n")
