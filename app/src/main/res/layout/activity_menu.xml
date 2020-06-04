@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.serveIt.owner_activities.menu_page"
-    android:background="#323232">
+    android:background="?attr/bgColor">
 
     <ProgressBar
         android:id="@+id/load_menu"

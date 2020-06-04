@@ -62,6 +62,7 @@ public class active_order extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.activity_active_order, container, false);
 
+        requireActivity().setTitle("Orders");
 
         tableRef = FirebaseDatabase.getInstance().getReference("Table");
         order_list = root.findViewById(R.id.order_list);
@@ -70,6 +71,8 @@ public class active_order extends Fragment {
         prevBtn = root.findViewById(R.id.prev_btn);
         readyBtn = root.findViewById(R.id.readyBtn);
         deleteBtn = root.findViewById(R.id.deleteBtn);
+
+
 
         ready_text = root.findViewById(R.id.ready_text);
         ready_text.setVisibility(View.INVISIBLE);

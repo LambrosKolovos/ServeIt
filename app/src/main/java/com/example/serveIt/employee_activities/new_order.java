@@ -62,6 +62,9 @@ public class new_order extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.activity_new_order, container, false);
+
+        requireActivity().setTitle("New order");
+
         searchMenu = root.findViewById(R.id.searchMenu);
         orderLayout = root.findViewById(R.id.order_display);
         priceView = root.findViewById(R.id.totalPrice);

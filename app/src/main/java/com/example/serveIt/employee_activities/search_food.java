@@ -139,7 +139,7 @@ public class search_food extends AppCompatActivity {
         if(searchText == null)
              firebaseSearchQuery = database.child(storeID).child("ItemList").orderByChild("category");
         else
-             firebaseSearchQuery = database.child(storeID).child("ItemList").orderByChild("category").startAt(searchText).endAt(searchText + "\uf8ff");
+             firebaseSearchQuery = database.child(storeID).child("ItemList").orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
 
         options =
                 new FirebaseRecyclerOptions.Builder<Food_Item>()

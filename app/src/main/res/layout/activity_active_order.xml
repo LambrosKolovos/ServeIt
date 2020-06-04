@@ -54,7 +54,7 @@
                     android:layout_marginTop="60dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/notepad"/>
+                    android:background="?attr/bgColor"/>
             </androidx.cardview.widget.CardView>
 
             <Button
@@ -78,7 +78,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="60dp"
             android:textSize="14sp"
-            android:textColor="#00ff00"/>
+            android:textColor="?attr/txtColor"/>
 
         <LinearLayout
             android:layout_width="wrap_content"

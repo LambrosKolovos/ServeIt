@@ -32,6 +32,7 @@ public class employee_activity extends AppCompatActivity {
     private DatabaseReference ref, refUser;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    private ValueEventListener kicked, storeDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +88,7 @@ public class employee_activity extends AppCompatActivity {
 
     private void checkWorkID(){
 
-        ref.addValueEventListener(new ValueEventListener() {
+         storeDelete = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild(storeID)){
@@ -104,7 +105,7 @@ public class employee_activity extends AppCompatActivity {
                                                 User user = dataSnapshot.getValue(User.class);
 
                                                 if(user != null){
-                                                  //  user.setWorkID(" ");
+                                                    //  user.setWorkID(" ");
                                                     finish();
                                                     Intent i = new Intent(getApplicationContext(), search_store.class);
                                                     i.putExtra("userLoggedIn", user);
@@ -128,66 +129,95 @@ public class employee_activity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //throw databaseError.toException();
+
             }
-        });
+        };
 
-        ref.child(storeID).child("employees").addValueEventListener(new ValueEventListener() {
+        ref.addValueEventListener(storeDelete);
+
+        kicked = new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-                refUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot userNode) {
-                        if(!dataSnapshot.hasChild(user.getUid()) && userNode.hasChild(user.getUid())){
-                            Toast.makeText(employee_activity.this, "You are kicked from store", Toast.LENGTH_SHORT).show();
-                            //    storeID = " ";
-                            refUser.child(user.getUid()).child("workID").setValue(" ")
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                refUser.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onDataChange(@NonNull final DataSnapshot storeSnap) {
+                if(storeSnap.hasChild(storeID)){
+                    ref.child(storeID).child("employees").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                            refUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot userNode) {
+                                    if(!dataSnapshot.hasChild(user.getUid()) && userNode.hasChild(user.getUid())){
+                                        Toast.makeText(employee_activity.this, "You are kicked from store", Toast.LENGTH_SHORT).show();
+                                        //    storeID = " ";
+                                        refUser.child(user.getUid()).child("workID").setValue(" ")
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
-                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                        User user = dataSnapshot.getValue(User.class);
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if(task.isSuccessful()){
+                                                            refUser.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                    User user = dataSnapshot.getValue(User.class);
 
-                                                        if(user != null){
-                                                           // user.setWorkID(" ");
-                                                            finish();
-                                                            Intent i = new Intent(getApplicationContext(), search_store.class);
-                                                            i.putExtra("userLoggedIn", user);
-                                                            startActivity(i);
+                                                                    if(user != null){
+                                                                        // user.setWorkID(" ");
+                                                                        finish();
+                                                                        Intent i = new Intent(getApplicationContext(), search_store.class);
+                                                                        i.putExtra("userLoggedIn", user);
+                                                                        startActivity(i);
+                                                                    }
+
+                                                                }
+
+                                                                @Override
+                                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                }
+                                                            });
                                                         }
-
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
                                                     }
                                                 });
-                                            }
-                                        }
-                                    });
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // throw databaseError.toException();
+                        }
+                    });
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // throw databaseError.toException();
+
             }
-        });
+        };
+
+        ref.addValueEventListener(kicked);
+
+
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(kicked != null)
+            ref.removeEventListener(kicked);
+
+        if(storeDelete != null)
+            ref.removeEventListener(storeDelete);
+
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
