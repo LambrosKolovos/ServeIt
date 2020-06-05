@@ -15,6 +15,7 @@ import com.diegodobelo.expandingview.ExpandingList;
 import com.example.serveIt.Category;
 import com.example.serveIt.Food_Item;
 import com.example.serveIt.R;
+import com.example.serveIt.Store;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -244,11 +245,46 @@ public class menu_page extends Fragment {
     }
 
     private void configureSubItem(final ExpandingItem item, final View view, final Food_Item food_item) {
-        TextView title = view.findViewById(R.id.sub_title);
-        TextView price = view.findViewById(R.id.price);
+        final TextView title = view.findViewById(R.id.sub_title);
+        final TextView price = view.findViewById(R.id.price);
 
-        title.setText(food_item.getName());
-        price.setText(food_item.getPrice());
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        ref.orderByChild("ownerID").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot data) {
+                String storeID = null;
+                System.out.println("THE NUMBER IS: " + data.getChildrenCount());
+                for(DataSnapshot store: data.getChildren()){
+                    storeID = store.getKey();
+                }
+
+                if(storeID != null) {
+                    ref = database.getReference("Store");
+                    ref.child(storeID).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Store store = dataSnapshot.getValue(Store.class);
+
+                            if(store != null){
+                                title.setText(food_item.getName());
+                                price.setText(food_item.getPrice() + store.getCurrency());
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         view.findViewById(R.id.remove_sub_item)
                 .setOnClickListener(new View.OnClickListener() {

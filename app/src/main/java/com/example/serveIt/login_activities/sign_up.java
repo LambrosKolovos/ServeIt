@@ -87,48 +87,9 @@ public class sign_up extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     layout.setVisibility(View.VISIBLE);
-                    Animation slide = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_open);
-                    slide.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            store_name.setHint("Business name");
-                            store_pass.setHint("Store password");
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                    layout.startAnimation(slide);
                     isOwner = true;
                 }
                 else{
-                    store_name.setHint("");
-                    store_pass.setHint("");
-                    Animation slide = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_close);
-                    slide.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                            store_name.setText("");
-                            store_pass.setText("");
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                    layout.startAnimation(slide);
                     layout.setVisibility(View.GONE);
                     isOwner = false;
                 }

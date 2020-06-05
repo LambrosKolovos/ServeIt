@@ -38,7 +38,6 @@ public class employee_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_activity);
-
         SharedPref sharedPref = new SharedPref(this);
         ref = FirebaseDatabase.getInstance().getReference("Store");
         refUser = FirebaseDatabase.getInstance().getReference("Users");
