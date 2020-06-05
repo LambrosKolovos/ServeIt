@@ -1,21 +1,14 @@
 package com.example.serveIt.owner_activities;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.icu.text.SymbolTable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
-import com.example.serveIt.Category;
-import com.example.serveIt.Food_Item;
+import com.example.serveIt.helper_classes.Category;
+import com.example.serveIt.helper_classes.Food_Item;
 import com.example.serveIt.R;
-import com.example.serveIt.Store;
+import com.example.serveIt.helper_classes.Store;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,31 +22,20 @@ import com.google.firebase.database.ValueEventListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class menu_page extends Fragment {

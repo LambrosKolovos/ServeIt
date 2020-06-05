@@ -8,10 +8,10 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.serveIt.R;
-import com.example.serveIt.User;
-import com.example.serveIt.employee_activities.employee_activity;
+import com.example.serveIt.helper_classes.User;
+import com.example.serveIt.employee_activities.MAIN_EMPLOYEE_ACTIVITY;
 import com.example.serveIt.employee_activities.search_store;
-import com.example.serveIt.owner_activities.owner_activity;
+import com.example.serveIt.owner_activities.MAIN_OWNER_ACTIVITY;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -76,7 +76,7 @@ public class splash_screen extends AppCompatActivity {
 
                 if(isOwner){
                     finish();
-                    startActivity(new Intent(getApplicationContext(), owner_activity.class));
+                    startActivity(new Intent(getApplicationContext(), MAIN_OWNER_ACTIVITY.class));
                 }
                 else{
                     if(user.getWorkID().equals(" ")){
@@ -85,7 +85,7 @@ public class splash_screen extends AppCompatActivity {
                         startActivity(i);
                     }
                     else{
-                        Intent i = new Intent(getApplicationContext(), employee_activity.class);
+                        Intent i = new Intent(getApplicationContext(), MAIN_EMPLOYEE_ACTIVITY.class);
                         i.putExtra("storeID", user.getWorkID());
                         startActivity(i);
                     }

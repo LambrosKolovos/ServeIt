@@ -1,4 +1,4 @@
-package com.example.serveIt;
+package com.example.serveIt.helper_classes;
 
 public class Table {
     private int ID;

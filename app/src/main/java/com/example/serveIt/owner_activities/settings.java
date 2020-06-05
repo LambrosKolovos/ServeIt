@@ -1,7 +1,6 @@
 package com.example.serveIt.owner_activities;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TableRow;
@@ -22,16 +20,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.serveIt.Category;
 import com.example.serveIt.R;
-import com.example.serveIt.SharedPref;
-import com.example.serveIt.change_password;
-import com.example.serveIt.contact_us;
+import com.example.serveIt.helper_classes.SharedPref;
+import com.example.serveIt.common_activities.change_password;
+import com.example.serveIt.common_activities.contact_us;
 import com.example.serveIt.login_activities.login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -97,7 +92,7 @@ public class settings extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    Intent i = new Intent(getContext(), owner_activity.class);
+                    Intent i = new Intent(getContext(), MAIN_OWNER_ACTIVITY.class);
                     b.putBoolean("trigger", true);
                     sharedPref.setNightMode(true);
                     i.putExtras(b);
@@ -106,7 +101,7 @@ public class settings extends Fragment {
                     startActivity(i);
                 }
                 else{
-                    Intent i = new Intent(getContext(), owner_activity.class);
+                    Intent i = new Intent(getContext(), MAIN_OWNER_ACTIVITY.class);
                     b.putBoolean("trigger", true);
                     sharedPref.setNightMode(false);
                     i.putExtras(b);

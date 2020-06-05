@@ -1,11 +1,9 @@
 package com.example.serveIt.employee_activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,22 +13,21 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
-import com.example.serveIt.SharedPref;
-import com.example.serveIt.User;
+import com.example.serveIt.helper_classes.SharedPref;
+import com.example.serveIt.helper_classes.User;
 import com.example.serveIt.login_activities.login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class employee_activity extends AppCompatActivity {
+public class MAIN_EMPLOYEE_ACTIVITY extends AppCompatActivity {
 
     Bundle b;
     String storeID;
@@ -98,7 +95,7 @@ public class employee_activity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild(storeID)){
-                    Toast.makeText(employee_activity.this, "Store with id " + storeID + " deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MAIN_EMPLOYEE_ACTIVITY.this, "Store with id " + storeID + " deleted", Toast.LENGTH_SHORT).show();
                     // storeID = " ";
                     refUser.child(user.getUid()).child("workID").setValue(" ")
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -152,7 +149,7 @@ public class employee_activity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot userNode) {
                                     if(!dataSnapshot.hasChild(user.getUid()) && userNode.hasChild(user.getUid())){
-                                        Toast.makeText(employee_activity.this, "You are kicked from store", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MAIN_EMPLOYEE_ACTIVITY.this, "You are kicked from store", Toast.LENGTH_SHORT).show();
                                         //    storeID = " ";
                                         refUser.child(user.getUid()).child("workID").setValue(" ")
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {

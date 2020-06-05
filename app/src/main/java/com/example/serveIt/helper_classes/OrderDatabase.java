@@ -1,4 +1,6 @@
-package com.example.serveIt;
+package com.example.serveIt.helper_classes;
+
+import com.example.serveIt.helper_classes.Order_Item;
 
 import java.util.ArrayList;
 

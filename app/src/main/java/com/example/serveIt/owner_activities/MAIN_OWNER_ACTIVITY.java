@@ -12,13 +12,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.serveIt.R;
-import com.example.serveIt.SharedPref;
-import com.example.serveIt.employee_activities.store_layout;
+import com.example.serveIt.helper_classes.SharedPref;
 import com.example.serveIt.login_activities.login;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class owner_activity extends AppCompatActivity {
+public class MAIN_OWNER_ACTIVITY extends AppCompatActivity {
 
     Bundle b;
     private  Dialog logoutDialog;

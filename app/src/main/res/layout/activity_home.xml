@@ -21,7 +21,8 @@
             android:id="@+id/imageView2"
             android:layout_width="200dp"
             android:layout_height="150dp"
-            app:srcCompat="@drawable/background_icon" />
+            app:srcCompat="@drawable/background_icon"
+            android:layout_marginBottom="10dp"/>
 
         <View
             android:layout_marginLeft="40dp"

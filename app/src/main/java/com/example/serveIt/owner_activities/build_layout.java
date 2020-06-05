@@ -6,22 +6,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.serveIt.R;
-import com.example.serveIt.Store;
-import com.example.serveIt.Table;
+import com.example.serveIt.helper_classes.Store;
+import com.example.serveIt.helper_classes.Table;
+import com.example.serveIt.owner_activities.Adapters.TableAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

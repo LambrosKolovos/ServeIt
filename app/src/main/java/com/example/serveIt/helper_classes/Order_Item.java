@@ -1,5 +1,7 @@
-package com.example.serveIt;
+package com.example.serveIt.helper_classes;
 
+
+import com.example.serveIt.helper_classes.Food_Item;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.example.serveIt.employee_activities;
+package com.example.serveIt.employee_activities.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -15,13 +15,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.serveIt.Food_Item;
-import com.example.serveIt.Order_Item;
+import com.example.serveIt.helper_classes.Order_Item;
 import com.example.serveIt.R;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Set;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 

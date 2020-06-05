@@ -1,4 +1,4 @@
-package com.example.serveIt;
+package com.example.serveIt.helper_classes;
 
 import java.io.Serializable;
 import java.util.HashMap;

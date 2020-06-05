@@ -13,11 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.serveIt.R;
-import com.example.serveIt.SharedPref;
-import com.example.serveIt.User;
-import com.example.serveIt.employee_activities.employee_activity;
+import com.example.serveIt.helper_classes.SharedPref;
+import com.example.serveIt.helper_classes.User;
+import com.example.serveIt.employee_activities.MAIN_EMPLOYEE_ACTIVITY;
 import com.example.serveIt.employee_activities.search_store;
-import com.example.serveIt.owner_activities.owner_activity;
+import com.example.serveIt.owner_activities.MAIN_OWNER_ACTIVITY;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -129,7 +129,7 @@ public class login extends AppCompatActivity {
 
                                 if(isOwner){
                                     finish();
-                                    startActivity(new Intent(getApplicationContext(), owner_activity.class));
+                                    startActivity(new Intent(getApplicationContext(), MAIN_OWNER_ACTIVITY.class));
                                 }
                                 else{
                                     if(user.getWorkID().equals(" ")){
@@ -138,7 +138,7 @@ public class login extends AppCompatActivity {
                                         startActivity(i);
                                     }
                                     else{
-                                        Intent i = new Intent(getApplicationContext(), employee_activity.class);
+                                        Intent i = new Intent(getApplicationContext(), MAIN_EMPLOYEE_ACTIVITY.class);
                                         i.putExtra("storeID", user.getWorkID());
                                         startActivity(i);
                                     }

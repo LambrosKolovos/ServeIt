@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -20,9 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
-import com.example.serveIt.*;
 import com.example.serveIt.employee_activities.search_store;
-import com.example.serveIt.owner_activities.owner_activity;
+import com.example.serveIt.helper_classes.Store;
+import com.example.serveIt.helper_classes.User;
+import com.example.serveIt.owner_activities.MAIN_OWNER_ACTIVITY;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -160,7 +159,7 @@ public class sign_up extends AppCompatActivity {
                                                         .push()
                                                         .setValue(store);
                                                 finish();
-                                                startActivity(new Intent(getApplicationContext(), owner_activity.class));
+                                                startActivity(new Intent(getApplicationContext(), MAIN_OWNER_ACTIVITY.class));
                                             }
                                             else{
                                                 Intent intent = new Intent(getApplicationContext(), search_store.class);

@@ -13,8 +13,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
-import com.example.serveIt.SharedPref;
-import com.example.serveIt.Store;
+import com.example.serveIt.helper_classes.SharedPref;
+import com.example.serveIt.helper_classes.Store;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

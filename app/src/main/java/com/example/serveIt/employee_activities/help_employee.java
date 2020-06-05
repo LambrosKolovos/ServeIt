@@ -2,16 +2,11 @@ package com.example.serveIt.employee_activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.serveIt.R;
-import com.example.serveIt.SharedPref;
+import com.example.serveIt.helper_classes.SharedPref;
 
 
 public class help_employee extends AppCompatActivity {

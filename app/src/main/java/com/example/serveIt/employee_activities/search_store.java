@@ -16,20 +16,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.serveIt.Food_Item;
-import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
-import com.example.serveIt.Store;
-import com.example.serveIt.User;
+import com.example.serveIt.helper_classes.Store;
+import com.example.serveIt.helper_classes.User;
 import com.example.serveIt.login_activities.login;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -39,10 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -274,7 +267,7 @@ public class search_store extends AppCompatActivity {
 
                                         //Load main application
                                         activity.finish();
-                                        Intent i = new Intent(context, employee_activity.class);
+                                        Intent i = new Intent(context, MAIN_EMPLOYEE_ACTIVITY.class);
                                         i.putExtra("storeID", user.getWorkID());
                                         context.startActivity(i);
                                         break;

@@ -1,10 +1,9 @@
-package com.example.serveIt.owner_activities;
+package com.example.serveIt.owner_activities.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,10 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.serveIt.Order_Item;
 import com.example.serveIt.R;
-import com.example.serveIt.User;
-import com.example.serveIt.employee_activities.OrderAdapter;
+import com.example.serveIt.helper_classes.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;

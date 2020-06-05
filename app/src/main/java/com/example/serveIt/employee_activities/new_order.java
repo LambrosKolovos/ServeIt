@@ -22,11 +22,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.serveIt.Order;
-import com.example.serveIt.OrderDatabase;
-import com.example.serveIt.Order_Item;
+import com.example.serveIt.helper_classes.Order;
+import com.example.serveIt.helper_classes.OrderDatabase;
+import com.example.serveIt.helper_classes.Order_Item;
 import com.example.serveIt.R;
-import com.example.serveIt.SharedPref;
+import com.example.serveIt.helper_classes.SharedPref;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

@@ -1,22 +1,18 @@
 package com.example.serveIt.employee_activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.content.Intent;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.serveIt.Order;
-import com.example.serveIt.Order_Item;
+import com.example.serveIt.helper_classes.Order;
+import com.example.serveIt.helper_classes.Order_Item;
 import com.example.serveIt.R;
-import com.example.serveIt.SharedPref;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.serveIt.helper_classes.SharedPref;
 
 public class item_notes extends AppCompatActivity {
     Bundle b;
@@ -97,7 +93,7 @@ public class item_notes extends AppCompatActivity {
                 b.putSerializable("currentOrder", currentOrder);
                 b.putSerializable("storeID", storeID);
                 b.putInt("tableID", tableID);
-                Intent i = new Intent(getApplicationContext(), employee_activity.class);
+                Intent i = new Intent(getApplicationContext(), MAIN_EMPLOYEE_ACTIVITY.class);
                 i.putExtras(b);
                 finish(); //to be changed (hardcoded)
                 startActivity(i);

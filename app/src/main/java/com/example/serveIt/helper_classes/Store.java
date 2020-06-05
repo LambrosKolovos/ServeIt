@@ -1,11 +1,15 @@
-package com.example.serveIt;
+package com.example.serveIt.helper_classes;
+
+import com.example.serveIt.helper_classes.Category;
+import com.example.serveIt.helper_classes.Table;
+import com.example.serveIt.helper_classes.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Store implements Serializable {
-    private HashMap<String,User> employees = new HashMap<>();
+    private HashMap<String, User> employees = new HashMap<>();
     private ArrayList<Category> menu;
     private ArrayList<Table> tables;
     private String currency;

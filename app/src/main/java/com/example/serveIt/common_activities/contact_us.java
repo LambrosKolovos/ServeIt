@@ -1,4 +1,4 @@
-package com.example.serveIt;
+package com.example.serveIt.common_activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.example.serveIt.R;
+import com.example.serveIt.helper_classes.SharedPref;
 
 public class contact_us extends AppCompatActivity {
 

@@ -2,11 +2,9 @@ package com.example.serveIt.employee_activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,11 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.serveIt.Food_Item;
-import com.example.serveIt.Order;
-import com.example.serveIt.Order_Item;
+import com.example.serveIt.helper_classes.Food_Item;
+import com.example.serveIt.helper_classes.Order;
+import com.example.serveIt.helper_classes.Order_Item;
 import com.example.serveIt.R;
-import com.example.serveIt.SharedPref;
+import com.example.serveIt.helper_classes.SharedPref;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -107,7 +105,7 @@ public class search_food extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(getApplicationContext(), employee_activity.class);
+        Intent intent = new Intent(getApplicationContext(), MAIN_EMPLOYEE_ACTIVITY.class);
         Bundle b = new Bundle();
         b.putSerializable("currentOrder", currentOrder);
         b.putSerializable("storeID", storeID);
@@ -207,7 +205,7 @@ public class search_food extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), employee_activity.class);
+        Intent intent = new Intent(getApplicationContext(), MAIN_EMPLOYEE_ACTIVITY.class);
         Bundle b = new Bundle();
         b.putSerializable("currentOrder", currentOrder);
         b.putSerializable("storeID", storeID);

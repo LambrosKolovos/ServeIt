@@ -1,7 +1,6 @@
-package com.example.serveIt;
+package com.example.serveIt.helper_classes;
 
 import java.io.Serializable;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 
