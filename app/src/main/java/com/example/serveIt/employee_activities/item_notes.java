@@ -14,6 +14,10 @@ import com.example.serveIt.helper_classes.Order_Item;
 import com.example.serveIt.R;
 import com.example.serveIt.helper_classes.SharedPref;
 
+
+/*
+activity that handles item_notes
+ */
 public class item_notes extends AppCompatActivity {
     Bundle b;
     Order_Item item;
@@ -61,6 +65,8 @@ public class item_notes extends AppCompatActivity {
         final TextView quantityView = findViewById(R.id.quantity);
         quantityView.setText(String.valueOf(item.getQuantity()));
 
+
+        //increase quantity
         incBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +74,8 @@ public class item_notes extends AppCompatActivity {
                 quantityView.setText(String.valueOf(item.getQuantity()));
             }
         });
+
+        //decrease quantity
         decBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +91,7 @@ public class item_notes extends AppCompatActivity {
         });
 
 
+        //listener that handles the add button
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import com.example.serveIt.R;
 import com.example.serveIt.helper_classes.SharedPref;
 
-
+/*
+activity that help the user to understand the app's functionality
+ */
 public class help_employee extends AppCompatActivity {
 
     SharedPref sharedPref;

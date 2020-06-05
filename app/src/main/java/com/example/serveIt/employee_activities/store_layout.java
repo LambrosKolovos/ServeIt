@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/*Fragment that show to employee the store layout*/
+
 public class store_layout extends Fragment {
 
     private FirebaseDatabase database;
@@ -49,6 +51,7 @@ public class store_layout extends Fragment {
         View root = inflater.inflate(R.layout.activity_store_layout, container, false);
 
 
+        //title of activity
         requireActivity().setTitle("Store layout");
 
         currentRow= new TableRow(getContext());
@@ -88,6 +91,8 @@ public class store_layout extends Fragment {
             clearTableDialog.dismiss();
     }
 
+    //method that reads tables from database and add theme to an arraylist
+    //then set the adapter to show the list in a recycler view
     private void readFromDB(){
         ref.child(storeID)
                 .addValueEventListener(new ValueEventListener() {
@@ -110,6 +115,7 @@ public class store_layout extends Fragment {
                 });
     }
 
+    //retrieves restaurant name from db and shows it
     private void showRestName(){
         storeRef.child(storeID)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -128,6 +134,7 @@ public class store_layout extends Fragment {
                 });
     }
 
+    //method that calculates number of columns in grid layout
     public static int calculateNoOfColumns(Context context, float columnWidthDp) { // For example columnWidthdp=180
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;

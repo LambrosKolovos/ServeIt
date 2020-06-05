@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+
+/*class that handles search food from the menu*/
 public class search_food extends AppCompatActivity {
 
     private EditText search_bar;
@@ -131,6 +133,10 @@ public class search_food extends AppCompatActivity {
         firebaseRecyclerAdapter.stopListening();
     }
 
+
+    //method that search in ItemList which is the full menu of the store
+    //check if the input text matches an item in the list
+    //if yes showing in it in the recyclerview
     private void firebaseUserSearch(String searchText) {
 
         Query firebaseSearchQuery;
@@ -177,6 +183,7 @@ public class search_food extends AppCompatActivity {
             mView = itemView;
         }
 
+        //sets the item layout and handles the on click
         public void setDetails(final Context ctx, final Food_Item item){
 
             final TextView item_name = mView.findViewById(R.id.food_name);

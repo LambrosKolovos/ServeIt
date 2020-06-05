@@ -41,6 +41,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+
+/* class that handles search stores */
 public class search_store extends AppCompatActivity {
 
     RecyclerView storeView;
@@ -82,6 +84,9 @@ public class search_store extends AppCompatActivity {
 
     }
 
+
+    //options menu that you can tap search
+    //and search from stores
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -106,7 +111,7 @@ public class search_store extends AppCompatActivity {
                 }
                 else{
                     noDataView.setVisibility(View.GONE);
-                    storeSearch(newText);
+                    storeSearch(newText);//if text is not empty call the adapter and search
                 }
                 return true;
             }
@@ -150,6 +155,9 @@ public class search_store extends AppCompatActivity {
 
     }
 
+    //method that handles store search
+    //initializes a firebaseRecylcer and adapter and with a query checks if the input text matches something from database
+    //and shows the result
     private void storeSearch(String searchText){
         Query firebaseSearchQuery;
 
@@ -186,6 +194,7 @@ public class search_store extends AppCompatActivity {
 
     }
 
+    //class that handles the results from adapter
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
@@ -218,6 +227,8 @@ public class search_store extends AppCompatActivity {
             });
 
         }
+
+        //if you tap to join a restaurant this dialog showing up
         private  void showJoinDialog(View v, final String id, final User user, final Activity activity){
             final EditText password;
             final TextView warning;
@@ -231,6 +242,10 @@ public class search_store extends AppCompatActivity {
             warning = joinDialog.findViewById(R.id.wrong_pass);
             warning.setVisibility(View.INVISIBLE);
 
+            //join btn listener that check if the password is correct
+            //if yes, add you to the employees of the store and sets the workID to the id of the store
+            //that you joined
+            //saves the current date to db also
             join_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -298,6 +313,7 @@ public class search_store extends AppCompatActivity {
         firebaseRecyclerAdapter.stopListening();
     }
 
+    //handles sign out button
     public void sign_out(View view){
         finish();
         firebaseRecyclerAdapter.stopListening();

@@ -30,6 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+/*
+adapter that handles the table layout
+ */
 public class TableAdapterEmployee extends RecyclerView.Adapter<TableAdapterEmployee.ViewHolder> {
 
     private List<Table> tableList;
@@ -78,6 +81,7 @@ public class TableAdapterEmployee extends RecyclerView.Adapter<TableAdapterEmplo
         else
             holder.tableView.setCardBackgroundColor(Color.parseColor("#008080"));
 
+        //clear status of table on long click
         holder.tableView
                 .setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -87,6 +91,7 @@ public class TableAdapterEmployee extends RecyclerView.Adapter<TableAdapterEmplo
                     }
                 });
 
+        //open new order to start a new order for this table
         holder.tableView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +110,7 @@ public class TableAdapterEmployee extends RecyclerView.Adapter<TableAdapterEmplo
 
     }
 
+    //open new order fragment and passes the table id that the user selected
     public void openNewOrder(int ID){
         if(activity != null){
             BottomNavigationView bottomNavigationView = activity.findViewById(R.id.bottom_nav);
@@ -124,7 +130,7 @@ public class TableAdapterEmployee extends RecyclerView.Adapter<TableAdapterEmplo
                 .commit();
     }
 
-
+    //clear tables status dialog
     public void showClearDialog(View v, final Table table){
         Button clear_btn, cancel_btn;
 
