@@ -20,7 +20,7 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/table" />
+            app:srcCompat="@drawable/table2" />
 
         <TextView
             android:id="@+id/table_id"

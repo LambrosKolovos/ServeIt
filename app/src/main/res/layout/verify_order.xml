@@ -23,6 +23,7 @@
     <EditText
         android:paddingTop="5dp"
         android:textColor="?txtColor"
+        android:textColorHint="?txtColor"
         android:id="@+id/tableField"
         android:layout_width="80dp"
         android:layout_centerInParent="true"

@@ -39,9 +39,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class search_store extends AppCompatActivity {
 
@@ -245,6 +250,11 @@ public class search_store extends AppCompatActivity {
 
 
                                         //Update store's employees
+                                        Date c = Calendar.getInstance().getTime();
+                                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                                        String date = df.format(c);
+
+                                        user.setDate(date);
                                         store.getEmployees().put(mAuth.getCurrentUser().getUid(), user);
                                         ref.child(storeID).child("employees").setValue(store.getEmployees());
 

@@ -33,6 +33,7 @@
             android:layout_weight="1"
             android:textColor="?staffText"
             android:gravity="center_vertical"
+            android:textSize="18sp"
             />
 
         <TextView
@@ -43,6 +44,7 @@
             android:layout_weight="1"
             android:textColor="?staffText"
             android:gravity="center_vertical"
+            android:textSize="18sp"
             />
 
         <ImageView

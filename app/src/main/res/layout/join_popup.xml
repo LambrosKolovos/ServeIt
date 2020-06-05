@@ -3,26 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="250dp"
     android:layout_height="150dp"
-    android:background="#ffffff"
+    android:background="@drawable/dialog_style"
     android:padding="5dp"
     android:layout_gravity="center">
 
 
     <EditText
-        android:background="@drawable/input_style"
+        android:background="@drawable/help_border"
         android:layout_margin="20dp"
         android:id="@+id/pass_field"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:hint="Enter password..."
         android:inputType="textPassword"
-        android:textColor="@color/colorPrimaryDark"
-        android:textAlignment="center"
-        android:gravity="center_vertical" />
+        android:textColor="?txtColor"
+        android:gravity="center"
+        android:textColorHint="?txtColor"/>
 
         <Button
-            android:textColor="#ffffff"
-            android:background="@color/colorPrimaryDark"
+            android:textColor="?btnTxtColor"
+            android:background="@drawable/button_style"
             android:layout_gravity="right"
             android:id="@+id/join"
             android:layout_width="wrap_content"
