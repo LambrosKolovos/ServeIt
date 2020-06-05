@@ -227,6 +227,7 @@ public class search_store extends AppCompatActivity {
         }
         private  void showJoinDialog(View v, final String id, final User user, final Activity activity){
             final EditText password;
+            final TextView warning;
             Button join_btn;
             final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Store");
 
@@ -234,6 +235,8 @@ public class search_store extends AppCompatActivity {
 
             join_btn = joinDialog.findViewById(R.id.join);
             password = joinDialog.findViewById(R.id.pass_field);
+            warning = joinDialog.findViewById(R.id.wrong_pass);
+            warning.setVisibility(View.INVISIBLE);
 
             join_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -276,8 +279,10 @@ public class search_store extends AppCompatActivity {
                                         context.startActivity(i);
                                         break;
                                     }
-                                    else
-                                        System.out.println("IM AFRAID THIS IS NOT CORRECT");
+                                    else{
+                                        warning.setText("Wrong password!");
+                                        warning.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             }
                         }

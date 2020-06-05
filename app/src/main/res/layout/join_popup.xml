@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="250dp"
-    android:layout_height="150dp"
+    android:layout_height="170dp"
     android:background="@drawable/dialog_style"
     android:padding="5dp"
     android:layout_gravity="center">
@@ -10,7 +10,10 @@
 
     <EditText
         android:background="@drawable/help_border"
-        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"
         android:id="@+id/pass_field"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -20,6 +23,16 @@
         android:gravity="center"
         android:textColorHint="?txtColor"/>
 
+    <TextView
+        android:id="@+id/wrong_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="error"
+        android:textColor="#ff0000"
+        android:layout_below="@id/pass_field"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"/>
+
         <Button
             android:textColor="?btnTxtColor"
             android:background="@drawable/button_style"
@@ -28,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="Join"
-            android:layout_below="@+id/pass_field"
+            android:layout_below="@+id/wrong_pass"
             android:layout_centerInParent="true"/>
 
 </RelativeLayout>
