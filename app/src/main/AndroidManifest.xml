@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login_activities.home"></activity>
+        <activity android:name=".login_activities.home" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".owner_activities.store_settings" />
         <activity android:name=".common_activities.change_password" />
         <activity android:name=".owner_activities.help_owner" />
