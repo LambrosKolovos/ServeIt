@@ -57,6 +57,8 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
 
         holder.employee_name.setText(employee.getFull_name());
 
+        holder.date.setText(employee.getDate());
+
         holder.delete_ico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,8 +129,9 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         private Context context;
-        private TextView employee_name;
+        private TextView employee_name, date;
         private ImageView delete_ico;
+
 
 
         public ViewHolder(View view, Context context){
@@ -138,6 +141,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
 
             employee_name = view.findViewById(R.id.employee_name);
             delete_ico = view.findViewById(R.id.delete_ico);
+            date = view.findViewById(R.id.date);
 
         }
 

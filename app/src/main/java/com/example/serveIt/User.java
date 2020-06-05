@@ -1,6 +1,8 @@
 package com.example.serveIt;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User implements Serializable {
 
@@ -9,6 +11,7 @@ public class User implements Serializable {
     private boolean isOwner;
     private String storeID;
     private String workID;
+    private String date;
 
     public User(String email, String full_name, boolean isOwner){
         this.email = email;
@@ -18,6 +21,15 @@ public class User implements Serializable {
 
     public User(){
 
+    }
+
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setStoreID(String storeID) {

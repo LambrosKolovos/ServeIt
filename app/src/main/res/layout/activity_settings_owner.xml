@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.serveIt.owner_activities.settings">
+    tools:context="com.example.serveIt.owner_activities.settings"
+    android:background="?bgColor"
+    >
 
     <ScrollView
+        android:id="@+id/settings_display"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/bgColor">
@@ -67,7 +70,8 @@
                         android:layout_marginLeft="20dp"
                         android:text="Your name"
                         android:textColor="?txtColor"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:textStyle="bold"/>
 
                 </TableRow>
 
@@ -199,7 +203,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginRight="25dp"
-                        android:paddingBottom="5dp"/>
+                        android:paddingBottom="5dp"
+                        android:theme="@style/ThemeOverlay.MySwitchCompat"/>
 
                 </TableRow>
 

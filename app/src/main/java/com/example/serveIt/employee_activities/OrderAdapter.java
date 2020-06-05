@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,7 +53,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
        if(!order_item.getNotes().isEmpty()) {
            holder.notes.setVisibility(View.VISIBLE);
-           holder.item_name.setOnClickListener(new View.OnClickListener() {
+           holder.item_layout.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
                    showNotesDialog(v, order_item.getNotes());
@@ -92,6 +93,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         Context context;
 
         TextView item_name, item_quantity;
+        LinearLayout item_layout;
         ImageView notes;
 
         public ViewHolder(@NonNull View itemView, Context context) {
@@ -103,6 +105,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
             Animation a = AnimationUtils.loadAnimation(context, R.anim.slide_in_right);
 
+            item_layout = itemView.findViewById(R.id.item_layout);
             item_name = itemView.findViewById(R.id.item_name);
             item_quantity = itemView.findViewById(R.id.item_quantity);
             notes = itemView.findViewById(R.id.notes);

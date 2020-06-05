@@ -278,9 +278,15 @@ public class menu_page extends Fragment {
             @Override
             public void onClick(View v) {
                 final String categoryName = categoryInput.getText().toString();
-                addItem(categoryName, new ArrayList<Food_Item>());
-                addCategoryToDatabase(categoryName);
-                categoryDialog.dismiss();
+                if(!categoryName.isEmpty()){
+                    addItem(categoryName, new ArrayList<Food_Item>());
+                    addCategoryToDatabase(categoryName);
+                    categoryDialog.dismiss();
+                }
+                else{
+                    alert.setVisibility(View.VISIBLE);
+                }
+
             }
         });
 

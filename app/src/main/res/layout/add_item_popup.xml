@@ -2,8 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="250dp"
-    android:layout_height="250dp"
-    android:background="#ffffff"
+    android:layout_height="230dp"
+    android:background="@drawable/dialog_style"
     android:padding="5dp"
     android:layout_gravity="center">
 
@@ -23,11 +23,13 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/input_style"
+            android:background="@drawable/help_border"
             android:ems="10"
             android:hint="Item name"
             android:inputType="textPersonName"
-            android:paddingLeft="15dp" />
+            android:paddingLeft="15dp"
+            android:textColorHint="?txtColor"
+            android:textColor="?txtColor"/>
 
         <TextView
             android:layout_below="@id/name_field"
@@ -38,7 +40,9 @@
             android:id="@+id/warning_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#FF0000 "/>
+            android:textColor="?txtColor"
+            android:textColorHint="?txtColor"
+            />
 
         <EditText
             android:id="@+id/price_field"
@@ -46,22 +50,23 @@
             android:layout_height="35dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/input_style"
+            android:background="@drawable/help_border"
             android:ems="10"
             android:hint="Price"
             android:inputType="numberDecimal"
-            android:paddingLeft="15dp" />
+            android:paddingLeft="15dp"
+            android:textColor="?txtColor"
+            android:textColorHint="?txtColor"/>
 
         <TextView
             android:layout_below="@id/price_field"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="15dp"
             android:paddingLeft="15dp"
             android:id="@+id/warning_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#FF0000 "/>
+            android:textColor="?txtColor"/>
     </LinearLayout>
 
     <LinearLayout
@@ -74,16 +79,16 @@
         android:orientation="horizontal">
 
         <Button
-            android:background="@drawable/input_style"
-            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/help_border"
+            android:textColor="?txtColor"
             android:id="@+id/close_btn"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="Cancel"/>
 
         <Button
-            android:textColor="#ffffff"
-            android:background="@color/colorPrimaryDark"
+            android:textColor="?btnTxtColor"
+            android:background="@drawable/button_style"
             android:layout_marginLeft="27dp"
             android:layout_gravity="right"
             android:id="@+id/add_item"

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -52,6 +53,7 @@ public class settings extends Fragment {
     Switch darkMode;
 
     private Dialog deleteDialog, passDialog;
+    private ScrollView settings_display;
 
     @Nullable
     @Override
@@ -82,6 +84,9 @@ public class settings extends Fragment {
         darkMode = root.findViewById(R.id.darkModeSwitch);
         help = root.findViewById(R.id.help_row);
         storeSettings = root.findViewById(R.id.store_settings_row);
+        settings_display = root.findViewById(R.id.settings_display);
+
+        settings_display.setVisibility(View.INVISIBLE);
 
         if(sharedPref.loadNightMode())
             darkMode.setChecked(true);
@@ -97,6 +102,7 @@ public class settings extends Fragment {
                     sharedPref.setNightMode(true);
                     i.putExtras(b);
                     getActivity().finish();
+                    getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                     startActivity(i);
                 }
                 else{
@@ -105,6 +111,7 @@ public class settings extends Fragment {
                     sharedPref.setNightMode(false);
                     i.putExtras(b);
                     getActivity().finish();
+                    getActivity().overridePendingTransition(R.anim.left_in,R.anim.right_out);
                     startActivity(i);
                 }
             }
@@ -157,6 +164,8 @@ public class settings extends Fragment {
             }
         });
 
+        showName();
+
         return root;
     }
 
@@ -203,6 +212,22 @@ public class settings extends Fragment {
         });
 
         deleteDialog.show();
+    }
+
+    private void showName(){
+        DatabaseReference username = userRef.child(mAuth.getUid()).child("full_name");
+        username.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String name_str = dataSnapshot.getValue(String.class);
+                name.setText(name_str);
+                settings_display.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void deleteAccount(){

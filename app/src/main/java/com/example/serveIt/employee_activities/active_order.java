@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ActionBar;
+import android.app.Dialog;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,6 +58,8 @@ public class active_order extends Fragment {
     Bundle b;
     String storeID;
 
+    private Dialog delete_all;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +74,7 @@ public class active_order extends Fragment {
         prevBtn = root.findViewById(R.id.prev_btn);
         readyBtn = root.findViewById(R.id.readyBtn);
         deleteBtn = root.findViewById(R.id.deleteBtn);
+        delete_all = new Dialog(requireContext());
 
 
 
@@ -144,6 +148,18 @@ public class active_order extends Fragment {
                                             }
                                         });
                             }
+
+                        }
+                    });
+
+                    deleteBtn.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            if(orders > 0){
+                                showDeleteAllDialog(v, storeID);
+                            }
+
+                            return true;
                         }
                     });
 
@@ -371,6 +387,31 @@ public class active_order extends Fragment {
         }
     }
 
+    private void showDeleteAllDialog(View v, final String storeID){
+        Button del_btn;
+
+        delete_all.setContentView(R.layout.delete_all_dialog);
+
+        del_btn = delete_all.findViewById(R.id.del_btn);
+
+        del_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list_items.clear();
+                orderAdapter.notifyDataSetChanged();
+                database.child(storeID).removeValue()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getContext(), "All orders deleted", Toast.LENGTH_SHORT).show();
+                                delete_all.dismiss();
+                            }
+                        });
+            }
+        });
+
+        delete_all.show();
+    }
 
     public static class QuantityComparator implements Comparator<Order_Item> {
         @Override
