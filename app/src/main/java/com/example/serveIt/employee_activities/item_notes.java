@@ -19,8 +19,6 @@ import com.example.serveIt.SharedPref;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class item_notes extends AppCompatActivity {
-    int counter = 1;
-    String totalCounter;
     Bundle b;
     Order_Item item;
     Order currentOrder;
@@ -70,15 +68,15 @@ public class item_notes extends AppCompatActivity {
         incBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                item.incQuanity();
+                item.incQuantity();
                 quantityView.setText(String.valueOf(item.getQuantity()));
             }
         });
         decBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(counter > 1) {
-                    item.setQuantity(item.getQuantity()-1);
+                if(item.getQuantity() > 1) {
+                    item.decQuantity();
                     quantityView.setText(String.valueOf(item.getQuantity()));
                 }
                 else{

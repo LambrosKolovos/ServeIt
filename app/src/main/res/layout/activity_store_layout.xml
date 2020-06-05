@@ -14,15 +14,24 @@
         android:textStyle="bold"
         android:textSize="24sp"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:textColor="?attr/txtColor"
+        android:textColor="?secondaryTxtColor"
         />
 
+    <View
+        android:layout_below="@id/restaurant_name"
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?txtColor"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/table_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/restaurant_name"/>
+        android:layout_below="@id/divider4"/>
 </RelativeLayout>

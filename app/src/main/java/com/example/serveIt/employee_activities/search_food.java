@@ -196,7 +196,7 @@ public class search_food extends AppCompatActivity {
                     if(!currentOrder.containsItem(item))
                         currentOrder.addItem(order_item);
                     else{
-                        currentOrder.getItem(item).incQuanity();
+                        currentOrder.getItem(item).incQuantity();
                     }
                     Toast.makeText(ctx, "Added: " + item.getName(), Toast.LENGTH_SHORT).show();
                 }

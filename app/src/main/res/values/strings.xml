@@ -57,4 +57,38 @@
         in your settings and you will be redirected to a new page where you can join your new store
         that you are working.
     </string>
+
+    <string name="answer_own1">
+        You can add tables by going to Table layout and clicking the rounded button at bottom right of your screen.
+    </string>
+
+    <string name="answer_own2">
+        You can add your store\'s menu by adding different categories using the rounded button and then click + on each category
+        to add items into it.
+    </string>
+
+    <string name="answer_own3">
+        Currently employees can join by entering the store\'s password so to invite an employee tell them the password and they
+        will be able to join.
+    </string>
+
+    <string name="answer_own4">
+        You can kick employees out of the store anytime in the manage staff page. You can see a full list of who is working
+        for you and the date they joined
+    </string>
+
+    <string name="answer_own5">
+        Changing store settings is available in your settings page. Currently you can change your store\'s name, enter code
+        and currency
+    </string>
+
+    <string name="answer_com1">
+        You can contact us through the contact section in your settings.\nWe appreciate your effort trying to make
+        the application better!
+    </string>
+
+    <string name="answer_com2">
+        When you decide you no longer need the app you can request a deletion of your account by clicking the
+        corresponding row in settings
+    </string>
 </resources>

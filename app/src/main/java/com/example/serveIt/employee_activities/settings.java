@@ -194,34 +194,6 @@ public class settings extends Fragment {
 
     }
 
-    private void showChangePassDialog(View v) {
-        final EditText oldpass, newPass;
-        Button change, cancel;
-
-        passDialog.setContentView(R.layout.pass_dialog);
-
-        oldpass = passDialog.findViewById(R.id.old_pass);
-        newPass = passDialog.findViewById(R.id.new_pass);
-        change = passDialog.findViewById(R.id.change);
-        cancel = passDialog.findViewById(R.id.cancel);
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                passDialog.dismiss();
-            }
-        });
-
-
-
-        change.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(getContext(), change_password.class));
-                }
-            });
-
-    }
 
     @SuppressLint("SetTextI18n")
     private void showAlert(View v, final boolean delete){

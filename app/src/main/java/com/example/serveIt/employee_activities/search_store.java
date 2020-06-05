@@ -57,6 +57,7 @@ public class search_store extends AppCompatActivity {
     User currentUser;
     private Button sign_out;
 
+    private Activity activity;
     private static Dialog joinDialog;
 
     private FirebaseRecyclerAdapter<Store, ViewHolder > firebaseRecyclerAdapter;
@@ -70,6 +71,7 @@ public class search_store extends AppCompatActivity {
         setContentView(R.layout.activity_search_store);
         sign_out = findViewById(R.id.sign_out);
         mAuth = FirebaseAuth.getInstance();
+        activity = this;
 
         ref = FirebaseDatabase.getInstance().getReference("Store");
 
@@ -181,7 +183,7 @@ public class search_store extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull ViewHolder viewHolder, int position, @NonNull Store model) {
-                viewHolder.setDetails(model, currentUser);
+                viewHolder.setDetails(model, currentUser, activity);
             }
 
         };
@@ -208,7 +210,7 @@ public class search_store extends AppCompatActivity {
 
         }
 
-        public void setDetails(final Store store, final User user){
+        public void setDetails(final Store store, final User user, final Activity activity){
 
 
             TextView store_name = mView.findViewById(R.id.store_name);
@@ -218,12 +220,12 @@ public class search_store extends AppCompatActivity {
             join.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showJoinDialog(v, store.getOwnerID(), user);
+                    showJoinDialog(v, store.getOwnerID(), user, activity);
                 }
             });
 
         }
-        private  void showJoinDialog(View v, final String id, final User user){
+        private  void showJoinDialog(View v, final String id, final User user, final Activity activity){
             final EditText password;
             Button join_btn;
             final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Store");
@@ -268,6 +270,7 @@ public class search_store extends AppCompatActivity {
 
 
                                         //Load main application
+                                        activity.finish();
                                         Intent i = new Intent(context, employee_activity.class);
                                         i.putExtra("storeID", user.getWorkID());
                                         context.startActivity(i);

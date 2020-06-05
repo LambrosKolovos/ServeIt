@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/bgColor"
     tools:context=".owner_activities.help_owner">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="?attr/bgColor"
         android:padding="20dp">
 
         <LinearLayout
@@ -49,6 +49,7 @@
                     android:background="?borderColor" />
 
                 <TextView
+                    android:text="@string/answer_own1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -91,6 +92,7 @@
                     android:background="?borderColor" />
 
                 <TextView
+                    android:text="@string/answer_own2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -134,6 +136,7 @@
                     android:background="?borderColor" />
 
                 <TextView
+                    android:text="@string/answer_own3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -177,12 +180,15 @@
                     android:background="?borderColor" />
 
                 <TextView
+                    android:text="@string/answer_own4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textColor="?txtColor" />
             </LinearLayout>
         </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -210,7 +216,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="@string/common_1"
+                    android:text="@string/question_own5"
                     android:textColor="?secondaryTxtColor" />
 
                 <View
@@ -219,12 +225,14 @@
                     android:background="?borderColor" />
 
                 <TextView
+                    android:text="@string/answer_own5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textColor="?txtColor" />
             </LinearLayout>
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -253,6 +261,50 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
+                    android:text="@string/common_1"
+                    android:textColor="?secondaryTxtColor" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?borderColor" />
+
+                <TextView
+                    android:text="@string/answer_com1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="?txtColor" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/help_border"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical"
+                android:text="7"
+                android:textColor="?secondaryTxtColor"
+                android:textSize="50sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:text="@string/common_2"
                     android:textColor="?secondaryTxtColor" />
 
@@ -262,6 +314,7 @@
                     android:background="?borderColor" />
 
                 <TextView
+                    android:text="@string/answer_com2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

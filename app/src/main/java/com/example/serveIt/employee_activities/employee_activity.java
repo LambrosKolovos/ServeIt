@@ -5,14 +5,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.serveIt.R;
 import com.example.serveIt.SharedPref;
 import com.example.serveIt.User;
+import com.example.serveIt.login_activities.login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,6 +38,7 @@ public class employee_activity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private ValueEventListener kicked, storeDelete;
+    private Dialog logoutDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,7 @@ public class employee_activity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         user = mAuth.getCurrentUser();
+        logoutDialog = new Dialog(this);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -247,4 +254,38 @@ public class employee_activity extends AppCompatActivity {
                     return true;
                 }
             };
+
+
+    @Override
+    public void onBackPressed() {
+        showLogoutDialog();
+    }
+
+    public void showLogoutDialog(){
+        Button logoutBtn, cancelBtn;
+        logoutDialog.setContentView(R.layout.logout_dialog);
+
+        logoutBtn = logoutDialog.findViewById(R.id.log_btn);
+        cancelBtn = logoutDialog.findViewById(R.id.cancel_btn);
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                    finish();
+                    Intent i = new  Intent(getApplicationContext(), login.class);
+                    startActivity(i);
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutDialog.dismiss();
+            }
+        });
+
+
+        logoutDialog.show();
+    }
 }
