@@ -27,6 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/*
+main employee activity that handles all the fragments
+ */
 public class MAIN_EMPLOYEE_ACTIVITY extends AppCompatActivity {
 
     Bundle b;
@@ -52,6 +55,7 @@ public class MAIN_EMPLOYEE_ACTIVITY extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
+        //load theme
         b = getIntent().getExtras();
         if(sharedPref.loadNightMode())
             setTheme(R.style.darkTheme);
@@ -59,6 +63,7 @@ public class MAIN_EMPLOYEE_ACTIVITY extends AppCompatActivity {
             setTheme(R.style.AppTheme);
 
 
+        //getting parameters from other activities
         if( b.getBoolean("trigger")){
             storeID = (String) b.getSerializable("storeID");
             bottomNav.setSelectedItemId(R.id.settings);
@@ -89,6 +94,9 @@ public class MAIN_EMPLOYEE_ACTIVITY extends AppCompatActivity {
         checkWorkID();
     }
 
+    //check if user is kicked or the store deleted
+    //and updates the employee ui
+    //starting search store activity to search for new store
     private void checkWorkID(){
 
          storeDelete = new ValueEventListener() {
@@ -222,6 +230,7 @@ public class MAIN_EMPLOYEE_ACTIVITY extends AppCompatActivity {
 
     }
 
+    //handles the bottom navigation bar
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override

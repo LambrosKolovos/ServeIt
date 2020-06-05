@@ -32,6 +32,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+
+/*
+* handles order view
+* */
 public class active_order extends Fragment {
 
 
@@ -86,6 +90,7 @@ public class active_order extends Fragment {
         tableId.setPaintFlags(tableId.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         order_list.setAdapter(orderAdapter);
 
+        /*reads data from db*/
         readData(new FirebaseCallback() {
             @Override
             public void onCallback(final List<String> list,final long number) {
@@ -93,6 +98,7 @@ public class active_order extends Fragment {
 
                 orders = number;
 
+                //check if list size is bigger than 0
                 if(list.size() > 0) {
 
                     orderNumber = list.size() - 1;
@@ -105,15 +111,15 @@ public class active_order extends Fragment {
 
                             for (DataSnapshot order_items : dataSnapshot.getChildren()) {
                                 //System.out.println(order_items.getKey());
-                                Order_Item items = order_items.getValue(Order_Item.class);
+                                Order_Item items = order_items.getValue(Order_Item.class);//retrieves the order item
                                 if (items != null) {
-                                    list_items.add(items);
+                                    list_items.add(items);//add them to list
                                 }
 
                             }
 
                             //   Collections.sort(list_items, new QuantityComparator());
-                            order_list.setAdapter(orderAdapter);
+                            order_list.setAdapter(orderAdapter);//bind them to an adapter to show them on the recycler view
                         }
 
                         @Override
@@ -122,6 +128,7 @@ public class active_order extends Fragment {
                         }
                     });
 
+                    //delete order button
                     deleteBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -142,6 +149,7 @@ public class active_order extends Fragment {
                         }
                     });
 
+                    //handles the delete all when you long click delete button
                     deleteBtn.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
@@ -162,6 +170,7 @@ public class active_order extends Fragment {
             }
         });
 
+        //previous order button
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,6 +212,7 @@ public class active_order extends Fragment {
             }
         });
 
+        //next order button
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -245,6 +255,9 @@ public class active_order extends Fragment {
             }
         });
 
+        /*ready button that save the status of the order to order is ready in the db
+        and also changes the table current status
+         */
         readyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -291,6 +304,9 @@ public class active_order extends Fragment {
         return root;
     }
 
+    /*
+    shows the tableID from the current order
+     */
     private void tableID(int orderNumber) {
         database.child(storeID).child(orderIDs.get(orderNumber)).child("table")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -310,6 +326,9 @@ public class active_order extends Fragment {
                 });
     }
 
+    /*
+    reads the order IDs from db and them to an arraylist
+     */
     private void readData(final FirebaseCallback firebaseCallback){
 
         final Query firebaseSearchQuery = database.child(storeID);
@@ -354,6 +373,9 @@ public class active_order extends Fragment {
         super.onStop();
     }
 
+    /*
+    check if order is ready and shows the textview
+    */
     private void checkReady(int orderNumber){
         if(orderIDs.size() > 0 ){
             database.child(storeID).child(orderIDs.get(orderNumber)).child("ready").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -377,6 +399,9 @@ public class active_order extends Fragment {
         }
     }
 
+    /*
+    dialog to delete all orders
+     */
     private void showDeleteAllDialog(View v, final String storeID){
         Button del_btn;
 
@@ -410,6 +435,8 @@ public class active_order extends Fragment {
         }
     }
 
+
+    //callback to user retrieved data out of the on data change
     private interface FirebaseCallback{
 
         void onCallback(List<String> list, long number);

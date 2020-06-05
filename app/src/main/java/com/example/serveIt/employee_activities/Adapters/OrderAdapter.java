@@ -20,6 +20,9 @@ import com.example.serveIt.R;
 
 import java.util.ArrayList;
 
+/*
+order adapter that handles the orders view
+ */
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
    private ArrayList<Order_Item> order_items;
@@ -37,7 +40,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.order_list, parent, false);
+                .inflate(R.layout.order_list, parent, false);//show each order in order_List.xml
         return new ViewHolder(view, parent.getContext());
     }
 
@@ -45,9 +48,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
        final Order_Item order_item = order_items.get(position);
 
+       //set order's attributes
        holder.item_name.setText(order_item.getItem().getName());
        holder.item_quantity.setText(order_item.getQuantity() + "x");
 
+       //if order item has notes you can click on it and read theme
        if(!order_item.getNotes().isEmpty()) {
            holder.notes.setVisibility(View.VISIBLE);
            holder.item_layout.setOnClickListener(new View.OnClickListener() {

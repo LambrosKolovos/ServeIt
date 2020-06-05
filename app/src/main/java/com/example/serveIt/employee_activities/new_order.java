@@ -36,6 +36,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/*
+class that handles the new order
+ */
 
 public class new_order extends Fragment{
 
@@ -126,6 +129,7 @@ public class new_order extends Fragment{
         return root;
     }
 
+    //dialog when user tries to send an order
     private void showVerification(View v){
         Button addBtn, closeBtn;
         final EditText tableField;
@@ -137,10 +141,12 @@ public class new_order extends Fragment{
         tableField = verificationDialog.findViewById(R.id.tableField);
         tableField.setText(String.valueOf(tableID));
 
+        //listener when user sends an order
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //if field is not empty keeps the id from the input
                 if(!tableField.getText().toString().isEmpty())
                     tableID = Integer.parseInt(tableField.getText().toString());
 
@@ -149,6 +155,7 @@ public class new_order extends Fragment{
 
                 OrderDatabase orderDatabase = new OrderDatabase(order.getOrdered(), String.valueOf(tableID));
 
+                //save the order to the database if table is not 0
                 if(tableID != 0){
                     if(order.getOrdered().size() != 0){
                         orderRef.child(storeID)
@@ -188,6 +195,7 @@ public class new_order extends Fragment{
         verificationDialog.show();
     }
 
+    //clear orderview after order successfully sent
     public void clearOrderView(){
         tableID_view.setText("Table: ");
         order.removeAll();
@@ -196,6 +204,7 @@ public class new_order extends Fragment{
         orderLayout.addView(build_header());
     }
 
+    //loads item notes when you tap in to an item that you picked
     public void loadItemNotes(View view, Order_Item item) {
         Intent i = new Intent(getActivity(), item_notes.class);
         b.putSerializable("item", item);
@@ -203,6 +212,7 @@ public class new_order extends Fragment{
         startActivity(i);
     }
 
+    //handles some of the table layout
     public void makeOrder(Order order) {
         for(Order_Item x : order.getOrdered()){
             TableRow item_row = build_row(x.getItem().getName(), String.valueOf(x.getQuantity()),  (x.getPrice()*x.getQuantity()) + "€");
@@ -212,7 +222,7 @@ public class new_order extends Fragment{
        refreshPriceView();
     }
 
-
+    //handles some of the table layout
     public TableRow build_row(String item_name, String quantity, String price){
 
         //Converts pixel to dp
@@ -237,6 +247,7 @@ public class new_order extends Fragment{
         return row;
     }
 
+    //handles some of the table layout
     public TableRow build_header(){
         int padding_in_dp = 25;
         final float scale = getResources().getDisplayMetrics().density;
@@ -248,6 +259,7 @@ public class new_order extends Fragment{
         TextView quantity = new TextView(getContext());
         TextView price = new TextView(getContext());
 
+        //picks the right colors depending on theme
         if(sharedPref.loadNightMode()){
             item.setTextColor(Color.parseColor("#EEEEEE"));
             quantity.setTextColor(Color.parseColor("#EEEEEE"));
@@ -280,6 +292,7 @@ public class new_order extends Fragment{
 
     }
 
+    //handles some of the table layout
     public TextView build_view(String name, int weight, boolean center, boolean clickable, final TableRow row){
         TextView view = new TextView(getContext());
         view.setText(name);
@@ -328,10 +341,12 @@ public class new_order extends Fragment{
         return  view;
     }
 
+    //refresh the price
     private void refreshPriceView() {
         priceView.setText("Total: " + order.getTotal_price() + "€");
     }
 
+    //update table status in db when order is taken in the respective table
     public void updateTableStatus(int id){
         tableRef.child(storeID)
                 .orderByChild("id")

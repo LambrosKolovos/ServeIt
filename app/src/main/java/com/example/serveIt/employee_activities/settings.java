@@ -35,6 +35,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
+/* settings of employee*/
 public class settings extends Fragment {
 
     private FirebaseAuth mAuth;
@@ -91,6 +93,7 @@ public class settings extends Fragment {
             darkModeSwitch.setChecked(false);
 
 
+        //switch theme to darkmode and saves it to prefs
         darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -115,6 +118,8 @@ public class settings extends Fragment {
             }
         });
 
+        //retrieves username from db
+        //and shows it
         DatabaseReference username = ref.child(mAuth.getUid()).child("full_name");
         username.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -164,6 +169,7 @@ public class settings extends Fragment {
             }
         });
 
+        //contact listener
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,6 +177,7 @@ public class settings extends Fragment {
             }
         });
 
+        //help listener
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,6 +185,7 @@ public class settings extends Fragment {
             }
         });
 
+        //logout listener
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,6 +203,8 @@ public class settings extends Fragment {
     }
 
 
+    //alert when you try to delete the account
+    //or leave workspace
     @SuppressLint("SetTextI18n")
     private void showAlert(View v, final boolean delete){
         Button no_btn, yes_btn;
@@ -241,6 +251,8 @@ public class settings extends Fragment {
         alertDialog.show();
     }
 
+
+    //method that handles delete user
     private void deleteUser(){
         final FirebaseUser user = mAuth.getCurrentUser();
 
@@ -249,7 +261,7 @@ public class settings extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            refStore.child(storeID).child("employees").child(user.getUid()).removeValue()
+                            refStore.child(storeID).child("employees").child(user.getUid()).removeValue()//deletes user from store's employees
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -257,12 +269,12 @@ public class settings extends Fragment {
                                                 user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                        if(task.isSuccessful()){
+                                                        if(task.isSuccessful()){//if successful show account deleted
                                                             Toast.makeText(getContext(), "Account deleted", Toast.LENGTH_SHORT).show();
                                                             Activity activity = getActivity();
                                                             if(activity != null){
                                                                 activity.finish();
-                                                                startActivity(new Intent(getContext(), login.class));
+                                                                startActivity(new Intent(getContext(), login.class));//start login activity
                                                             }
                                                         }
                                                         else{
@@ -285,6 +297,8 @@ public class settings extends Fragment {
                 });
     }
 
+    //method that handles leave workspace
+    //sets workID to " "
     private void leaveStore(){
         final DatabaseReference userRef = ref.child(mAuth.getCurrentUser().getUid());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
