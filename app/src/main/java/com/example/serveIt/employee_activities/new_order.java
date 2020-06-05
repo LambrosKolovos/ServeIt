@@ -141,6 +141,9 @@ public class new_order extends Fragment{
             @Override
             public void onClick(View v) {
 
+                if(!tableField.getText().toString().isEmpty())
+                    tableID = Integer.parseInt(tableField.getText().toString());
+
                 if(tableID == 0)
                     tableID = Integer.parseInt(tableField.getText().toString());
 
