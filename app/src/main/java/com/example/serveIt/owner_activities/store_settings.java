@@ -30,6 +30,7 @@ public class store_settings extends AppCompatActivity {
     private DatabaseReference storeRef;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    private Spinner currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,12 @@ public class store_settings extends AppCompatActivity {
         store_password = findViewById(R.id.store_password);
         save_changes = findViewById(R.id.save_changes);
 
+        final Spinner dropdown = findViewById(R.id.currency);
+        String[] items = new String[]{"Euros (€)", "US Dollars ($)"};
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.contact_spinner_item, items);
+        dropdown.setAdapter(adapter);
+
+
         storeRef.orderByChild("ownerID").equalTo(user.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -68,6 +75,16 @@ public class store_settings extends AppCompatActivity {
                         if(store != null){
                             store_name.setText(store.getName());
                             store_password.setText(store.getPassword());
+
+                            String findValue = "€";
+
+                            if(store.getCurrency().equals("€"))
+                                findValue = "Euros (€)";
+                            else
+                                findValue = "US Dollars ($)";
+
+                            int spinnerPosition = adapter.getPosition(findValue);
+                            dropdown.setSelection(spinnerPosition);
                         }
                     }
 
@@ -83,6 +100,14 @@ public class store_settings extends AppCompatActivity {
             public void onClick(View v) {
                 final String name = store_name.getText().toString();
                 final String pass = store_password.getText().toString();
+                final String selectedCurrency = dropdown.getSelectedItem().toString();
+                final String curr;
+                if(selectedCurrency.equals("Euros (€)")){
+                    curr = "€";
+                }
+                else{
+                    curr = "$";
+                }
 
                 if(!name.isEmpty() && pass.length() >= 6){
                     storeRef.orderByChild("ownerID").equalTo(user.getUid())
@@ -98,6 +123,7 @@ public class store_settings extends AppCompatActivity {
                                     if(storeID != null) {
                                         storeRef.child(storeID).child("name").setValue(name);
                                         storeRef.child(storeID).child("password").setValue(pass);
+                                        storeRef.child(storeID).child("currency").setValue(curr);
                                         Toast.makeText(store_settings.this, "Store settings updated", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -116,10 +142,7 @@ public class store_settings extends AppCompatActivity {
 
 
 
-        Spinner dropdown = findViewById(R.id.currency);
-        String[] items = new String[]{"Euros (€)", "US Dollars ($)"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.contact_spinner_item, items);
-        dropdown.setAdapter(adapter);
+
     }
 
     @Override

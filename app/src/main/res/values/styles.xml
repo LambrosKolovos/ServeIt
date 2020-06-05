@@ -57,5 +57,11 @@
         <item name="android:colorForeground">#42221f1f</item>
     </style>
 
+    <style name="ThemeOverlay.MySwitchCompat2" parent="">
+        <item name="colorControlActivated">#252525</item>
+        <item name="colorSwitchThumbNormal">#f1f1f1</item>
+        <item name="android:colorForeground">#42221f1f</item>
+    </style>
+
 
 </resources>
