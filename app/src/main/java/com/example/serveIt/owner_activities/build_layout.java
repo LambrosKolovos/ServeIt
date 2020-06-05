@@ -30,6 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+   This fragment allows owner to add table to the store
+ */
 public class build_layout extends Fragment {
 
     FloatingActionButton add_table;
@@ -104,6 +107,9 @@ public class build_layout extends Fragment {
         return root;
     }
 
+    /*
+        Reads store's data from the database and prints tables on the screen
+     */
     private void readFromDB(final FirebaseCallback firebaseCallback){
         store_ref.orderByChild("ownerID").equalTo(user.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -153,6 +159,9 @@ public class build_layout extends Fragment {
                 });
     }
 
+    /*
+        Gets restaurant name from database and prints it on the screen
+     */
     private void showRestName(){
 
         store_ref.orderByChild("ownerID").equalTo(user.getUid())
@@ -192,6 +201,9 @@ public class build_layout extends Fragment {
                 });
     }
 
+    /*
+        Splits table on columns based on screen width
+     */
 
     public static int calculateNoOfColumns(Context context, float columnWidthDp) { // For example columnWidthdp=180
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();

@@ -25,6 +25,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/*
+    This fragment allows owner to manage their employees.
+ */
 public class manage_staff extends Fragment {
 
     private DatabaseReference ref;
@@ -60,6 +64,10 @@ public class manage_staff extends Fragment {
     }
 
 
+    /*
+        Reads employee for the current store data from database and displays them on screen
+        using a recycler view.
+     */
     private void loadEmployees(){
 
         ref.orderByChild("ownerID").equalTo(user.getUid())

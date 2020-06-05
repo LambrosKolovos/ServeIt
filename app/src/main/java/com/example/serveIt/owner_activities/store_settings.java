@@ -23,6 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/*
+    Updates owner's store settings such as name , enter code, currency.
+ */
 public class store_settings extends AppCompatActivity {
 
     private EditText store_name, store_password;
@@ -30,7 +33,6 @@ public class store_settings extends AppCompatActivity {
     private DatabaseReference storeRef;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-    private Spinner currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

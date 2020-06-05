@@ -8,6 +8,10 @@ import android.view.MenuItem;
 import com.example.serveIt.R;
 import com.example.serveIt.helper_classes.SharedPref;
 
+/*
+    This is the help page for owner. A quick tutorial for owners
+    to set up their store
+ */
 public class help_owner extends AppCompatActivity {
     SharedPref sharedPref;
     @Override

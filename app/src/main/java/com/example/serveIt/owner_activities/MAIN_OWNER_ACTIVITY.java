@@ -17,6 +17,10 @@ import com.example.serveIt.login_activities.login;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+/*
+   Implements the main activity of an owner user.
+   Initializes sharedPref, BottomBar Navigation and loads the corresponding fragment.
+ */
 public class MAIN_OWNER_ACTIVITY extends AppCompatActivity {
 
     Bundle b;

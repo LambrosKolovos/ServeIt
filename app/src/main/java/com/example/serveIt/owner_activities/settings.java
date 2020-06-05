@@ -35,6 +35,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/*
+    User's settings fragment
+ */
 public class settings extends Fragment {
 
     private FirebaseAuth mAuth;
@@ -113,6 +116,8 @@ public class settings extends Fragment {
         });
 
         user = mAuth.getCurrentUser();
+
+        // Allow's user to delete his account
         delete_acc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +125,7 @@ public class settings extends Fragment {
             }
         });
 
+        // Allow's user to change his password
         change_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +133,7 @@ public class settings extends Fragment {
             }
         });
 
+        // Allow's owner to change store settings
         storeSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,12 +141,15 @@ public class settings extends Fragment {
             }
         });
 
+        // Redirects to help page
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent((getContext()), help_owner.class));
             }
         });
+
+        // Redirects to contact page
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +157,7 @@ public class settings extends Fragment {
             }
         });
 
+        // Logs user out of the account
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,6 +236,9 @@ public class settings extends Fragment {
         });
     }
 
+    /*
+        Deletes user account from database
+     */
     private void deleteAccount(){
         storeRef.orderByChild("ownerID").equalTo(user.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {

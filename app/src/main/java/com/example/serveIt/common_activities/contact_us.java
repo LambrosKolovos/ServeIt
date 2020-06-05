@@ -10,6 +10,11 @@ import android.widget.Spinner;
 import com.example.serveIt.R;
 import com.example.serveIt.helper_classes.SharedPref;
 
+
+/*
+    Allows user to contact the development team.
+    (Comming soon)
+ */
 public class contact_us extends AppCompatActivity {
 
     @Override

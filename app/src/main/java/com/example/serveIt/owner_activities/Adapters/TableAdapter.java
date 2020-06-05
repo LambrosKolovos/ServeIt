@@ -24,6 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+/*
+    Table adapter for the recycler view that displays the tables.
+ */
 public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> {
 
     private List<Table> tableList;
@@ -57,6 +60,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
 
         holder.tableID.setText(tableID);
 
+        //Removes a table on click
         holder.tableView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -131,6 +135,9 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
         return tableList.size();
     }
 
+    /*
+        Creates a new table
+     */
     public void add(int tableID){
         Table table = new Table(tableID, "AVAILABLE");
         tableList.add(table);
@@ -138,6 +145,9 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
         notifyItemInserted(tableList.size());
     }
 
+    /*
+        Adds the table to database.
+     */
     private void addTableToDB(){
         storeRef.orderByChild("ownerID").equalTo(firebaseAuth.getCurrentUser().getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -164,6 +174,9 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
 
 
 
+    /*
+        TableView that displays on screen.
+     */
     static class ViewHolder extends RecyclerView.ViewHolder{
 
         private View mView;

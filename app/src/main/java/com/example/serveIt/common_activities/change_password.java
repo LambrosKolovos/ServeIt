@@ -19,6 +19,9 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/*
+    Allows user to change his password
+ */
 public class change_password extends AppCompatActivity {
 
     EditText oldPass, newPass, confPass;

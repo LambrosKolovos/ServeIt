@@ -38,6 +38,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 
+/*
+    Allows owner to create their custom menu for the store
+ */
 public class menu_page extends Fragment {
 
 
@@ -88,6 +91,10 @@ public class menu_page extends Fragment {
 
         return root;
     }
+
+    /*
+        Loads the pre existing menu every time the fragment opens so owner can further add items.
+     */
 
     public void loadData() {
 
@@ -171,6 +178,10 @@ public class menu_page extends Fragment {
     }
 
 
+    /*
+        Adds an item to the selected category.
+     */
+
     private void addItem(final String title, ArrayList<Food_Item> subItems){
         //Let's create an item with R.layout.expanding_layout
         final ExpandingItem item = menu.createNewItem(R.layout.expanding_layout);
@@ -226,6 +237,9 @@ public class menu_page extends Fragment {
 
     }
 
+    /*
+        Prints the item of a category to the screen
+     */
     private void configureSubItem(final ExpandingItem item, final View view, final Food_Item food_item) {
         final TextView title = view.findViewById(R.id.sub_title);
         final TextView price = view.findViewById(R.id.price);
@@ -278,6 +292,10 @@ public class menu_page extends Fragment {
                 });
     }
 
+
+    /*
+        Shows a popup for addding a new blank category to the menu
+     */
     private void showCategoryDialog(View v){
         Button closeBtn, addBtn;
         final EditText categoryInput;
@@ -318,6 +336,9 @@ public class menu_page extends Fragment {
         categoryDialog.show();
     }
 
+    /*
+        Shows a dialog for adding an item to category
+     */
     private void showFoodItemDialog(View v, final String category, final OnItemCreated positive){
         Button closeBtn, addBtn;
         final EditText name, price;
@@ -369,6 +390,10 @@ public class menu_page extends Fragment {
         foodItemDialog.show();
     }
 
+
+    /*
+        Saves the item that's passed as an arguement to the database
+     */
     private void addItemToDatabase(final String category, final Food_Item food_item){
 
         food_item.setCategory(category);
@@ -401,6 +426,9 @@ public class menu_page extends Fragment {
 
     }
 
+    /*
+        Adds the category to the database
+     */
     private void addCategoryToDatabase(final String name){
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         ref.orderByChild("ownerID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -425,6 +453,9 @@ public class menu_page extends Fragment {
         });
     }
 
+    /*
+        Removes an item from datbase.
+     */
     private void removeItemFromDatabase(final String category, final Food_Item item){
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         ref.orderByChild("ownerID").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -452,6 +483,10 @@ public class menu_page extends Fragment {
             }
         });
     }
+
+    /*
+        Removes category from database
+     */
 
     private void removeCategoryFromDatabase(final String name){
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();

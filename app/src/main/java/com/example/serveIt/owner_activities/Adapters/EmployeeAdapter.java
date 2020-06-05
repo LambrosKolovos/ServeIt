@@ -25,6 +25,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+/*
+    Employee adapter for display in manage_staff
+ */
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHolder> {
 
     private List<User> employees;
@@ -56,6 +59,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
 
         holder.date.setText(employee.getDate());
 
+        //Handles delete button funcionality that deletes user from current store.
         holder.delete_ico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
