@@ -8,7 +8,7 @@ public class Store implements Serializable {
     private HashMap<String,User> employees = new HashMap<>();
     private ArrayList<Category> menu;
     private ArrayList<Table> tables;
-
+    private String currency;
     private String name;
     private String ownerID;
     private String password;
@@ -17,10 +17,19 @@ public class Store implements Serializable {
         this.name = name;
         this.ownerID = ownerID;
         this.password = password;
+        this.currency = "€";
     }
 
     public Store(){
 
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public void setPassword(String password) {

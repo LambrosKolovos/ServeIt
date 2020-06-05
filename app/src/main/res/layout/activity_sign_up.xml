@@ -32,7 +32,7 @@
                 android:layout_marginBottom="10dp"
                 android:inputType="textPersonName"
                 android:hint="Full name"
-                android:background="@drawable/input_style"
+                android:background="@drawable/input_field"
                 android:paddingLeft="20dp"/>
 
             <EditText
@@ -43,7 +43,7 @@
                 android:ems="10"
                 android:layout_marginBottom="10dp"
                 android:inputType="textEmailAddress"
-                android:background="@drawable/input_style"
+                android:background="@drawable/input_field"
                 android:paddingLeft="20dp"/>
 
             <EditText
@@ -54,7 +54,7 @@
                 android:ems="10"
                 android:layout_marginBottom="10dp"
                 android:inputType="textPassword"
-                android:background="@drawable/input_style"
+                android:background="@drawable/input_field"
                 android:paddingLeft="20dp"/>
 
             <Switch
@@ -63,7 +63,7 @@
                 android:layout_marginLeft="4dp"
                 android:layout_height="wrap_content"
                 android:text="Owner"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:textColor="#ffffff"/>
 
             <LinearLayout
                 android:id="@+id/layout"
@@ -76,7 +76,7 @@
                     android:id="@+id/store_name"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/input_style"
+                    android:background="@drawable/input_field"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:paddingLeft="20dp"
@@ -87,7 +87,7 @@
                     android:id="@+id/store_pass"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/input_style"
+                    android:background="@drawable/input_field"
                     android:ems="10"
                     android:inputType="textPassword"
                     android:paddingLeft="20dp" />
@@ -100,14 +100,16 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:textAlignment="center"
-                android:textColor="#ff0000"
+                android:textColor="#ffffff"
                 android:ems="10"
                 android:layout_weight="1"/>
 
             <Button
+                android:textColor="#ffffff"
+                android:background="@drawable/login_btn"
                 android:layout_marginTop="15dp"
                 android:id="@+id/sign_up"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="Sign Up" />
 
@@ -123,10 +125,11 @@
     </LinearLayout>
 
     <TextView
+        android:textSize="16sp"
         android:id="@+id/login_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="#ffffff"
         android:textAlignment="center"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"

@@ -8,40 +8,64 @@
     android:gravity="center_horizontal"
     tools:context=".login_activities.home">
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:srcCompat="@drawable/table"
-        android:layout_marginBottom="50dp"/>
 
     <LinearLayout
-        android:id="@+id/layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_below="@+id/logo"
-        android:gravity="center_horizontal">
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/imageView2"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            app:srcCompat="@drawable/background_icon" />
+
+        <View
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ffffff" />
 
         <TextView
             android:id="@+id/quote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:layout_marginBottom="50dp"
+            android:text="Making service better"
+            android:layout_centerInParent="true"
+            android:textColor="#ffffff"
             android:textSize="24sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="50dp">
+        <Button
+            android:textColor="#ffffff"
+            android:background="@drawable/login_btn"
+            android:layout_above="@id/login_btn"
+            android:id="@+id/login_btn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:layout_marginBottom="20dp"/>
 
         <Button
+            android:textColor="#ffffff"
+            android:background="@drawable/register_btn"
             android:id="@+id/register_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="Register" />
-
-        <Button
-            android:id="@+id/login_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login" />
     </LinearLayout>
+
+
+
 
 </RelativeLayout>

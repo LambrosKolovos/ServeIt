@@ -63,6 +63,13 @@ public class login extends AppCompatActivity {
         register_view.setPaintFlags(register_view.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         register_view.setText("Don't have an account? Sign up here!");
 
+        login_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginClick(v);
+            }
+        });
+
         register_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -97,6 +97,7 @@ public class new_order extends Fragment{
             tableID_view.setText("Table: " +  tableID);
         }
         else{
+            tableID = 0;
             tableID_view.setText("Table: ");
         }
 
@@ -134,34 +135,41 @@ public class new_order extends Fragment{
         addBtn = verificationDialog.findViewById(R.id.send_btn);
         closeBtn = verificationDialog.findViewById(R.id.close_btn);
         tableField = verificationDialog.findViewById(R.id.tableField);
-
+        tableField.setText(String.valueOf(tableID));
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                if(tableID == 0)
+                    tableID = Integer.parseInt(tableField.getText().toString());
+
                 OrderDatabase orderDatabase = new OrderDatabase(order.getOrdered(), String.valueOf(tableID));
 
-                if(order.getOrdered().size() != 0){
-                    orderRef.child(storeID)
-                            .push()
-                            .setValue(orderDatabase)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        updateTableStatus(tableID);
-                                        Toast.makeText(getContext(), "Order successfully sent!", Toast.LENGTH_SHORT).show();
+                if(tableID != 0){
+                    if(order.getOrdered().size() != 0){
+                        orderRef.child(storeID)
+                                .push()
+                                .setValue(orderDatabase)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            updateTableStatus(tableID);
+                                            Toast.makeText(getContext(), "Order successfully sent!", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else{
+                                            Toast.makeText(getContext(), "Order can't be sent!", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                    else{
-                                        Toast.makeText(getContext(), "Order can't be sent!", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                    verificationDialog.dismiss();
+                                });
+                        verificationDialog.dismiss();
+                    }
+                    else
+                        Toast.makeText(getContext(), "Can't send empty order", Toast.LENGTH_SHORT).show();
                 }
                 else
-                    Toast.makeText(getContext(), "Can't send empty order", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Select a table!", Toast.LENGTH_SHORT).show();
 
                 clearOrderView();
             }
@@ -320,7 +328,6 @@ public class new_order extends Fragment{
     private void refreshPriceView() {
         priceView.setText("Total: " + order.getTotal_price() + "€");
     }
-
 
     public void updateTableStatus(int id){
         tableRef.child(storeID)
