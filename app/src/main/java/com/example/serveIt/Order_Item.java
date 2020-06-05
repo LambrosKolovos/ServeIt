@@ -34,9 +34,11 @@ public class Order_Item implements Serializable {
         return quantity;
     }
 
-    public void incQuanity() {
+    public void incQuantity() {
         this.quantity++;
     }
+
+    public void decQuantity() {this.quantity--;}
 
     public double getPrice() {
         return price;

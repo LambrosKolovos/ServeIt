@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_style"
+    android:padding="5dp"
+    android:layout_gravity="center">
+
+
+    <TextView
+        android:layout_margin="20dp"
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?txtColor"
+        android:text="Exit the application?"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/message"
+        android:id="@+id/button_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:background="@drawable/help_border"
+            android:textColor="?txtColor"
+            android:id="@+id/cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Cancel"/>
+
+        <Button
+            android:textColor="?btnTxtColor"
+            android:background="@drawable/button_style"
+            android:layout_marginLeft="27dp"
+            android:layout_gravity="right"
+            android:id="@+id/log_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Logout" />
+    </LinearLayout>
+
+</RelativeLayout>
