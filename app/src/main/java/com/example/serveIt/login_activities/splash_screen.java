@@ -6,18 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.serveIt.R;
 import com.example.serveIt.User;
 import com.example.serveIt.employee_activities.employee_activity;
 import com.example.serveIt.employee_activities.search_store;
-import com.example.serveIt.employee_activities.store_layout;
-import com.example.serveIt.owner_activities.build_layout;
 import com.example.serveIt.owner_activities.owner_activity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class home_screen extends AppCompatActivity {
+public class splash_screen extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference ref;
@@ -35,13 +28,11 @@ public class home_screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
+        setContentView(R.layout.activity_splash_screen);
 
         mAuth = FirebaseAuth.getInstance();
         ref = FirebaseDatabase.getInstance().getReference();
 
-        Button login = findViewById(R.id.login);
-        Button register_btn = findViewById(R.id.register_btn);
 
         final FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -50,7 +41,7 @@ public class home_screen extends AppCompatActivity {
                 @Override
                 public void run() {
                     finish();
-                    startLogin();
+                    startHome();
                 }
             }, 2500);
 
@@ -65,25 +56,12 @@ public class home_screen extends AppCompatActivity {
         }
 
 
-        register_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),sign_up.class));
-            }
-        });
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),login.class));
-            }
-        });
 
 
     }
 
-    private void startLogin(){
-        startActivity(new Intent(getApplicationContext(), login.class));
+    private void startHome(){
+        startActivity(new Intent(getApplicationContext(), home.class));
     }
 
     private void startApp(FirebaseUser currentUser){
